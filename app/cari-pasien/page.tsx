@@ -21,20 +21,17 @@ export default function CariPasienPage() {
   return (
     <div className="min-h-screen bg-gray-900">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Back Button */}
-        <div className="mb-6">
-          <Link
-            href="/"
-            className="inline-flex items-center space-x-2 text-blue-400 hover:text-blue-300 transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            <span>Kembali</span>
-          </Link>
-        </div>
-
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">Cari Data Pasien</h1>
+          <div className="flex items-center space-x-4 mb-4">
+            <Link
+              href="/data-pasien"
+              className="text-blue-400 hover:text-blue-300 transition-colors"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </Link>
+            <h1 className="text-2xl font-bold text-white">Cari Data Pasien</h1>
+          </div>
           <p className="text-gray-400">Temukan data pasien berdasarkan nama, nomor rekam medis, atau tindakan</p>
         </div>
 
@@ -51,33 +48,51 @@ export default function CariPasienPage() {
 
           <div className="p-6">
             <form onSubmit={handleSearch} className="space-y-4">
-              <div className="flex flex-col sm:flex-row gap-4">
-                <div className="flex-1">
-                  <input
-                    type="text"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    placeholder="Masukkan kata kunci pencarian..."
-                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                    required
-                  />
-                </div>
-                <div className="sm:w-48">
-                  <select
-                    value={searchBy}
-                    onChange={(e) => setSearchBy(e.target.value)}
-                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                  >
-                    <option value="nama">Nama</option>
-                    <option value="no_rm">No. RM</option>
-                    <option value="tindakan">Tindakan</option>
-                  </select>
-                </div>
+              <div className="relative">
+                <input
+                  type="text"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Masukkan kata kunci pencarian..."
+                  className="w-full px-4 py-3 pr-12 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                  required
+                />
+                <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+              </div>
+              
+              <div className="flex flex-wrap gap-2">
                 <button
-                  type="submit"
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+                  type="button"
+                  onClick={() => setSearchBy('nama')}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    searchBy === 'nama'
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                  }`}
                 >
-                  Cari
+                  Nama
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSearchBy('no_rm')}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    searchBy === 'no_rm'
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                  }`}
+                >
+                  No. RM
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSearchBy('tindakan')}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    searchBy === 'tindakan'
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                  }`}
+                >
+                  Tindakan
                 </button>
               </div>
             </form>

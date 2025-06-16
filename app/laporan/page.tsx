@@ -26,7 +26,7 @@ export default function LaporanPage() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-3xl font-bold text-white mb-4">Survey Kepuasan Pelayanan</h1>
+          <h1 className="text-3xl font-bold text-white mb-4">Arship Tugas</h1>
           <p className="text-gray-400">Akses survey kepuasan pelayanan untuk meningkatkan kualitas praktek</p>
         </div>
 
@@ -35,16 +35,13 @@ export default function LaporanPage() {
           {/* Survey BPJS */}
           <div className="bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
             <div className="p-8 text-center">
-              {/* QR Code Placeholder */}
-              <div className="w-48 h-48 mx-auto mb-6 bg-white rounded-lg flex items-center justify-center">
-                <div className="grid grid-cols-8 gap-1">
-                  {Array.from({ length: 64 }, (_, i) => (
-                    <div
-                      key={i}
-                      className={`w-2 h-2 ${Math.random() > 0.5 ? 'bg-black' : 'bg-white'}`}
-                    />
-                  ))}
-                </div>
+              {/* Kessan Image */}
+              <div className="w-48 h-48 mx-auto mb-6 rounded-lg overflow-hidden">
+                <img
+                  src="/Kessan.jpg"
+                  alt="Survey BPJS Kesehatan"
+                  className="w-full h-full object-cover"
+                />
               </div>
 
               {/* BPJS Info */}
@@ -56,24 +53,28 @@ export default function LaporanPage() {
                 <p className="text-gray-400 text-sm mb-4">Survey kepuasan pelayanan kesehatan BPJS Kesehatan</p>
               </div>
 
-              <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center space-x-2 mx-auto">
+              <a
+                href="https://kesan.bpjs-kesehatan.go.id/kessan/survey/search/ew0KImtkcHBrIjogIjAxNTdHMDA3IiwNCiJubXBwayI6ICIgZHJnLiBEYW5ueSBIYW5nZ29ubyIsDQoia2RkYXRpMiI6ICIwMTU3Ig0KfQ"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center space-x-2 mx-auto"
+              >
                 <span>Survey 1</span>
                 <span>🔗</span>
-              </button>
+              </a>
             </div>
           </div>
 
           {/* Survey Pasien */}
           <div className="bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
             <div className="p-8 text-center">
-              {/* Kemenkes Logo Placeholder */}
-              <div className="w-48 h-48 mx-auto mb-6 bg-gray-600 rounded-lg flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-green-400 rounded-full mx-auto mb-2 flex items-center justify-center">
-                    <span className="text-white text-2xl">🏛️</span>
-                  </div>
-                  <div className="text-white font-bold text-lg">KEMENKES RI</div>
-                </div>
+              {/* Kepuasan Image */}
+              <div className="w-48 h-48 mx-auto mb-6 rounded-lg overflow-hidden">
+                <img
+                  src="/Kepuasan.jpg"
+                  alt="Survey Kepuasan Pasien Kemenkes"
+                  className="w-full h-full object-cover"
+                />
               </div>
 
               {/* Pasien Info */}
@@ -82,10 +83,15 @@ export default function LaporanPage() {
                 <p className="text-gray-400 text-sm mb-4">Survey kepuasan pasien Kementerian Kesehatan</p>
               </div>
 
-              <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center space-x-2 mx-auto">
+              <a
+                href="https://mutufasyankes.kemkes.go.id/halaman/survei_kepuasan_pasien/0902612912"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center space-x-2 mx-auto"
+              >
                 <span>Survey 2</span>
                 <span>🔗</span>
-              </button>
+              </a>
             </div>
           </div>
         </div>

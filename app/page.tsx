@@ -31,16 +31,13 @@ export default function Homepage() {
           {/* Practice Image */}
           <div className="mb-8">
             <div className="relative w-full max-w-2xl mx-auto aspect-video rounded-2xl overflow-hidden shadow-2xl">
-              <div className="w-full h-full bg-gradient-to-br from-pink-300 to-pink-500 flex items-center justify-center">
-                <div className="text-center text-white">
-                  <div className="w-24 h-24 bg-white rounded-full mx-auto mb-4 flex items-center justify-center">
-                    <div className="w-16 h-16 bg-pink-500 rounded-full flex items-center justify-center">
-                      <span className="text-white text-2xl font-bold">🦷</span>
-                    </div>
-                  </div>
-                  <p className="text-lg">Foto Praktek Dokter Gigi</p>
-                </div>
-              </div>
+              <Image
+                src="/Praktek.png"
+                alt="Praktek Mandiri drg. Danny Hanggono"
+                width={800}
+                height={450}
+                className="w-full h-full object-cover"
+              />
             </div>
           </div>
 

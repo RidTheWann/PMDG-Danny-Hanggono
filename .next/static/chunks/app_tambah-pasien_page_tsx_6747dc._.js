@@ -12,7 +12,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$left$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$7b$export__default__as__ArrowLeft$7d$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/arrow-left.js [app-client] (ecmascript) {export default as ArrowLeft}");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$save$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$7b$export__default__as__Save$7d$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/save.js [app-client] (ecmascript) {export default as Save}");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$7b$export__default__as__User$7d$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/user.js [app-client] (ecmascript) {export default as User}");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$dollar$2d$sign$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$7b$export__default__as__DollarSign$7d$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/dollar-sign.js [app-client] (ecmascript) {export default as DollarSign}");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$stethoscope$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$7b$export__default__as__Stethoscope$7d$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/stethoscope.js [app-client] (ecmascript) {export default as Stethoscope}");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$alert$2d$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$7b$export__default__as__AlertCircle$7d$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/alert-circle.js [app-client] (ecmascript) {export default as AlertCircle}");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/build/polyfills/process.js [app-client] (ecmascript)");
@@ -30,7 +29,7 @@ function TambahPasien() {
         nama_pasien: '',
         no_rm: '',
         kelamin: '',
-        biaya: '',
+        jenis_pasien: '',
         obat: false,
         cabut_anak: false,
         cabut_dewasa: false,
@@ -57,7 +56,7 @@ function TambahPasien() {
             submitData.append('Nama Pasien', formData.nama_pasien);
             submitData.append('No.RM', formData.no_rm || '-');
             submitData.append('Kelamin', formData.kelamin);
-            submitData.append('Biaya', formData.biaya || '0');
+            submitData.append('Jenis Pasien', formData.jenis_pasien);
             submitData.append('Obat', formData.obat ? 'Ya' : 'Tidak');
             submitData.append('Cabut Anak', formData.cabut_anak ? 'Ya' : 'Tidak');
             submitData.append('Cabut Dewasa', formData.cabut_dewasa ? 'Ya' : 'Tidak');
@@ -82,7 +81,7 @@ function TambahPasien() {
                     nama_pasien: '',
                     no_rm: '',
                     kelamin: '',
-                    biaya: '',
+                    jenis_pasien: '',
                     obat: false,
                     cabut_anak: false,
                     cabut_dewasa: false,
@@ -657,7 +656,7 @@ function TambahPasien() {
                                                 children: [
                                                     /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"]("div", {
                                                         className: "w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center",
-                                                        children: /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"](__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$dollar$2d$sign$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$7b$export__default__as__DollarSign$7d$__["DollarSign"], {
+                                                        children: /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"](__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$7b$export__default__as__User$7d$__["User"], {
                                                             className: "w-4 h-4 text-orange-600"
                                                         }, void 0, false, {
                                                             fileName: "<[project]/app/tambah-pasien/page.tsx>",
@@ -671,7 +670,7 @@ function TambahPasien() {
                                                     }, this),
                                                     /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"]("h2", {
                                                         className: "text-lg font-semibold text-gray-900",
-                                                        children: "Informasi Biaya"
+                                                        children: "Jenis Pasien"
                                                     }, void 0, false, {
                                                         fileName: "<[project]/app/tambah-pasien/page.tsx>",
                                                         lineNumber: 312,
@@ -687,37 +686,44 @@ function TambahPasien() {
                                                 className: "max-w-md",
                                                 children: [
                                                     /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"]("label", {
-                                                        htmlFor: "biaya",
+                                                        htmlFor: "jenis_pasien",
                                                         className: "block text-sm font-medium text-gray-700 mb-2",
-                                                        children: "Biaya Perawatan"
+                                                        children: "Kategori Pasien *"
                                                     }, void 0, false, {
                                                         fileName: "<[project]/app/tambah-pasien/page.tsx>",
                                                         lineNumber: 316,
                                                         columnNumber: 17
                                                     }, this),
-                                                    /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"]("div", {
-                                                        className: "relative",
+                                                    /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"]("select", {
+                                                        id: "jenis_pasien",
+                                                        name: "jenis_pasien",
+                                                        value: formData.jenis_pasien,
+                                                        onChange: handleInputChange,
+                                                        required: true,
+                                                        className: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 input-focus transition-all",
                                                         children: [
-                                                            /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"]("span", {
-                                                                className: "absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500",
-                                                                children: "Rp"
+                                                            /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"]("option", {
+                                                                value: "",
+                                                                children: "Pilih jenis pasien"
                                                             }, void 0, false, {
                                                                 fileName: "<[project]/app/tambah-pasien/page.tsx>",
-                                                                lineNumber: 320,
+                                                                lineNumber: 327,
                                                                 columnNumber: 19
                                                             }, this),
-                                                            /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"]("input", {
-                                                                type: "number",
-                                                                id: "biaya",
-                                                                name: "biaya",
-                                                                value: formData.biaya,
-                                                                onChange: handleInputChange,
-                                                                min: "0",
-                                                                placeholder: "0",
-                                                                className: "w-full pl-8 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 input-focus transition-all"
+                                                            /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"]("option", {
+                                                                value: "BPJS",
+                                                                children: "BPJS"
                                                             }, void 0, false, {
                                                                 fileName: "<[project]/app/tambah-pasien/page.tsx>",
-                                                                lineNumber: 321,
+                                                                lineNumber: 328,
+                                                                columnNumber: 19
+                                                            }, this),
+                                                            /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"]("option", {
+                                                                value: "UMUM",
+                                                                children: "UMUM"
+                                                            }, void 0, false, {
+                                                                fileName: "<[project]/app/tambah-pasien/page.tsx>",
+                                                                lineNumber: 329,
                                                                 columnNumber: 19
                                                             }, this)
                                                         ]
@@ -753,7 +759,7 @@ function TambahPasien() {
                                         children: "Batal"
                                     }, void 0, false, {
                                         fileName: "<[project]/app/tambah-pasien/page.tsx>",
-                                        lineNumber: 338,
+                                        lineNumber: 337,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"]("button", {
@@ -765,32 +771,32 @@ function TambahPasien() {
                                                 className: "animate-spin rounded-full h-4 w-4 border-b-2 border-white"
                                             }, void 0, false, {
                                                 fileName: "<[project]/app/tambah-pasien/page.tsx>",
-                                                lineNumber: 350,
+                                                lineNumber: 349,
                                                 columnNumber: 17
                                             }, this) : /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"](__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$save$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$7b$export__default__as__Save$7d$__["Save"], {
                                                 className: "w-4 h-4"
                                             }, void 0, false, {
                                                 fileName: "<[project]/app/tambah-pasien/page.tsx>",
-                                                lineNumber: 352,
+                                                lineNumber: 351,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"]("span", {
                                                 children: loading ? 'Menyimpan...' : 'Simpan Pasien'
                                             }, void 0, false, {
                                                 fileName: "<[project]/app/tambah-pasien/page.tsx>",
-                                                lineNumber: 354,
+                                                lineNumber: 353,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "<[project]/app/tambah-pasien/page.tsx>",
-                                        lineNumber: 344,
+                                        lineNumber: 343,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "<[project]/app/tambah-pasien/page.tsx>",
-                                lineNumber: 337,
+                                lineNumber: 336,
                                 columnNumber: 11
                             }, this)
                         ]
@@ -812,7 +818,7 @@ function TambahPasien() {
         columnNumber: 5
     }, this);
 }
-_s(TambahPasien, "PpFa4rY9oRNh4kYYSBrTayjFbHY=");
+_s(TambahPasien, "VFN6inW5MJyIUAeWn/Scgi9vfp0=");
 _c = TambahPasien;
 var _c;
 __turbopack_refresh__.register(_c, "TambahPasien");

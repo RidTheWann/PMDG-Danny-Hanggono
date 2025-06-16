@@ -64,7 +64,7 @@ function DataPasien() {
                             nama_pasien: row[2] || '',
                             no_rm: row[3] || '',
                             kelamin: row[4] || '',
-                            biaya: parseFloat(row[5]) || 0,
+                            jenis_pasien: row[5] || '',
                             obat: row[6] || '',
                             cabut_anak: row[7] || '',
                             cabut_dewasa: row[8] || '',
@@ -133,7 +133,7 @@ function DataPasien() {
             formData.append('Nama Pasien', updatedPatient.nama_pasien);
             formData.append('No.RM', updatedPatient.no_rm);
             formData.append('Kelamin', updatedPatient.kelamin);
-            formData.append('Biaya', updatedPatient.biaya.toString());
+            formData.append('Jenis Pasien', updatedPatient.jenis_pasien);
             formData.append('Obat', updatedPatient.obat);
             formData.append('Cabut Anak', updatedPatient.cabut_anak);
             formData.append('Cabut Dewasa', updatedPatient.cabut_dewasa);
@@ -156,13 +156,6 @@ function DataPasien() {
         } catch (error) {
             console.error('Error updating patient:', error);
         }
-    };
-    const formatCurrency = (amount)=>{
-        return new Intl.NumberFormat('id-ID', {
-            style: 'currency',
-            currency: 'IDR',
-            minimumFractionDigits: 0
-        }).format(amount);
     };
     const formatDate = (dateString)=>{
         try {
@@ -198,7 +191,7 @@ function DataPasien() {
                         className: "animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"
                     }, void 0, false, {
                         fileName: "<[project]/app/data-pasien/page.tsx>",
-                        lineNumber: 219,
+                        lineNumber: 213,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("p", {
@@ -206,18 +199,18 @@ function DataPasien() {
                         children: "Memuat data pasien..."
                     }, void 0, false, {
                         fileName: "<[project]/app/data-pasien/page.tsx>",
-                        lineNumber: 220,
+                        lineNumber: 214,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "<[project]/app/data-pasien/page.tsx>",
-                lineNumber: 218,
+                lineNumber: 212,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "<[project]/app/data-pasien/page.tsx>",
-            lineNumber: 217,
+            lineNumber: 211,
             columnNumber: 7
         }, this);
     }
@@ -242,27 +235,27 @@ function DataPasien() {
                                                 className: "w-5 h-5"
                                             }, void 0, false, {
                                                 fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                lineNumber: 237,
+                                                lineNumber: 231,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("span", {
                                                 children: "Kembali"
                                             }, void 0, false, {
                                                 fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                lineNumber: 238,
+                                                lineNumber: 232,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "<[project]/app/data-pasien/page.tsx>",
-                                        lineNumber: 233,
+                                        lineNumber: 227,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("div", {
                                         className: "h-6 w-px bg-gray-300"
                                     }, void 0, false, {
                                         fileName: "<[project]/app/data-pasien/page.tsx>",
-                                        lineNumber: 240,
+                                        lineNumber: 234,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("div", {
@@ -272,7 +265,7 @@ function DataPasien() {
                                                 children: "Data Pasien"
                                             }, void 0, false, {
                                                 fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                lineNumber: 242,
+                                                lineNumber: 236,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("p", {
@@ -280,19 +273,19 @@ function DataPasien() {
                                                 children: "Kelola dan lihat data pasien"
                                             }, void 0, false, {
                                                 fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                lineNumber: 243,
+                                                lineNumber: 237,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "<[project]/app/data-pasien/page.tsx>",
-                                        lineNumber: 241,
+                                        lineNumber: 235,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "<[project]/app/data-pasien/page.tsx>",
-                                lineNumber: 232,
+                                lineNumber: 226,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"](__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -303,36 +296,36 @@ function DataPasien() {
                                         className: "w-4 h-4"
                                     }, void 0, false, {
                                         fileName: "<[project]/app/data-pasien/page.tsx>",
-                                        lineNumber: 250,
+                                        lineNumber: 244,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("span", {
                                         children: "Tambah Pasien"
                                     }, void 0, false, {
                                         fileName: "<[project]/app/data-pasien/page.tsx>",
-                                        lineNumber: 251,
+                                        lineNumber: 245,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "<[project]/app/data-pasien/page.tsx>",
-                                lineNumber: 246,
+                                lineNumber: 240,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "<[project]/app/data-pasien/page.tsx>",
-                        lineNumber: 231,
+                        lineNumber: 225,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "<[project]/app/data-pasien/page.tsx>",
-                    lineNumber: 230,
+                    lineNumber: 224,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "<[project]/app/data-pasien/page.tsx>",
-                lineNumber: 229,
+                lineNumber: 223,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("div", {
@@ -353,7 +346,7 @@ function DataPasien() {
                                                     className: "absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4"
                                                 }, void 0, false, {
                                                     fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                    lineNumber: 263,
+                                                    lineNumber: 257,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("input", {
@@ -364,13 +357,13 @@ function DataPasien() {
                                                     className: "pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 input-focus transition-all w-full sm:w-80"
                                                 }, void 0, false, {
                                                     fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                    lineNumber: 264,
+                                                    lineNumber: 258,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "<[project]/app/data-pasien/page.tsx>",
-                                            lineNumber: 262,
+                                            lineNumber: 256,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("div", {
@@ -386,7 +379,7 @@ function DataPasien() {
                                                             children: "Bulan"
                                                         }, void 0, false, {
                                                             fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                            lineNumber: 279,
+                                                            lineNumber: 273,
                                                             columnNumber: 19
                                                         }, this),
                                                         Array.from({
@@ -398,13 +391,13 @@ function DataPasien() {
                                                                 })
                                                             }, i + 1, false, {
                                                                 fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                                lineNumber: 281,
+                                                                lineNumber: 275,
                                                                 columnNumber: 21
                                                             }, this))
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                    lineNumber: 274,
+                                                    lineNumber: 268,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("select", {
@@ -417,7 +410,7 @@ function DataPasien() {
                                                             children: "Tahun"
                                                         }, void 0, false, {
                                                             fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                            lineNumber: 292,
+                                                            lineNumber: 286,
                                                             columnNumber: 19
                                                         }, this),
                                                         Array.from({
@@ -429,26 +422,26 @@ function DataPasien() {
                                                                 children: year
                                                             }, year, false, {
                                                                 fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                                lineNumber: 296,
+                                                                lineNumber: 290,
                                                                 columnNumber: 23
                                                             }, this);
                                                         })
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                    lineNumber: 287,
+                                                    lineNumber: 281,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "<[project]/app/data-pasien/page.tsx>",
-                                            lineNumber: 273,
+                                            lineNumber: 267,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "<[project]/app/data-pasien/page.tsx>",
-                                    lineNumber: 261,
+                                    lineNumber: 255,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("div", {
@@ -462,20 +455,20 @@ function DataPasien() {
                                                     className: "w-4 h-4"
                                                 }, void 0, false, {
                                                     fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                    lineNumber: 310,
+                                                    lineNumber: 304,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("span", {
                                                     children: "Refresh"
                                                 }, void 0, false, {
                                                     fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                    lineNumber: 311,
+                                                    lineNumber: 305,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "<[project]/app/data-pasien/page.tsx>",
-                                            lineNumber: 306,
+                                            lineNumber: 300,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("button", {
@@ -485,37 +478,37 @@ function DataPasien() {
                                                     className: "w-4 h-4"
                                                 }, void 0, false, {
                                                     fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                    lineNumber: 314,
+                                                    lineNumber: 308,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("span", {
                                                     children: "Export"
                                                 }, void 0, false, {
                                                     fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                    lineNumber: 315,
+                                                    lineNumber: 309,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "<[project]/app/data-pasien/page.tsx>",
-                                            lineNumber: 313,
+                                            lineNumber: 307,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "<[project]/app/data-pasien/page.tsx>",
-                                    lineNumber: 305,
+                                    lineNumber: 299,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "<[project]/app/data-pasien/page.tsx>",
-                            lineNumber: 260,
+                            lineNumber: 254,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "<[project]/app/data-pasien/page.tsx>",
-                        lineNumber: 259,
+                        lineNumber: 253,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("div", {
@@ -534,7 +527,7 @@ function DataPasien() {
                                                     children: "Tanggal"
                                                 }, void 0, false, {
                                                     fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                    lineNumber: 327,
+                                                    lineNumber: 321,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("th", {
@@ -542,7 +535,7 @@ function DataPasien() {
                                                     children: "Antrean"
                                                 }, void 0, false, {
                                                     fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                    lineNumber: 330,
+                                                    lineNumber: 324,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("th", {
@@ -550,7 +543,7 @@ function DataPasien() {
                                                     children: "Nama Pasien"
                                                 }, void 0, false, {
                                                     fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                    lineNumber: 333,
+                                                    lineNumber: 327,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("th", {
@@ -558,7 +551,7 @@ function DataPasien() {
                                                     children: "No. RM"
                                                 }, void 0, false, {
                                                     fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                    lineNumber: 336,
+                                                    lineNumber: 330,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("th", {
@@ -566,7 +559,15 @@ function DataPasien() {
                                                     children: "Kelamin"
                                                 }, void 0, false, {
                                                     fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                    lineNumber: 339,
+                                                    lineNumber: 333,
+                                                    columnNumber: 19
+                                                }, this),
+                                                /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("th", {
+                                                    className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                                                    children: "Jenis Pasien"
+                                                }, void 0, false, {
+                                                    fileName: "<[project]/app/data-pasien/page.tsx>",
+                                                    lineNumber: 336,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("th", {
@@ -574,15 +575,7 @@ function DataPasien() {
                                                     children: "Tindakan"
                                                 }, void 0, false, {
                                                     fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                    lineNumber: 342,
-                                                    columnNumber: 19
-                                                }, this),
-                                                /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("th", {
-                                                    className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
-                                                    children: "Biaya"
-                                                }, void 0, false, {
-                                                    fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                    lineNumber: 345,
+                                                    lineNumber: 339,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("th", {
@@ -590,25 +583,25 @@ function DataPasien() {
                                                     children: "Aksi"
                                                 }, void 0, false, {
                                                     fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                    lineNumber: 348,
+                                                    lineNumber: 342,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "<[project]/app/data-pasien/page.tsx>",
-                                            lineNumber: 326,
+                                            lineNumber: 320,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "<[project]/app/data-pasien/page.tsx>",
-                                        lineNumber: 325,
+                                        lineNumber: 319,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("tbody", {
                                         className: "bg-white divide-y divide-gray-200",
                                         children: filteredPatients.length === 0 ? /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("tr", {
                                             children: /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("td", {
-                                                colSpan: 8,
+                                                colSpan: 7,
                                                 className: "px-6 py-12 text-center text-gray-500",
                                                 children: /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("div", {
                                                     className: "flex flex-col items-center",
@@ -617,7 +610,7 @@ function DataPasien() {
                                                             className: "w-12 h-12 text-gray-300 mb-4"
                                                         }, void 0, false, {
                                                             fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                            lineNumber: 358,
+                                                            lineNumber: 352,
                                                             columnNumber: 25
                                                         }, this),
                                                         /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("p", {
@@ -625,7 +618,7 @@ function DataPasien() {
                                                             children: "Tidak ada data pasien"
                                                         }, void 0, false, {
                                                             fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                            lineNumber: 359,
+                                                            lineNumber: 353,
                                                             columnNumber: 25
                                                         }, this),
                                                         /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("p", {
@@ -633,23 +626,23 @@ function DataPasien() {
                                                             children: "Belum ada pasien yang terdaftar untuk periode ini"
                                                         }, void 0, false, {
                                                             fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                            lineNumber: 360,
+                                                            lineNumber: 354,
                                                             columnNumber: 25
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                    lineNumber: 357,
+                                                    lineNumber: 351,
                                                     columnNumber: 23
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                lineNumber: 356,
+                                                lineNumber: 350,
                                                 columnNumber: 21
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "<[project]/app/data-pasien/page.tsx>",
-                                            lineNumber: 355,
+                                            lineNumber: 349,
                                             columnNumber: 19
                                         }, this) : filteredPatients.map((patient, index)=>/*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("tr", {
                                                 className: "hover:bg-gray-50 transition-colors",
@@ -659,7 +652,7 @@ function DataPasien() {
                                                         children: formatDate(patient.tanggal_kunjungan)
                                                     }, void 0, false, {
                                                         fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                        lineNumber: 367,
+                                                        lineNumber: 361,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("td", {
@@ -672,12 +665,12 @@ function DataPasien() {
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                            lineNumber: 371,
+                                                            lineNumber: 365,
                                                             columnNumber: 25
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                        lineNumber: 370,
+                                                        lineNumber: 364,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("td", {
@@ -685,7 +678,7 @@ function DataPasien() {
                                                         children: patient.nama_pasien
                                                     }, void 0, false, {
                                                         fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                        lineNumber: 375,
+                                                        lineNumber: 369,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("td", {
@@ -693,7 +686,7 @@ function DataPasien() {
                                                         children: patient.no_rm || '-'
                                                     }, void 0, false, {
                                                         fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                        lineNumber: 378,
+                                                        lineNumber: 372,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("td", {
@@ -701,7 +694,22 @@ function DataPasien() {
                                                         children: patient.kelamin
                                                     }, void 0, false, {
                                                         fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                        lineNumber: 381,
+                                                        lineNumber: 375,
+                                                        columnNumber: 23
+                                                    }, this),
+                                                    /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("td", {
+                                                        className: "px-6 py-4 whitespace-nowrap text-sm text-gray-500",
+                                                        children: /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("span", {
+                                                            className: `inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${patient.jenis_pasien === 'BPJS' ? 'bg-green-100 text-green-800' : 'bg-orange-100 text-orange-800'}`,
+                                                            children: patient.jenis_pasien || '-'
+                                                        }, void 0, false, {
+                                                            fileName: "<[project]/app/data-pasien/page.tsx>",
+                                                            lineNumber: 379,
+                                                            columnNumber: 25
+                                                        }, this)
+                                                    }, void 0, false, {
+                                                        fileName: "<[project]/app/data-pasien/page.tsx>",
+                                                        lineNumber: 378,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("td", {
@@ -712,20 +720,12 @@ function DataPasien() {
                                                             children: getTreatmentSummary(patient)
                                                         }, void 0, false, {
                                                             fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                            lineNumber: 385,
+                                                            lineNumber: 388,
                                                             columnNumber: 25
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                        lineNumber: 384,
-                                                        columnNumber: 23
-                                                    }, this),
-                                                    /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("td", {
-                                                        className: "px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900",
-                                                        children: formatCurrency(patient.biaya)
-                                                    }, void 0, false, {
-                                                        fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                        lineNumber: 389,
+                                                        lineNumber: 387,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("td", {
@@ -779,28 +779,28 @@ function DataPasien() {
                                                 ]
                                             }, index, true, {
                                                 fileName: "<[project]/app/data-pasien/page.tsx>",
-                                                lineNumber: 366,
+                                                lineNumber: 360,
                                                 columnNumber: 21
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "<[project]/app/data-pasien/page.tsx>",
-                                        lineNumber: 353,
+                                        lineNumber: 347,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "<[project]/app/data-pasien/page.tsx>",
-                                lineNumber: 324,
+                                lineNumber: 318,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "<[project]/app/data-pasien/page.tsx>",
-                            lineNumber: 323,
+                            lineNumber: 317,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "<[project]/app/data-pasien/page.tsx>",
-                        lineNumber: 322,
+                        lineNumber: 316,
                         columnNumber: 9
                     }, this),
                     filteredPatients.length > 0 && /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("div", {
@@ -832,7 +832,7 @@ function DataPasien() {
                 ]
             }, void 0, true, {
                 fileName: "<[project]/app/data-pasien/page.tsx>",
-                lineNumber: 257,
+                lineNumber: 251,
                 columnNumber: 7
             }, this),
             deleteConfirm && /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("div", {
@@ -907,7 +907,7 @@ function DataPasien() {
         ]
     }, void 0, true, {
         fileName: "<[project]/app/data-pasien/page.tsx>",
-        lineNumber: 227,
+        lineNumber: 221,
         columnNumber: 5
     }, this);
 }

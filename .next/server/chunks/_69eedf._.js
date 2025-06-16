@@ -42,14 +42,16 @@ async function GET(request) {
         const records = sheetData.slice(1);
         // Calculate stats
         let totalPasienHariIni = 0;
-        let totalPasienBulanIni = records.length;
+        let totalPasienBulanIni = 0;
         let antreanTerakhir = 0;
-        let pendapatanBulanIni = 0;
+        let pasiенBPJS = 0;
+        let pasienUmum = 0;
         records.forEach((row)=>{
             if (row.length === 0) return;
-            const tanggalKunjungan = row[0];
-            const noAntrean = row[1];
-            const biaya = parseFloat(row[5]) || 0;
+            const tanggalKunjungan = row[0] || '';
+            const noAntrean = row[1] || '';
+            const jenisPasien = row[5] || '';
+            totalPasienBulanIni++;
             // Count patients for today
             if (tanggalKunjungan && tanggalKunjungan.includes(todayStr)) {
                 totalPasienHariIni++;
@@ -59,14 +61,19 @@ async function GET(request) {
                     antreanTerakhir = currentAntrean;
                 }
             }
-            // Sum up monthly revenue
-            pendapatanBulanIni += biaya;
+            // Count patient types
+            if (jenisPasien === 'BPJS') {
+                pasiенBPJS++;
+            } else if (jenisPasien === 'UMUM') {
+                pasienUmum++;
+            }
         });
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$web$2f$exports$2f$next$2d$response$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].json({
             totalPasienHariIni,
             totalPasienBulanIni,
             antreanTerakhir,
-            pendapatanBulanIni
+            pasiенBPJS,
+            pasienUmum
         });
     } catch (error) {
         console.error('Error fetching dashboard stats:', error);

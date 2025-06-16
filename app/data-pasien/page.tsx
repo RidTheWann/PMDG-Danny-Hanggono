@@ -11,7 +11,7 @@ interface Patient {
   nama_pasien: string;
   no_rm: string;
   kelamin: string;
-  biaya: number;
+  jenis_pasien: string;
   obat: string;
   cabut_anak: string;
   cabut_dewasa: string;
@@ -65,7 +65,7 @@ export default function DataPasien() {
               nama_pasien: row[2] || '',
               no_rm: row[3] || '',
               kelamin: row[4] || '',
-              biaya: parseFloat(row[5]) || 0,
+              jenis_pasien: row[5] || '',
               obat: row[6] || '',
               cabut_anak: row[7] || '',
               cabut_dewasa: row[8] || '',
@@ -150,7 +150,7 @@ export default function DataPasien() {
       formData.append('Nama Pasien', updatedPatient.nama_pasien);
       formData.append('No.RM', updatedPatient.no_rm);
       formData.append('Kelamin', updatedPatient.kelamin);
-      formData.append('Biaya', updatedPatient.biaya.toString());
+      formData.append('Jenis Pasien', updatedPatient.jenis_pasien);
       formData.append('Obat', updatedPatient.obat);
       formData.append('Cabut Anak', updatedPatient.cabut_anak);
       formData.append('Cabut Dewasa', updatedPatient.cabut_dewasa);
@@ -177,13 +177,7 @@ export default function DataPasien() {
     }
   };
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('id-ID', {
-      style: 'currency',
-      currency: 'IDR',
-      minimumFractionDigits: 0,
-    }).format(amount);
-  };
+  
 
   const formatDate = (dateString: string) => {
     try {
@@ -340,10 +334,10 @@ export default function DataPasien() {
                     Kelamin
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Tindakan
+                    Jenis Pasien
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Biaya
+                    Tindakan
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Aksi
@@ -353,7 +347,7 @@ export default function DataPasien() {
               <tbody className="bg-white divide-y divide-gray-200">
                 {filteredPatients.length === 0 ? (
                   <tr>
-                    <td colSpan={8} className="px-6 py-12 text-center text-gray-500">
+                    <td colSpan={7} className="px-6 py-12 text-center text-gray-500">
                       <div className="flex flex-col items-center">
                         <Calendar className="w-12 h-12 text-gray-300 mb-4" />
                         <p className="text-lg font-medium">Tidak ada data pasien</p>
@@ -381,13 +375,19 @@ export default function DataPasien() {
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {patient.kelamin}
                       </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                          patient.jenis_pasien === 'BPJS' 
+                            ? 'bg-green-100 text-green-800' 
+                            : 'bg-orange-100 text-orange-800'
+                        }`}>
+                          {patient.jenis_pasien || '-'}
+                        </span>
+                      </td>
                       <td className="px-6 py-4 text-sm text-gray-500 max-w-xs">
                         <div className="truncate" title={getTreatmentSummary(patient)}>
                           {getTreatmentSummary(patient)}
                         </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        {formatCurrency(patient.biaya)}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         <div className="flex items-center space-x-2">

@@ -10,7 +10,7 @@ interface PatientForm {
   nama_pasien: string;
   no_rm: string;
   kelamin: string;
-  biaya: string;
+  jenis_pasien: string;
   obat: boolean;
   cabut_anak: boolean;
   cabut_dewasa: boolean;
@@ -27,7 +27,7 @@ export default function TambahPasien() {
     nama_pasien: '',
     no_rm: '',
     kelamin: '',
-    biaya: '',
+    jenis_pasien: '',
     obat: false,
     cabut_anak: false,
     cabut_dewasa: false,
@@ -57,7 +57,7 @@ export default function TambahPasien() {
       submitData.append('Nama Pasien', formData.nama_pasien);
       submitData.append('No.RM', formData.no_rm || '-');
       submitData.append('Kelamin', formData.kelamin);
-      submitData.append('Biaya', formData.biaya || '0');
+      submitData.append('Jenis Pasien', formData.jenis_pasien);
       submitData.append('Obat', formData.obat ? 'Ya' : 'Tidak');
       submitData.append('Cabut Anak', formData.cabut_anak ? 'Ya' : 'Tidak');
       submitData.append('Cabut Dewasa', formData.cabut_dewasa ? 'Ya' : 'Tidak');
@@ -86,7 +86,7 @@ export default function TambahPasien() {
           nama_pasien: '',
           no_rm: '',
           kelamin: '',
-          biaya: '',
+          jenis_pasien: '',
           obat: false,
           cabut_anak: false,
           cabut_dewasa: false,
@@ -303,32 +303,31 @@ export default function TambahPasien() {
               </div>
             </div>
 
-            {/* Financial Information */}
+            {/* Patient Type Information */}
             <div className="p-6">
               <div className="flex items-center space-x-3 mb-4">
                 <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
-                  <DollarSign className="w-4 h-4 text-orange-600" />
+                  <User className="w-4 h-4 text-orange-600" />
                 </div>
-                <h2 className="text-lg font-semibold text-gray-900">Informasi Biaya</h2>
+                <h2 className="text-lg font-semibold text-gray-900">Jenis Pasien</h2>
               </div>
 
               <div className="max-w-md">
-                <label htmlFor="biaya" className="block text-sm font-medium text-gray-700 mb-2">
-                  Biaya Perawatan
+                <label htmlFor="jenis_pasien" className="block text-sm font-medium text-gray-700 mb-2">
+                  Kategori Pasien *
                 </label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">Rp</span>
-                  <input
-                    type="number"
-                    id="biaya"
-                    name="biaya"
-                    value={formData.biaya}
-                    onChange={handleInputChange}
-                    min="0"
-                    placeholder="0"
-                    className="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 input-focus transition-all"
-                  />
-                </div>
+                <select
+                  id="jenis_pasien"
+                  name="jenis_pasien"
+                  value={formData.jenis_pasien}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 input-focus transition-all"
+                >
+                  <option value="">Pilih jenis pasien</option>
+                  <option value="BPJS">BPJS</option>
+                  <option value="UMUM">UMUM</option>
+                </select>
               </div>
             </div>
           </div>

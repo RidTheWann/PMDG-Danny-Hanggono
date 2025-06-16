@@ -34,13 +34,14 @@ export async function GET(request: NextRequest) {
     const dailyData: { [key: string]: any } = {};
     const treatmentCounts: { [key: string]: number } = {};
     let totalPatients = 0;
-    let totalRevenue = 0;
+    let bpjsPatients = 0;
+    let umumPatients = 0;
 
     records.forEach((row: any[]) => {
       if (row.length === 0) return;
       
       const tanggalKunjungan = row[0];
-      const biaya = parseFloat(row[5]) || 0;
+      const jenisPasien = row[5] || '';
       
       // Extract treatments
       const treatments = {
@@ -67,13 +68,21 @@ export async function GET(request: NextRequest) {
         dailyData[dateKey] = {
           date: dateKey,
           totalPatients: 0,
-          totalRevenue: 0,
+          bpjsPatients: 0,
+          umumPatients: 0,
           treatments: {}
         };
       }
 
       dailyData[dateKey].totalPatients += 1;
-      dailyData[dateKey].totalRevenue += biaya;
+      
+      if (jenisPasien === 'BPJS') {
+        dailyData[dateKey].bpjsPatients += 1;
+        bpjsPatients += 1;
+      } else if (jenisPasien === 'UMUM') {
+        dailyData[dateKey].umumPatients += 1;
+        umumPatients += 1;
+      }
 
       // Count daily treatments
       Object.entries(treatments).forEach(([treatment, isTrue]) => {
@@ -83,7 +92,6 @@ export async function GET(request: NextRequest) {
       });
 
       totalPatients += 1;
-      totalRevenue += biaya;
     });
 
     // Find most popular treatment
@@ -101,7 +109,8 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({
       totalPatients,
-      totalRevenue,
+      bpjsPatients,
+      umumPatients,
       averagePerDay,
       mostPopularTreatment: getTreatmentLabel(mostPopularTreatment),
       dailyData: dailyDataArray

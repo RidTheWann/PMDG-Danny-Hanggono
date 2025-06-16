@@ -8,7 +8,8 @@ import { ArrowLeft, FileText, Download, Calendar, TrendingUp, Users, DollarSign,
 interface ReportData {
   date: string;
   totalPatients: number;
-  totalRevenue: number;
+  bpjsPatients: number;
+  umumPatients: number;
   treatments: {
     [key: string]: number;
   };
@@ -16,7 +17,8 @@ interface ReportData {
 
 interface MonthlyStats {
   totalPatients: number;
-  totalRevenue: number;
+  bpjsPatients: number;
+  umumPatients: number;
   averagePerDay: number;
   mostPopularTreatment: string;
   dailyData: ReportData[];
@@ -47,13 +49,7 @@ export default function Laporan() {
     }
   };
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('id-ID', {
-      style: 'currency',
-      currency: 'IDR',
-      minimumFractionDigits: 0,
-    }).format(amount);
-  };
+  
 
   const getMonthName = (month: string) => {
     const months = [
@@ -160,13 +156,13 @@ export default function Laporan() {
               <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-100 fade-in">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600 mb-1">Total Pendapatan</p>
+                    <p className="text-sm font-medium text-gray-600 mb-1">Pasien BPJS</p>
                     <p className="text-2xl font-bold text-gray-900">
-                      {formatCurrency(monthlyStats.totalRevenue)}
+                      {monthlyStats.bpjsPatients}
                     </p>
                   </div>
                   <div className="bg-green-50 p-3 rounded-lg">
-                    <DollarSign className="w-6 h-6 text-green-600" />
+                    <Users className="w-6 h-6 text-green-600" />
                   </div>
                 </div>
               </div>
@@ -188,13 +184,13 @@ export default function Laporan() {
               <div className="bg-white rounded-xl shadow-soft p-6 border border-gray-100 fade-in">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600 mb-1">Tindakan Populer</p>
-                    <p className="text-lg font-bold text-gray-900">
-                      {monthlyStats.mostPopularTreatment}
+                    <p className="text-sm font-medium text-gray-600 mb-1">Pasien UMUM</p>
+                    <p className="text-2xl font-bold text-gray-900">
+                      {monthlyStats.umumPatients}
                     </p>
                   </div>
                   <div className="bg-orange-50 p-3 rounded-lg">
-                    <Activity className="w-6 h-6 text-orange-600" />
+                    <Users className="w-6 h-6 text-orange-600" />
                   </div>
                 </div>
               </div>
@@ -219,7 +215,7 @@ export default function Laporan() {
                         Jumlah Pasien
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Pendapatan
+                        BPJS / UMUM
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Tindakan Terbanyak
@@ -250,8 +246,8 @@ export default function Laporan() {
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                             {day.totalPatients} pasien
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                            {formatCurrency(day.totalRevenue)}
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {day.bpjsPatients} / {day.umumPatients}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                             {Object.keys(day.treatments).length > 0 

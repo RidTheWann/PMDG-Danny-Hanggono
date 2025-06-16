@@ -9,7 +9,8 @@ interface DashboardStats {
   totalPasienHariIni: number;
   totalPasienBulanIni: number;
   antreanTerakhir: number;
-  pendapatanBulanIni: number;
+  pasiенBPJS: number;
+  pasienUmum: number;
 }
 
 export default function Homepage() {
@@ -17,7 +18,8 @@ export default function Homepage() {
     totalPasienHariIni: 0,
     totalPasienBulanIni: 0,
     antreanTerakhir: 0,
-    pendapatanBulanIni: 0
+    pasiенBPJS: 0,
+    pasienUmum: 0
   });
   const [loading, setLoading] = useState(true);
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -44,13 +46,7 @@ export default function Homepage() {
     return () => clearInterval(timer);
   }, []);
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('id-ID', {
-      style: 'currency',
-      currency: 'IDR',
-      minimumFractionDigits: 0,
-    }).format(amount);
-  };
+  
 
   const formatTime = (date: Date) => {
     return date.toLocaleTimeString('id-ID', {
@@ -127,12 +123,11 @@ export default function Homepage() {
       bg: 'bg-purple-50'
     },
     {
-      title: 'Pendapatan Bulan Ini',
-      value: formatCurrency(stats.pendapatanBulanIni),
+      title: 'Pasien BPJS',
+      value: stats.pasiенBPJS,
       icon: BarChart3,
       color: 'text-orange-600',
-      bg: 'bg-orange-50',
-      isNumber: false
+      bg: 'bg-orange-50'
     }
   ];
 
@@ -202,7 +197,7 @@ export default function Homepage() {
                 <div>
                   <p className="text-sm font-medium text-gray-600 mb-1">{stat.title}</p>
                   <p className="text-2xl font-bold text-gray-900">
-                    {stat.isNumber === false ? stat.value : stat.value.toLocaleString()}
+                    {stat.value.toLocaleString()}
                   </p>
                 </div>
                 <div className={`${stat.bg} p-3 rounded-lg`}>

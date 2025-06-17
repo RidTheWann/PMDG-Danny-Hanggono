@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from 'next'
 import Link from 'next/link'
 import './globals.css'
+import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from "@vercel/analytics/react"
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -163,6 +165,8 @@ export default function RootLayout({
           </main>
           
           {/* Script untuk menu mobile dengan animasi */}
+          <SpeedInsights />
+          <Analytics />
           <script dangerouslySetInnerHTML={{ __html: `
             (function() {
               const mobileMenuButton = document.getElementById('mobileMenuButton');

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { CalendarPlus, User, CreditCard } from 'lucide-react';
+import { Calendar, User, CreditCard } from 'lucide-react';
 import StatusModal from '../components/StatusModal';
 
 interface PatientForm {
@@ -156,7 +156,7 @@ export default function TambahPasienPage() {
             <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-sm"></div>
             <div className="relative flex items-center space-x-4">
               <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg transform transition-transform hover:scale-105">
-                <CalendarPlus className="w-5 h-5 text-white" />
+                <Calendar className="w-5 h-5 text-white" />
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-white tracking-tight">Input Data Harian</h1>
@@ -174,7 +174,7 @@ export default function TambahPasienPage() {
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <CalendarPlus className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors" />
+                  <Calendar className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors" />
                 </div>
                 <input
                   type="date"

@@ -1,9 +1,3 @@
 {
-  "/page": "app/page.js",
-  "/data-pasien/page": "app/data-pasien/page.js",
-  "/api/dashboard-stats/route": "app/api/dashboard-stats/route.js",
-  "/api/data-pasien/route": "app/api/data-pasien/route.js",
-  "/tambah-pasien/page": "app/tambah-pasien/page.js",
-  "/api/tambah-pasien/route": "app/api/tambah-pasien/route.js",
-  "/api/data-pasien/[id]/route": "app/api/data-pasien/[id]/route.js"
+  "/tambah-pasien/page": "app/tambah-pasien/page.js"
 }

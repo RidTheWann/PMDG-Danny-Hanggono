@@ -50,7 +50,7 @@ export default function RootLayout({
     <html lang="id" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.svg" />
       </head>
       <body className="font-sans antialiased bg-gradient-to-br from-gray-900 to-gray-800 text-white min-h-screen flex flex-col">
           {/* Header Navigation */}
@@ -229,6 +229,8 @@ export default function RootLayout({
 
 
 
+        <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   )

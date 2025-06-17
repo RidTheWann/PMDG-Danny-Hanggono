@@ -1,6 +1,15 @@
 /**
  * Google Apps Script untuk menerima data dari API dan menyimpannya ke Google Sheets
- * Deploy sebagai Web App dengan akses "Anyone, even anonymous"
+ * 
+ * PETUNJUK DEPLOYMENT:
+ * 1. Buka https://script.google.com/ dan buat project baru
+ * 2. Copy-paste kode ini ke editor
+ * 3. Ganti YOUR_SPREADSHEET_ID dengan ID spreadsheet Anda
+ * 4. Klik Deploy > New deployment
+ * 5. Pilih tipe: Web app
+ * 6. Atur akses: "Anyone, even anonymous"
+ * 7. Klik Deploy dan salin URL yang dihasilkan
+ * 8. Tambahkan URL tersebut ke file .env sebagai GOOGLE_SHEETS_URL
  */
 
 // ID spreadsheet yang digunakan

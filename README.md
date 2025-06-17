@@ -53,9 +53,10 @@ CREATE TABLE data_entries (
 5. Klik tombol "Submit Data"
 6. Data akan tersimpan di database Neon PostgreSQL dan Google Sheets
 
+# Aplikasi Manajemen Data Pasien
 ## Environment Variables
 
-Aplikasi ini membutuhkan beberapa environment variables yang harus diatur di file `.env`:
+Aplikasi ini membutuhkan beberapa environment variables yang harus diatur di file `.env` untuk pengembangan lokal:
 
 ```
 DATABASE_URL=postgresql://username:password@host:port/database?sslmode=require
@@ -63,6 +64,24 @@ GOOGLE_SHEETS_URL=https://script.google.com/macros/s/your-script-id/exec
 SPREADSHEET_ID=your-spreadsheet-id
 GOOGLE_CREDENTIALS={ "type": "service_account", ... }
 ```
+
+Untuk keamanan, salin file `.env.example` menjadi `.env` dan isi dengan nilai yang sesuai. **JANGAN** commit file `.env` ke repositori Git.
+
+## Deployment ke Vercel
+
+Aplikasi ini dikonfigurasi untuk deployment ke Vercel. Ikuti langkah-langkah berikut:
+
+1. Fork repositori ini ke akun GitHub Anda
+2. Buat akun di [Vercel](https://vercel.com) jika belum memiliki
+3. Buat project baru di Vercel dan hubungkan dengan repositori GitHub Anda
+4. Tambahkan Environment Variables berikut di pengaturan project Vercel:
+   - `DATABASE_URL`: URL koneksi database PostgreSQL
+   - `GOOGLE_SHEETS_URL`: URL Google Apps Script yang sudah di-deploy
+   - `SPREADSHEET_ID`: ID Google Spreadsheet
+   - `GOOGLE_CREDENTIALS`: Kredensial Service Account Google (dalam format JSON)
+5. Deploy aplikasi
+
+Vercel akan secara otomatis men-deploy ulang aplikasi setiap kali ada perubahan di repositori GitHub.
 
 ## Pengembangan
 

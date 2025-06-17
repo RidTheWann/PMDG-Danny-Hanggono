@@ -12,6 +12,7 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://praktek-mandiri-drg-danny-hanggono.vercel.app/'), // Ganti dengan URL produksi Anda
   title: 'Praktek Mandiri drg. Danny Hanggono',
   description: 'Sistem Manajemen Digital untuk Praktek Dokter Gigi drg. Danny Hanggono',
   keywords: ['dokter gigi', 'praktek mandiri', 'dental clinic', 'manajemen pasien'],

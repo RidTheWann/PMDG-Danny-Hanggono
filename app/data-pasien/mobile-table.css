@@ -1,0 +1,45 @@
+/* Styles for mobile table */
+@media (max-width: 640px) {
+  .mobile-table-container {
+    position: relative;
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+  }
+  
+  .mobile-table-container:after {
+    content: '';
+    /* Hapus efek gradient di kanan dan kiri untuk menampilkan semua konten */
+    position: absolute;
+    right: 0;
+  }
+
+  .mobile-table-container table {
+    display: block;
+  }
+
+  .mobile-table-container table {
+    background: rgba(31, 41, 55, 0.05);
+    width: 100%;
+  }
+
+  /* Highlight scrollbar track */
+  .mobile-table-container::-webkit-scrollbar-track {
+    position: absolute;
+    left: 0;
+    background: rgba(31, 41, 55, 0.1);
+    height: 6px;
+  }
+  
+  /* Highlight active scrollbar thumb hover */
+  .mobile-table-container::-webkit-scrollbar-thumb:hover {
+    background-color: #6b7280;
+  }
+
+  /* Tambahkan scrollbar horizontal yang lebih jelas */
+  .mobile-table-container::-webkit-scrollbar {
+    height: 8px;
+    background: #1f2937;
+    border-radius: 4px;
+  }
+}

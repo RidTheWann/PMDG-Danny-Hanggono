@@ -1,0 +1,17 @@
+{
+  "name": "Praktek Mandiri drg. Danny Hanggono",
+  "short_name": "DentalCare",
+  "description": "Sistem Manajemen Digital untuk Praktek Dokter Gigi",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1e40af",
+  "theme_color": "#1e40af",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64",
+      "type": "image/x-icon"
+    }
+  ]
+}

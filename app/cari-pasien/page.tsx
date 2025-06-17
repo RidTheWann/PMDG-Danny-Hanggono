@@ -1,141 +1,367 @@
-
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Search } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Search, User, Calendar, CreditCard, Edit, Trash2, X, CheckCircle, AlertCircle, Activity, UserRound, Pencil } from 'lucide-react';
+
+// Definisi tipe Patient
+interface Patient {
+  id: string;
+  tanggal: string;
+  nama_pasien: string;
+  no_rm: string;
+  kelamin: 'L' | 'P';
+  jenis_pasien: 'BPJS' | 'UMUM';
+  obat: boolean;
+  cabut_anak: boolean;
+  cabut_dewasa: boolean;
+  tambal_sementara: boolean;
+  tambal_tetap: boolean;
+  scaling: boolean;
+  rujuk: boolean;
+  lainnya?: string;
+  [key: string]: string | boolean | undefined;
+}
+
+// Definisi label untuk tindakan
+const actionLabels: Record<string, string> = {
+  obat: 'Obat',
+  cabut_anak: 'Cabut Anak',
+  cabut_dewasa: 'Cabut Dewasa',
+  tambal_sementara: 'Tambal Sementara',
+  tambal_tetap: 'Tambal Tetap',
+  scaling: 'Scaling',
+  rujuk: 'Rujuk'
+};
+
+// Fungsi untuk memformat tanggal
+const formatDate = (dateString: string) => {
+  const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: 'long', year: 'numeric' };
+  return new Date(dateString).toLocaleDateString('id-ID', options);
+};
 
 export default function CariPasienPage() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchBy, setSearchBy] = useState('nama');
-  const [searchResults, setSearchResults] = useState<any[]>([]);
-  const [hasSearched, setHasSearched] = useState(false);
+  const [searchType, setSearchType] = useState<'nama' | 'rm' | 'tindakan'>('nama');
+  const [results, setResults] = useState<Patient[]>([]);
+  const [allPatients, setAllPatients] = useState<Patient[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
+  const [initialSearch, setInitialSearch] = useState(true);
+  const [pageLoaded, setPageLoaded] = useState(false);
+  
+  // Efek untuk animasi saat halaman dimuat
+  useEffect(() => {
+    setPageLoaded(true);
+  }, []);
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    setHasSearched(true);
-    // Simulate search - in real app, this would call an API
-    setSearchResults([]);
+  // Debounce search term
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 300);
+
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [searchTerm]);
+
+  // Fetch all patients on mount
+  useEffect(() => {
+    const fetchAllPatients = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/data-pasien');
+        if (!response.ok) {
+          throw new Error('Failed to fetch patients');
+        }
+        const data = await response.json();
+        setAllPatients(data);
+      } catch (error) {
+        console.error('Error fetching patients:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAllPatients();
+  }, []);
+
+  // Handle search when debounced term changes
+  useEffect(() => {
+    if (debouncedSearchTerm) {
+      handleSearch();
+      setInitialSearch(false);
+    }
+  }, [debouncedSearchTerm, searchType]);
+
+  const handleSearch = useCallback(() => {
+    setLoading(true);
+    
+    let filteredResults: any[] = [];
+    
+    if (searchType === 'nama') {
+      filteredResults = allPatients.filter(patient => 
+        patient.nama_pasien.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+      );
+    } else if (searchType === 'rm') {
+      filteredResults = allPatients.filter(patient => 
+        patient.no_rm.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+      );
+    } else if (searchType === 'tindakan') {
+      filteredResults = allPatients.filter(patient => {
+        // Cek apakah ada tindakan yang cocok
+        const tindakanMatch = Object.entries(actionLabels).some(([key, label]) => {
+          if (patient[key] === true || patient[key] === 'Ya') {
+            return label.toLowerCase().includes(debouncedSearchTerm.toLowerCase());
+          }
+          return false;
+        });
+        
+        // Cek apakah ada tindakan lainnya yang cocok
+        const lainnyaMatch = patient.lainnya && 
+          patient.lainnya.toLowerCase().includes(debouncedSearchTerm.toLowerCase());
+        
+        return tindakanMatch || lainnyaMatch;
+      });
+    }
+    
+    setResults(filteredResults);
+    setLoading(false);
+  }, [allPatients, debouncedSearchTerm, searchType]);
+
+  // Render badge untuk tindakan
+  const renderActionBadges = (patient: any) => {
+    const badges: JSX.Element[] = [];
+    
+    Object.entries(actionLabels).forEach(([key, label]) => {
+      if (patient[key] === true || patient[key] === 'Ya') {
+        badges.push(
+          <span 
+            key={key} 
+            className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 mr-2 mb-2"
+          >
+            {label}
+          </span>
+        );
+      }
+    });
+    
+    if (patient.lainnya && patient.lainnya.trim() !== '') {
+      badges.push(
+        <span 
+          key="lainnya" 
+          className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 mr-2 mb-2"
+        >
+          {patient.lainnya}
+        </span>
+      );
+    }
+    
+    return badges;
   };
 
   return (
-    <div className="min-h-screen bg-gray-900">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center space-x-4 mb-4">
-            <Link
-              href="/data-pasien"
-              className="text-blue-400 hover:text-blue-300 transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5" />
-            </Link>
-            <h1 className="text-2xl font-bold text-white">Cari Data Pasien</h1>
-          </div>
-          <p className="text-gray-400">Temukan data pasien berdasarkan nama, nomor rekam medis, atau tindakan</p>
-        </div>
-
-        {/* Search Section */}
-        <div className="bg-gray-800 rounded-2xl shadow-xl mb-8">
-          <div className="bg-gray-700 px-6 py-4 rounded-t-2xl border-b border-gray-600">
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
-                <Search className="w-4 h-4 text-white" />
+        <div className={`mb-8 transform transition-all duration-700 ${pageLoaded ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
+          <div className="bg-gradient-to-r from-blue-900 to-gray-800 rounded-xl p-6 border border-gray-700 shadow-lg relative overflow-hidden">
+            <div className="absolute inset-0 bg-grid-white/[0.05] bg-[length:20px_20px]" aria-hidden="true"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-sm"></div>
+            <div className="relative flex items-center space-x-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg transform transition-transform hover:scale-105">
+                <Search className="w-6 h-6 text-white" />
               </div>
-              <h2 className="text-lg font-semibold text-white">Pencarian</h2>
+              <div>
+                <h1 className="text-3xl font-bold text-white tracking-tight">Cari Pasien</h1>
+                <p className="text-blue-200 mt-2">Temukan data pasien berdasarkan nama, nomor RM, atau tindakan</p>
+              </div>
             </div>
-          </div>
-
-          <div className="p-6">
-            <form onSubmit={handleSearch} className="space-y-4">
-              <div className="relative">
-                <input
-                  type="text"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="Masukkan kata kunci pencarian..."
-                  className="w-full px-4 py-3 pr-12 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                  required
-                />
-                <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-              </div>
-              
-              <div className="flex flex-wrap gap-2">
-                <button
-                  type="button"
-                  onClick={() => setSearchBy('nama')}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                    searchBy === 'nama'
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                  }`}
-                >
-                  Nama
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setSearchBy('no_rm')}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                    searchBy === 'no_rm'
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                  }`}
-                >
-                  No. RM
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setSearchBy('tindakan')}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                    searchBy === 'tindakan'
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                  }`}
-                >
-                  Tindakan
-                </button>
-              </div>
-            </form>
           </div>
         </div>
 
-        {/* Results Section */}
-        <div className="bg-gray-800 rounded-2xl shadow-xl">
-          <div className="bg-gray-700 px-6 py-4 rounded-t-2xl border-b border-gray-600">
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
-                <span className="text-white text-sm">📋</span>
+        {/* Search Box */}
+        <div className={`mb-8 transform transition-all duration-700 delay-100 ${pageLoaded ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
+          <div className="bg-gray-800 bg-opacity-90 backdrop-blur-sm rounded-xl p-6 border border-gray-700 shadow-lg">
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <Search className="h-5 w-5 text-blue-400" />
               </div>
-              <h2 className="text-lg font-semibold text-white">Hasil Pencarian</h2>
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder={`Cari berdasarkan ${searchType === 'nama' ? 'nama pasien' : searchType === 'rm' ? 'nomor RM' : 'tindakan'}`}
+                className="block w-full pl-12 pr-4 py-4 border border-gray-600 bg-gray-700/70 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-400 transition-all shadow-sm hover:border-gray-500"
+              />
+            </div>
+
+            {/* Search Type Buttons */}
+            <div className="flex flex-wrap gap-2 mt-4">
+              <button
+                onClick={() => setSearchType('nama')}
+                className={`px-5 py-2.5 rounded-xl font-medium transition-all duration-200 flex items-center space-x-2 ${searchType === 'nama' 
+                  ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-md' 
+                  : 'bg-gray-700/70 text-gray-300 hover:bg-gray-600/80 hover:-translate-y-0.5'}`}
+              >
+                <User className="h-4 w-4" />
+                <span>Nama Pasien</span>
+              </button>
+              <button
+                onClick={() => setSearchType('rm')}
+                className={`px-5 py-2.5 rounded-xl font-medium transition-all duration-200 flex items-center space-x-2 ${searchType === 'rm' 
+                  ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-md' 
+                  : 'bg-gray-700/70 text-gray-300 hover:bg-gray-600/80 hover:-translate-y-0.5'}`}
+              >
+                <CreditCard className="h-4 w-4" />
+                <span>Nomor RM</span>
+              </button>
+              <button
+                onClick={() => setSearchType('tindakan')}
+                className={`px-5 py-2.5 rounded-xl font-medium transition-all duration-200 flex items-center space-x-2 ${searchType === 'tindakan' 
+                  ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-md' 
+                  : 'bg-gray-700/70 text-gray-300 hover:bg-gray-600/80 hover:-translate-y-0.5'}`}
+              >
+                <Activity className="h-4 w-4" />
+                <span>Tindakan</span>
+              </button>
             </div>
           </div>
+        </div>
 
-          <div className="p-6">
-            {!hasSearched ? (
-              <div className="text-center py-12">
-                <div className="w-24 h-24 bg-gray-700 rounded-full mx-auto mb-4 flex items-center justify-center">
-                  <Search className="w-12 h-12 text-gray-500" />
-                </div>
-                <p className="text-gray-400">Masukkan kata kunci untuk mencari!</p>
-                <p className="text-gray-500 text-sm mt-1">Hasil pencarian akan muncul di sini</p>
-              </div>
-            ) : searchResults.length === 0 ? (
-              <div className="text-center py-12">
-                <div className="w-24 h-24 bg-gray-700 rounded-full mx-auto mb-4 flex items-center justify-center">
-                  <span className="text-gray-500 text-2xl">🔍</span>
-                </div>
-                <p className="text-gray-400">Masukkan kata kunci untuk mencari!</p>
-                <p className="text-gray-500 text-sm mt-1">Hasil pencarian akan muncul di sini</p>
-              </div>
+        {/* Results Header */}
+        <div className={`mb-6 transform transition-all duration-700 delay-200 ${pageLoaded ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
+          <div className="bg-gray-800/70 backdrop-blur-sm rounded-xl px-6 py-4 border border-gray-700 shadow-md">
+            {loading ? (
+              <h2 className="text-xl font-semibold flex items-center">
+                <div className="mr-3 h-5 w-5 rounded-full border-2 border-blue-500 border-t-transparent animate-spin"></div>
+                Mencari...
+              </h2>
+            ) : initialSearch ? (
+              <h2 className="text-xl font-semibold flex items-center text-blue-300">
+                <Search className="h-5 w-5 mr-2" />
+                Masukkan kata kunci pencarian
+              </h2>
+            ) : results.length === 0 ? (
+              <h2 className="text-xl font-semibold flex items-center text-amber-300">
+                <AlertCircle className="h-5 w-5 mr-2" />
+                Tidak ada hasil ditemukan
+              </h2>
             ) : (
-              <div className="space-y-4">
-                {searchResults.map((result, index) => (
-                  <div key={index} className="bg-gray-700 rounded-lg p-4">
-                    {/* Patient card would go here */}
-                  </div>
-                ))}
-              </div>
+              <h2 className="text-xl font-semibold flex items-center text-green-300">
+                <CheckCircle className="h-5 w-5 mr-2" />
+                Ditemukan {results.length} hasil
+              </h2>
             )}
+          </div>
+        </div>
+        
+        {/* Results List */}
+        <div className={`transform transition-all duration-700 delay-300 ${pageLoaded ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {loading ? (
+              // Loading skeletons
+              Array(4).fill(0).map((_, index) => (
+                <div key={index} className="bg-gray-800 rounded-xl p-4 animate-pulse">
+                  <div className="flex items-center mb-4">
+                    <div className="h-12 w-12 rounded-full bg-gray-700"></div>
+                    <div className="ml-4 flex-1">
+                      <div className="h-5 w-32 bg-gray-700 rounded mb-2"></div>
+                      <div className="h-4 w-24 bg-gray-700 rounded"></div>
+                    </div>
+                    <div className="h-8 w-20 bg-gray-700 rounded"></div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                      <div className="h-4 w-16 bg-gray-700 rounded mb-2"></div>
+                      <div className="h-5 w-24 bg-gray-700 rounded"></div>
+                    </div>
+                    <div>
+                      <div className="h-4 w-16 bg-gray-700 rounded mb-2"></div>
+                      <div className="h-5 w-24 bg-gray-700 rounded"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="h-4 w-20 bg-gray-700 rounded mb-2"></div>
+                    <div className="flex flex-wrap gap-2">
+                      <div className="h-6 w-16 bg-gray-700 rounded-full"></div>
+                      <div className="h-6 w-20 bg-gray-700 rounded-full"></div>
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : !initialSearch && results.length > 0 ? (
+              results.map((patient, index) => (
+                <motion.div
+                  key={patient.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: index * 0.05 }}
+                  className="bg-gray-800 bg-opacity-90 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg border border-gray-700 hover:shadow-blue-900/20 hover:-translate-y-1 transition-all duration-300"
+                  style={{
+                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(255, 255, 255, 0.05) inset'
+                  }}
+                >
+                  <div className="p-5">
+                    <div className="flex items-center mb-4">
+                      <div className="flex-shrink-0 h-12 w-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-md">
+                        {patient.kelamin === 'L' ? (
+                          <UserRound className="h-6 w-6 text-white" />
+                        ) : (
+                          <UserRound className="h-6 w-6 text-white" />
+                        )}
+                      </div>
+                      <div className="ml-4 flex-1">
+                        <h3 className="text-lg font-medium text-white">{patient.nama_pasien}</h3>
+                        <p className="text-blue-300">{patient.kelamin === 'L' ? 'Laki-laki' : 'Perempuan'}</p>
+                      </div>
+                      <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full shadow-sm ${patient.jenis_pasien === 'BPJS' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'}`}>
+                        {patient.jenis_pasien}
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4 mb-4">
+                      <div className="bg-gray-700/50 p-3 rounded-lg">
+                        <p className="text-sm text-blue-300 flex items-center mb-1">
+                          <Calendar className="h-4 w-4 mr-2" />
+                          Tanggal
+                        </p>
+                        <p className="text-sm font-medium">{formatDate(patient.tanggal)}</p>
+                      </div>
+                      <div className="bg-gray-700/50 p-3 rounded-lg">
+                        <p className="text-sm text-blue-300 flex items-center mb-1">
+                          <CreditCard className="h-4 w-4 mr-2" />
+                          No. RM
+                        </p>
+                        <p className="text-sm font-medium">{patient.no_rm}</p>
+                      </div>
+                    </div>
+
+                    <div>
+                      <p className="text-sm text-blue-300 flex items-center mb-2">
+                        <Activity className="h-4 w-4 mr-2" />
+                        Tindakan
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {renderActionBadges(patient)}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-gradient-to-r from-gray-700 to-gray-800 px-5 py-3 flex justify-end">
+                    <Link 
+                      href={`/edit-pasien/${patient.id}`} 
+                      className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-xl text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 shadow-md hover:shadow-blue-700/30 transition-all duration-200 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500"
+                    >
+                      <Pencil className="h-4 w-4 mr-2" />
+                      Edit
+                    </Link>
+                  </div>
+                </motion.div>
+              ))
+            ) : null}
           </div>
         </div>
       </div>

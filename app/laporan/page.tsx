@@ -46,11 +46,8 @@ export default function LaporanPage() {
 
               {/* BPJS Info */}
               <div className="mb-6">
-                <div className="w-16 h-16 bg-green-500 rounded-full mx-auto mb-4 flex items-center justify-center">
-                  <span className="text-white text-2xl">🏥</span>
-                </div>
                 <h3 className="text-xl font-bold text-white mb-2">Survey Kepuasan BPJS</h3>
-                <p className="text-gray-400 text-sm mb-4">Survey kepuasan pelayanan kesehatan BPJS Kesehatan</p>
+                <p className="text-gray-400 text-sm mb-4">Survey kepuasan pelayanan kesehatan BPJS</p>
               </div>
 
               <a
@@ -71,7 +68,7 @@ export default function LaporanPage() {
               {/* Kepuasan Image */}
               <div className="w-48 h-48 mx-auto mb-6 rounded-lg overflow-hidden">
                 <img
-                  src="/Kepuasan.jpg"
+                  src="/Kepuasan.png"
                   alt="Survey Kepuasan Pasien Kemenkes"
                   className="w-full h-full object-cover"
                 />

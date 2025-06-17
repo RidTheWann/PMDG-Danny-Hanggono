@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
+import { CalendarPlus, BarChart3, ClipboardList, TrendingUp, CheckSquare } from 'lucide-react';
 
 export default function Homepage() {
   const [loading, setLoading] = useState(true);
@@ -11,6 +13,24 @@ export default function Homepage() {
     // Simulate loading time
     setTimeout(() => setLoading(false), 1000);
   }, []);
+
+  const features = [
+    {
+      icon: ClipboardList,
+      title: "Data Harian",
+      description: "Catat semua tindakan medis dan rujukan pasien dengan mudah dan terstruktur.",
+    },
+    {
+      icon: TrendingUp,
+      title: "Dashboard Analytics",
+      description: "Monitor statistik praktek dengan visualisasi data yang interaktif dan real-time.",
+    },
+    {
+      icon: CheckSquare,
+      title: "Manajemen Tugas",
+      description: "Kelola tugas dan arship dengan sistem galeri yang terorganisir dengan baik.",
+    },
+  ];
 
   if (loading) {
     return (
@@ -24,86 +44,93 @@ export default function Homepage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Main Content */}
-        <div className="text-center">
-          {/* Practice Image */}
-          <div className="mb-8">
-            <div className="relative w-full max-w-2xl mx-auto aspect-video rounded-2xl overflow-hidden shadow-2xl">
-              <Image
-                src="/Praktek.png"
-                alt="Praktek Mandiri drg. Danny Hanggono"
-                width={800}
-                height={450}
-                className="w-full h-full object-cover"
-              />
-            </div>
+    <main className="min-h-screen bg-gray-900">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Hero Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="text-center mb-16"
+        >
+          <div className="mb-8 rounded-2xl overflow-hidden shadow-2xl max-w-4xl mx-auto">
+            <Image
+              src="/Praktek.png"
+              alt="Praktek Mandiri drg. Danny Hanggono"
+              width={800}
+              height={450}
+              className="w-full h-auto max-h-[400px] sm:max-h-[450px] md:max-h-[500px] object-cover object-center transform hover:scale-102 transition-transform duration-500"
+              priority
+            />
           </div>
-
-          {/* Welcome Text */}
-          <div className="mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Selamat Datang di
+          
+          <div className="max-w-3xl mx-auto">
+            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
+              Selamat Datang di<br/>
+              <span className="text-blue-600">Praktek Mandiri</span>
             </h1>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              <span className="text-blue-400">Praktek Mandiri</span>
-            </h2>
-            <p className="text-xl text-gray-300 mb-2">
-              Sistem Manajemen Digital untuk Praktek Dokter Gigi
-            </p>
-            <p className="text-lg text-gray-400">
+            <p className="text-xl text-gray-300 mb-8">
+              Sistem Manajemen Digital untuk Praktek Dokter Gigi<br/>
               drg. Danny Hanggono
             </p>
-          </div>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/tambah-pasien"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2"
+              >
+                <CalendarPlus className="h-5 w-5" />
+                <span>Input Data Harian</span>
+              </Link>
 
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-            <Link
-              href="/tambah-pasien"
-              className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2"
+              <Link
+                href="/data-pasien"
+                className="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2"
+              >
+                <BarChart3 className="h-5 w-5" />
+                <span>Lihat Dashboard</span>
+              </Link>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Features Grid */}
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          className="grid md:grid-cols-3 gap-8 mb-16"
+        >
+          {features.map((feature, index) => (
+            <motion.div
+              key={feature.title}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ 
+                duration: 0.6, 
+                delay: 0.3 + index * 0.1,
+                ease: "easeOut" 
+              }}
+              whileHover={{ 
+                y: -8,
+                transition: { duration: 0.3, ease: "easeOut" } 
+              }}
+              className="h-full"
             >
-              <span>➕</span>
-              <span>Input Data Harian</span>
-            </Link>
-
-            <Link
-              href="/data-pasien"
-              className="w-full sm:w-auto bg-gray-700 hover:bg-gray-600 text-white font-semibold py-4 px-8 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2"
-            >
-              <span>📊</span>
-              <span>Lihat Dashboard</span>
-            </Link>
-          </div>
-
-          {/* Additional Info */}
-          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-gray-800 rounded-lg p-6 text-center">
-              <div className="w-12 h-12 bg-blue-500 rounded-lg mx-auto mb-4 flex items-center justify-center">
-                <span className="text-white text-xl">👥</span>
+              <div className="h-full bg-gray-800 hover:bg-gray-700 rounded-xl p-6 shadow-lg transition-all duration-500 border border-gray-700 hover:border-blue-500">
+                <motion.div 
+                  className="text-blue-500 text-3xl mb-4"
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                >
+                  <feature.icon className="h-8 w-8" />
+                </motion.div>
+                <h3 className="text-xl font-semibold mb-3 text-white">{feature.title}</h3>
+                <p className="text-gray-300">{feature.description}</p>
               </div>
-              <h3 className="text-lg font-semibold text-white mb-2">Manajemen Pasien</h3>
-              <p className="text-gray-400 text-sm">Kelola data pasien dengan mudah dan efisien</p>
-            </div>
-
-            <div className="bg-gray-800 rounded-lg p-6 text-center">
-              <div className="w-12 h-12 bg-green-500 rounded-lg mx-auto mb-4 flex items-center justify-center">
-                <span className="text-white text-xl">📈</span>
-              </div>
-              <h3 className="text-lg font-semibold text-white mb-2">Analisis Data</h3>
-              <p className="text-gray-400 text-sm">Monitor perkembangan praktek dengan laporan</p>
-            </div>
-
-            <div className="bg-gray-800 rounded-lg p-6 text-center">
-              <div className="w-12 h-12 bg-purple-500 rounded-lg mx-auto mb-4 flex items-center justify-center">
-                <span className="text-white text-xl">🔒</span>
-              </div>
-              <h3 className="text-lg font-semibold text-white mb-2">Keamanan Data</h3>
-              <p className="text-gray-400 text-sm">Data pasien tersimpan aman dan terlindungi</p>
-            </div>
-          </div>
-        </div>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
-    </div>
+    </main>
   );
 }

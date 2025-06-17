@@ -109,35 +109,20 @@ function LaporanPage() {
                                     /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("div", {
                                         className: "mb-6",
                                         children: [
-                                            /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("div", {
-                                                className: "w-16 h-16 bg-green-500 rounded-full mx-auto mb-4 flex items-center justify-center",
-                                                children: /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("span", {
-                                                    className: "text-white text-2xl",
-                                                    children: "🏥"
-                                                }, void 0, false, {
-                                                    fileName: "<[project]/app/laporan/page.tsx>",
-                                                    lineNumber: 50,
-                                                    columnNumber: 19
-                                                }, this)
-                                            }, void 0, false, {
-                                                fileName: "<[project]/app/laporan/page.tsx>",
-                                                lineNumber: 49,
-                                                columnNumber: 17
-                                            }, this),
                                             /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("h3", {
                                                 className: "text-xl font-bold text-white mb-2",
                                                 children: "Survey Kepuasan BPJS"
                                             }, void 0, false, {
                                                 fileName: "<[project]/app/laporan/page.tsx>",
-                                                lineNumber: 52,
+                                                lineNumber: 49,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("p", {
                                                 className: "text-gray-400 text-sm mb-4",
-                                                children: "Survey kepuasan pelayanan kesehatan BPJS Kesehatan"
+                                                children: "Survey kepuasan pelayanan kesehatan BPJS"
                                             }, void 0, false, {
                                                 fileName: "<[project]/app/laporan/page.tsx>",
-                                                lineNumber: 53,
+                                                lineNumber: 50,
                                                 columnNumber: 17
                                             }, this)
                                         ]
@@ -156,20 +141,20 @@ function LaporanPage() {
                                                 children: "Survey 1"
                                             }, void 0, false, {
                                                 fileName: "<[project]/app/laporan/page.tsx>",
-                                                lineNumber: 62,
+                                                lineNumber: 59,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("span", {
                                                 children: "🔗"
                                             }, void 0, false, {
                                                 fileName: "<[project]/app/laporan/page.tsx>",
-                                                lineNumber: 63,
+                                                lineNumber: 60,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "<[project]/app/laporan/page.tsx>",
-                                        lineNumber: 56,
+                                        lineNumber: 53,
                                         columnNumber: 15
                                     }, this)
                                 ]
@@ -191,17 +176,17 @@ function LaporanPage() {
                                     /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("div", {
                                         className: "w-48 h-48 mx-auto mb-6 rounded-lg overflow-hidden",
                                         children: /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("img", {
-                                            src: "/Kepuasan.jpg",
+                                            src: "/Kepuasan.png",
                                             alt: "Survey Kepuasan Pasien Kemenkes",
                                             className: "w-full h-full object-cover"
                                         }, void 0, false, {
                                             fileName: "<[project]/app/laporan/page.tsx>",
-                                            lineNumber: 73,
+                                            lineNumber: 70,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "<[project]/app/laporan/page.tsx>",
-                                        lineNumber: 72,
+                                        lineNumber: 69,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("div", {
@@ -212,7 +197,7 @@ function LaporanPage() {
                                                 children: "Survey Kepuasan Pasien"
                                             }, void 0, false, {
                                                 fileName: "<[project]/app/laporan/page.tsx>",
-                                                lineNumber: 82,
+                                                lineNumber: 79,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("p", {
@@ -220,13 +205,13 @@ function LaporanPage() {
                                                 children: "Survey kepuasan pasien Kementerian Kesehatan"
                                             }, void 0, false, {
                                                 fileName: "<[project]/app/laporan/page.tsx>",
-                                                lineNumber: 83,
+                                                lineNumber: 80,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "<[project]/app/laporan/page.tsx>",
-                                        lineNumber: 81,
+                                        lineNumber: 78,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("a", {
@@ -239,31 +224,31 @@ function LaporanPage() {
                                                 children: "Survey 2"
                                             }, void 0, false, {
                                                 fileName: "<[project]/app/laporan/page.tsx>",
-                                                lineNumber: 92,
+                                                lineNumber: 89,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"]("span", {
                                                 children: "🔗"
                                             }, void 0, false, {
                                                 fileName: "<[project]/app/laporan/page.tsx>",
-                                                lineNumber: 93,
+                                                lineNumber: 90,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "<[project]/app/laporan/page.tsx>",
-                                        lineNumber: 86,
+                                        lineNumber: 83,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "<[project]/app/laporan/page.tsx>",
-                                lineNumber: 70,
+                                lineNumber: 67,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "<[project]/app/laporan/page.tsx>",
-                            lineNumber: 69,
+                            lineNumber: 66,
                             columnNumber: 11
                         }, this)
                     ]
@@ -281,17 +266,17 @@ function LaporanPage() {
                             children: "← Kembali ke Beranda"
                         }, void 0, false, {
                             fileName: "<[project]/app/laporan/page.tsx>",
-                            lineNumber: 105,
+                            lineNumber: 102,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "<[project]/app/laporan/page.tsx>",
-                        lineNumber: 101,
+                        lineNumber: 98,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "<[project]/app/laporan/page.tsx>",
-                    lineNumber: 100,
+                    lineNumber: 97,
                     columnNumber: 9
                 }, this)
             ]

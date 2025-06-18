@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+// Tambahkan revalidate = 0 untuk mencegah caching di Vercel
+export const revalidate = 0;
+
 export async function GET(request: NextRequest) {
   try {
     const today = new Date();
@@ -21,6 +24,7 @@ export async function GET(request: NextRequest) {
       headers: {
         'Content-Type': 'application/json',
       },
+      cache: 'no-store'
     });
 
     if (!response.ok) {

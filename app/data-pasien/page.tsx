@@ -118,7 +118,10 @@ export default function DataPasienPage() {
   // Fungsi untuk fetch data dengan useCallback agar bisa digunakan dalam useEffect
   const fetchDashboardStats = useCallback(async () => {
     try {
-      const response = await fetch('/api/dashboard-stats');
+      const response = await fetch('/api/dashboard-stats', {
+        cache: 'no-store',
+        next: { revalidate: 0 }
+      });
       const data = await response.json();
       if (data) {
         setStats(data);
@@ -130,7 +133,10 @@ export default function DataPasienPage() {
 
   const fetchPatientData = useCallback(async () => {
     try {
-      const response = await fetch('/api/data-pasien');
+      const response = await fetch('/api/data-pasien', {
+        cache: 'no-store',
+        next: { revalidate: 0 }
+      });
       if (!response.ok) throw new Error('Gagal fetch data pasien');
       const data = await response.json();
       // Pastikan actions selalu array string

@@ -101,6 +101,7 @@ export default function TambahPasienPage() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(patientData),
+        cache: 'no-store'
       });
 
       if (!response.ok) {

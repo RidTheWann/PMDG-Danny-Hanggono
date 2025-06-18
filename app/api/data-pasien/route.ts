@@ -9,6 +9,9 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false }, // Neon PostgreSQL biasanya butuh SSL
 });
 
+// Tambahkan revalidate = 0 untuk mencegah caching di Vercel
+export const revalidate = 0;
+
 export async function GET() {
   try {
     // Ambil seluruh data dari tabel data_entries, tanpa LIMIT

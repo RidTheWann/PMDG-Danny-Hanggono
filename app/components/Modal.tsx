@@ -31,17 +31,18 @@ export default function Modal({ isOpen, onClose, title, children, maxWidth = 'ma
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md transition-all"
+      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-md transition-all"
       onClick={onClose}
     >
       <motion.div 
         initial={{ scale: 0.9, y: 20, opacity: 0 }}
         animate={{ scale: 1, y: 0, opacity: 1 }}
         transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-        className={`${maxWidth} w-full bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl shadow-[0_0_25px_rgba(0,0,0,0.3)] border border-gray-700/50 backdrop-filter backdrop-blur-sm transform transition-all overflow-hidden`}
+        className={`w-[98vw] sm:w-full ${maxWidth} bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl shadow-[0_0_25px_rgba(0,0,0,0.3)] border border-gray-700/50 backdrop-filter backdrop-blur-sm transform transition-all overflow-hidden`}
+        style={{ maxWidth: '98vw' }}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between p-4 border-b border-gray-700/50 bg-gradient-to-r from-gray-800 to-gray-900">
+        <div className="flex items-center justify-between p-3 sm:p-4 border-b border-gray-700/50 bg-gradient-to-r from-gray-800 to-gray-900">
           <h3 className="text-lg font-medium text-white">{title}</h3>
           <motion.button
             whileHover={{ scale: 1.1, backgroundColor: 'rgba(239, 68, 68, 0.2)' }}
@@ -52,7 +53,7 @@ export default function Modal({ isOpen, onClose, title, children, maxWidth = 'ma
             <X className="w-5 h-5" />
           </motion.button>
         </div>
-        <div className="p-6">
+        <div className="p-3 sm:p-6 max-h-[90vh] overflow-y-auto">
           {children}
         </div>
       </motion.div>

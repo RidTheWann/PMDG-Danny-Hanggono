@@ -136,7 +136,7 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Edit Data Pasien" maxWidth="max-w-2xl">
+    <Modal isOpen={isOpen} onClose={onClose} title="Edit Data Pasien" maxWidth="max-w-lg">
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
@@ -145,7 +145,7 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
         <form onSubmit={handleSubmit} className="relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 pointer-events-none"></div>
           <div className="relative">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 mb-6">
               <motion.div 
                 className="group" 
                 initial={{ opacity: 0, x: -10 }}
@@ -462,7 +462,7 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
             </motion.div>
             
             <motion.div 
-              className="flex flex-col sm:flex-row justify-end gap-3 mt-8" 
+              className="flex flex-col sm:flex-row justify-end gap-3 mt-4 sm:mt-8 sticky bottom-0 bg-gradient-to-t from-gray-900/90 to-transparent pt-3 z-10"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.6 }}

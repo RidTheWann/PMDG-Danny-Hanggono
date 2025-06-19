@@ -69,6 +69,16 @@ interface TreatmentStats {
   lainnya: number;
 }
 
+// Helper untuk ambil tanggal hari ini di Asia/Jakarta
+function getTodayJakarta() {
+  const now = new Date();
+  // Ambil waktu UTC
+  const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+  // Offset Jakarta (UTC+7)
+  const jakarta = new Date(utc + 7 * 60 * 60000);
+  return jakarta.toISOString().slice(0, 10);
+}
+
 export default function DataPasienPage() {
   const [patients, setPatients] = useState<Patient[]>([]);
   const [loading, setLoading] = useState(true);
@@ -89,13 +99,7 @@ export default function DataPasienPage() {
     rujuk: 0,
     lainnya: 0
   });
-  const [filterDate, setFilterDate] = useState(() => {
-    // Set default ke hari ini WIB (Asia/Jakarta)
-    const now = new Date();
-    // Konversi ke WIB (UTC+7)
-    const wib = new Date(now.getTime() + (7 * 60 - now.getTimezoneOffset()) * 60000);
-    return wib.toISOString().slice(0, 10);
-  });
+  const [filterDate, setFilterDate] = useState(() => getTodayJakarta());
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
   

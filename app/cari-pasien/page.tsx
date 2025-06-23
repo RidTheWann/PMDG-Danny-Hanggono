@@ -164,24 +164,18 @@ export default function CariPasienPage() {
     
     return badges;
   };
-
   // Handler untuk buka modal edit
   const handleEdit = (patient: Patient) => {
     setSelectedPatient(patient);
     setEditModalOpen(true);
   };
-
   // Handler untuk simpan perubahan
   const handleSaveEdit = async (updatedPatient: any) => {
-    // Lakukan update ke API jika perlu
-    // Contoh: await fetch(`/api/data-pasien/${updatedPatient.id}`, { method: 'PUT', body: JSON.stringify(updatedPatient) })
-    // Update data di state lokal
     setAllPatients((prev) => prev.map((p) => p.id === updatedPatient.id ? updatedPatient : p));
     setResults((prev) => prev.map((p) => p.id === updatedPatient.id ? updatedPatient : p));
     setEditModalOpen(false);
     setSelectedPatient(null);
   };
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

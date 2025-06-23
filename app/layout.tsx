@@ -1,3 +1,5 @@
+"use client";
+
 import type { Metadata, Viewport } from 'next'
 import Link from 'next/link'
 import './globals.css'

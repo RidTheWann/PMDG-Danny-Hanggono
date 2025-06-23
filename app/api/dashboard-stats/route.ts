@@ -18,14 +18,30 @@ export async function GET(request: NextRequest) {
       throw new Error('Google Sheets URL not configured');
     }
 
-    // Get data for current month
-    const response = await fetch(`${sheetsUrl}?action=get&month=${currentMonth}&year=${currentYear}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      cache: 'no-store'
-    });
+    // Tambahkan timeout pada fetch (10 detik)
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10000);
+    let response;
+    try {
+      response = await fetch(`${sheetsUrl}?action=get&month=${currentMonth}&year=${currentYear}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        cache: 'no-store',
+        signal: controller.signal
+      });
+    } catch (err: any) {
+      if (err.name === 'AbortError') {
+        return NextResponse.json(
+          { error: 'Timeout saat mengambil data Google Sheets' },
+          { status: 504 }
+        );
+      }
+      throw err;
+    } finally {
+      clearTimeout(timeout);
+    }
 
     if (!response.ok) {
       throw new Error('Failed to fetch data from Google Sheets');

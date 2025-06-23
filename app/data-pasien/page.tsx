@@ -282,10 +282,10 @@ export default function DataPasienPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-900">
+      <div className="min-h-screen flex items-center justify-center bg-gray-900 dark:bg-gray-100">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-400">Memuat data pasien...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-400 mx-auto mb-4"></div>
+          <p className="text-gray-400 dark:text-gray-600">Memuat data pasien...</p>
         </div>
       </div>
     );
@@ -385,17 +385,17 @@ export default function DataPasienPage() {
   const trafficPerempuan = trafficLabels.map(tgl => trafficData[tgl].perempuan);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800">
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 dark:from-gray-100 dark:to-gray-200 transition-colors duration-500">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Kunjungan Harian Table - DIPINDAH KE ATAS */}
-        <div className="bg-gray-800 rounded-2xl shadow-xl mb-8">
-          <div className="bg-gray-700 px-6 py-4 rounded-t-2xl border-b border-gray-600">
+        <div className="bg-gray-800 dark:bg-white rounded-2xl shadow-xl mb-8 transition-colors duration-500">
+          <div className="bg-gray-700 dark:bg-blue-100 px-6 py-4 rounded-t-2xl border-b border-gray-600 dark:border-blue-200">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
               <div className="flex items-center space-x-3">
                 <div className="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center">
                   <Calendar className="h-5 w-5 text-white" />
                 </div>
-                <h2 className="text-lg font-semibold text-white">Kunjungan Harian</h2>
+                <h2 className="text-lg font-semibold text-white dark:text-blue-900">Kunjungan Harian</h2>
               </div>
               <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">
                 <input

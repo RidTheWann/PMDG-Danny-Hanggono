@@ -110,28 +110,32 @@ export default function DataPasienPage() {
   const [successMessage, setSuccessMessage] = useState('');
   const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
   const [pageLoaded, setPageLoaded] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   
   // Efek untuk animasi saat halaman dimuat
   useEffect(() => {
     setPageLoaded(true);
   }, []);
   
-  // Polling interval untuk real-time updates (setiap 10 detik)
-  const POLLING_INTERVAL = 10000;
+  // Perbesar polling interval
+  const POLLING_INTERVAL = 60000; // 60 detik
 
   // Fungsi untuk fetch data dengan useCallback agar bisa digunakan dalam useEffect
   const fetchDashboardStats = useCallback(async () => {
     try {
+      setError(null);
       const response = await fetch('/api/dashboard-stats', {
         cache: 'no-store',
-        next: { revalidate: 0 }
       });
+      if (!response.ok) throw new Error('Gagal fetch data dashboard');
       const data = await response.json();
-      if (data) {
+      if (data && !data.error) {
         setStats(data);
+      } else {
+        setError('Gagal memuat statistik dashboard.');
       }
     } catch (error) {
-      console.error('Error fetching dashboard stats:', error);
+      setError('Gagal memuat statistik dashboard. Silakan coba beberapa saat lagi.');
     }
   }, []);
 
@@ -286,6 +290,12 @@ export default function DataPasienPage() {
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-400 mx-auto mb-4"></div>
           <p className="text-gray-400 dark:text-gray-600">Memuat data pasien...</p>
+          {error && (
+            <div className="mt-4 text-red-500 bg-red-100 dark:bg-red-200 px-4 py-2 rounded-lg inline-block">
+              {error}
+              <button onClick={() => { setLoading(true); fetchDashboardStats(); }} className="ml-4 underline text-blue-700">Coba Lagi</button>
+            </div>
+          )}
         </div>
       </div>
     );

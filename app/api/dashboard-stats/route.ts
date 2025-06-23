@@ -4,7 +4,14 @@ import { NextRequest, NextResponse } from 'next/server';
 export const revalidate = 0;
 
 // In-memory cache sederhana
-let cachedStats = null;
+type DashboardStats = {
+  totalPasienHariIni: number;
+  totalPasienBulanIni: number;
+  antreanTerakhir: number;
+  pasiенBPJS: number;
+  pasienUmum: number;
+};
+let cachedStats: DashboardStats | null = null;
 let cachedAt = 0;
 const CACHE_DURATION = 30 * 1000; // 30 detik
 

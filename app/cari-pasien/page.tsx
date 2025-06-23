@@ -1,10 +1,9 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Search, User, Calendar, CreditCard, Edit, Trash2, X, CheckCircle, AlertCircle, Activity, UserRound, Pencil } from 'lucide-react';
-import EditPatientModal from '../components/EditPatientModal';
 
 // Definisi tipe Patient
 interface Patient {
@@ -12,8 +11,8 @@ interface Patient {
   tanggal: string;
   nama_pasien: string;
   no_rm: string;
-  kelamin: 'L' | 'P';
-  jenis_pasien: 'BPJS' | 'UMUM';
+  kelamin: string; // ubah ke string agar bisa handle 'L', 'Laki-laki', 'P', 'Perempuan'
+  jenis_pasien: string;
   obat: boolean;
   cabut_anak: boolean;
   cabut_dewasa: boolean;
@@ -42,6 +41,13 @@ const formatDate = (dateString: string) => {
   return new Date(dateString).toLocaleDateString('id-ID', options);
 };
 
+// Fungsi untuk memformat gender
+const formatGender = (kelamin: string) => {
+  if (kelamin === 'L' || kelamin === 'Laki-laki') return 'Laki-laki';
+  if (kelamin === 'P' || kelamin === 'Perempuan') return 'Perempuan';
+  return kelamin;
+};
+
 export default function CariPasienPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchType, setSearchType] = useState<'nama' | 'rm' | 'tindakan'>('nama');
@@ -51,8 +57,6 @@ export default function CariPasienPage() {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
   const [initialSearch, setInitialSearch] = useState(true);
   const [pageLoaded, setPageLoaded] = useState(false);
-  const [editModalOpen, setEditModalOpen] = useState(false);
-  const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
   
   // Efek untuk animasi saat halaman dimuat
   useEffect(() => {
@@ -63,7 +67,7 @@ export default function CariPasienPage() {
   useEffect(() => {
     const timerId = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm);
-    }, 300);
+    }, 700); // debounce lebih lama
 
     return () => {
       clearTimeout(timerId);
@@ -101,48 +105,41 @@ export default function CariPasienPage() {
 
   const handleSearch = useCallback(() => {
     setLoading(true);
-    
-    let filteredResults: any[] = [];
-    
+    let filteredResults: Patient[] = [];
     if (searchType === 'nama') {
-      filteredResults = allPatients.filter(patient => 
+      filteredResults = allPatients.filter((patient: Patient) =>
         patient.nama_pasien.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
       );
     } else if (searchType === 'rm') {
-      filteredResults = allPatients.filter(patient => 
+      filteredResults = allPatients.filter((patient: Patient) =>
         patient.no_rm.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
       );
     } else if (searchType === 'tindakan') {
-      filteredResults = allPatients.filter(patient => {
+      filteredResults = allPatients.filter((patient: Patient) => {
         // Cek apakah ada tindakan yang cocok
-        const tindakanMatch = Object.entries(actionLabels).some(([key, label]) => {
+        const tindakanMatch = Object.entries(actionLabels).some(([key, label]: [string, string]) => {
           if (patient[key] === true || patient[key] === 'Ya') {
             return label.toLowerCase().includes(debouncedSearchTerm.toLowerCase());
           }
           return false;
         });
-        
         // Cek apakah ada tindakan lainnya yang cocok
-        const lainnyaMatch = patient.lainnya && 
-          patient.lainnya.toLowerCase().includes(debouncedSearchTerm.toLowerCase());
-        
+        const lainnyaMatch = patient.lainnya &&
+          (patient.lainnya as string).toLowerCase().includes(debouncedSearchTerm.toLowerCase());
         return tindakanMatch || lainnyaMatch;
       });
     }
-    
     setResults(filteredResults);
     setLoading(false);
   }, [allPatients, debouncedSearchTerm, searchType]);
 
-  // Render badge untuk tindakan
-  const renderActionBadges = (patient: any) => {
+  const renderActionBadges = (patient: Patient) => {
     const badges: JSX.Element[] = [];
-    
-    Object.entries(actionLabels).forEach(([key, label]) => {
+    Object.entries(actionLabels).forEach(([key, label]: [string, string]) => {
       if (patient[key] === true || patient[key] === 'Ya') {
         badges.push(
-          <span 
-            key={key} 
+          <span
+            key={key}
             className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 mr-2 mb-2"
           >
             {label}
@@ -150,31 +147,17 @@ export default function CariPasienPage() {
         );
       }
     });
-    
-    if (patient.lainnya && patient.lainnya.trim() !== '') {
+    if (patient.lainnya && (patient.lainnya as string).trim() !== '') {
       badges.push(
-        <span 
-          key="lainnya" 
+        <span
+          key="lainnya"
           className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 mr-2 mb-2"
         >
           {patient.lainnya}
         </span>
       );
     }
-    
     return badges;
-  };
-  // Handler untuk buka modal edit
-  const handleEdit = (patient: Patient) => {
-    setSelectedPatient(patient);
-    setEditModalOpen(true);
-  };
-  // Handler untuk simpan perubahan
-  const handleSaveEdit = async (updatedPatient: any) => {
-    setAllPatients((prev) => prev.map((p) => p.id === updatedPatient.id ? updatedPatient : p));
-    setResults((prev) => prev.map((p) => p.id === updatedPatient.id ? updatedPatient : p));
-    setEditModalOpen(false);
-    setSelectedPatient(null);
   };
 
   return (
@@ -277,6 +260,7 @@ export default function CariPasienPage() {
         <div className={`transform transition-all duration-700 delay-300 ${pageLoaded ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {loading ? (
+              // Loading skeletons
               Array(4).fill(0).map((_, index) => (
                 <div key={index} className="bg-gray-800 rounded-xl p-4 animate-pulse">
                   <div className="flex items-center mb-4">
@@ -321,15 +305,11 @@ export default function CariPasienPage() {
                   <div className="p-5">
                     <div className="flex items-center mb-4">
                       <div className="flex-shrink-0 h-12 w-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-md">
-                        {patient.kelamin === 'L' ? (
-                          <UserRound className="h-6 w-6 text-white" />
-                        ) : (
-                          <UserRound className="h-6 w-6 text-white" />
-                        )}
+                        <UserRound className="h-6 w-6 text-white" />
                       </div>
                       <div className="ml-4 flex-1">
                         <h3 className="text-lg font-medium text-white">{patient.nama_pasien}</h3>
-                        <p className="text-blue-300">{patient.kelamin === 'L' ? 'Laki-laki' : 'Perempuan'}</p>
+                        <p className="text-blue-300">{formatGender(patient.kelamin as string)}</p>
                       </div>
                       <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full shadow-sm ${patient.jenis_pasien === 'BPJS' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'}`}>
                         {patient.jenis_pasien}
@@ -364,9 +344,11 @@ export default function CariPasienPage() {
                     </div>
                   </div>
 
+                  {/* Ganti tombol Edit agar memunculkan alert sementara (atau modal edit jika sudah ada) */}
                   <div className="bg-gradient-to-r from-gray-700 to-gray-800 px-5 py-3 flex justify-end">
                     <button
-                      onClick={() => handleEdit(patient)}
+                      type="button"
+                      onClick={() => alert('Fitur edit langsung di halaman ini, bukan redirect. Silakan edit di halaman Data Pasien.')}
                       className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-xl text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 shadow-md hover:shadow-blue-700/30 transition-all duration-200 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500"
                     >
                       <Pencil className="h-4 w-4 mr-2" />
@@ -375,16 +357,9 @@ export default function CariPasienPage() {
                   </div>
                 </motion.div>
               ))
-            : null}
+            ) : null}
           </div>
         </div>
-
-        <EditPatientModal
-          isOpen={editModalOpen}
-          onClose={() => { setEditModalOpen(false); setSelectedPatient(null); }}
-          patient={selectedPatient}
-          onSave={handleSaveEdit}
-        />
       </div>
     </div>
   );

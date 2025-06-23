@@ -1,6 +1,5 @@
 "use client";
 
-import type { Metadata, Viewport } from 'next'
 import Link from 'next/link'
 import './globals.css'
 import { SpeedInsights } from "@vercel/speed-insights/next"
@@ -8,43 +7,6 @@ import { Analytics } from "@vercel/analytics/react"
 import { useTheme } from './hooks/useTheme';
 import { Sun, Moon } from 'lucide-react';
 import Image from 'next/image';
-
-export const viewport: Viewport = {
-  width: 'device-width',
-  initialScale: 1,
-  maximumScale: 5,
-  themeColor: '#1e40af'
-}
-
-export const metadata: Metadata = {
-  metadataBase: new URL('https://praktek-mandiri-drg-danny-hanggono.vercel.app/'), // Ganti dengan URL produksi Anda
-  title: 'Praktek Mandiri drg. Danny Hanggono',
-  description: 'Sistem Manajemen Digital untuk Praktek Dokter Gigi drg. Danny Hanggono',
-  keywords: ['dokter gigi', 'praktek mandiri', 'dental clinic', 'manajemen pasien'],
-  authors: [{ name: 'drg. Danny Hanggono' }],
-  robots: 'index, follow',
-  manifest: '/manifest.json',
-  openGraph: {
-    title: 'Praktek Mandiri drg. Danny Hanggono',
-    description: 'Sistem Manajemen Digital untuk Praktek Dokter Gigi drg. Danny Hanggono',
-    type: 'website',
-    locale: 'id_ID',
-    images: [
-      {
-        url: '/Praktek.png',
-        width: 800,
-        height: 600,
-        alt: 'Praktek Mandiri drg. Danny Hanggono'
-      }
-    ]
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Praktek Mandiri drg. Danny Hanggono',
-    description: 'Sistem Manajemen Digital untuk Praktek Dokter Gigi drg. Danny Hanggono',
-    images: ['/Praktek.png']
-  }
-}
 
 export default function RootLayout({
   children,

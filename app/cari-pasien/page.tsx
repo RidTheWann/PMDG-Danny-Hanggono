@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Search, User, Calendar, CreditCard, Edit, Trash2, X, CheckCircle, AlertCircle, Activity, UserRound, Pencil } from 'lucide-react';
+import EditPatientModal from '../components/EditPatientModal';
 
 // Definisi tipe Patient
 interface Patient {
@@ -50,6 +51,8 @@ export default function CariPasienPage() {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
   const [initialSearch, setInitialSearch] = useState(true);
   const [pageLoaded, setPageLoaded] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
   
   // Efek untuk animasi saat halaman dimuat
   useEffect(() => {
@@ -160,6 +163,23 @@ export default function CariPasienPage() {
     }
     
     return badges;
+  };
+
+  // Handler untuk buka modal edit
+  const handleEdit = (patient: Patient) => {
+    setSelectedPatient(patient);
+    setEditModalOpen(true);
+  };
+
+  // Handler untuk simpan perubahan
+  const handleSaveEdit = async (updatedPatient: any) => {
+    // Lakukan update ke API jika perlu
+    // Contoh: await fetch(`/api/data-pasien/${updatedPatient.id}`, { method: 'PUT', body: JSON.stringify(updatedPatient) })
+    // Update data di state lokal
+    setAllPatients((prev) => prev.map((p) => p.id === updatedPatient.id ? updatedPatient : p));
+    setResults((prev) => prev.map((p) => p.id === updatedPatient.id ? updatedPatient : p));
+    setEditModalOpen(false);
+    setSelectedPatient(null);
   };
 
   return (
@@ -292,7 +312,7 @@ export default function CariPasienPage() {
                   </div>
                 </div>
               ))
-            ) : !initialSearch && results.length > 0 ? (
+            : !initialSearch && results.length > 0 ? (
               results.map((patient, index) => (
                 <motion.div
                   key={patient.id}
@@ -351,19 +371,26 @@ export default function CariPasienPage() {
                   </div>
 
                   <div className="bg-gradient-to-r from-gray-700 to-gray-800 px-5 py-3 flex justify-end">
-                    <Link 
-                      href={`/edit-pasien/${patient.id}`} 
+                    <button
+                      onClick={() => handleEdit(patient)}
                       className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-xl text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 shadow-md hover:shadow-blue-700/30 transition-all duration-200 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500"
                     >
                       <Pencil className="h-4 w-4 mr-2" />
                       Edit
-                    </Link>
+                    </button>
                   </div>
                 </motion.div>
               ))
             ) : null}
           </div>
         </div>
+
+        <EditPatientModal
+          isOpen={editModalOpen}
+          onClose={() => { setEditModalOpen(false); setSelectedPatient(null); }}
+          patient={selectedPatient}
+          onSave={handleSaveEdit}
+        />
       </div>
     </div>
   );

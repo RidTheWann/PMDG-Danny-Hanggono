@@ -4,6 +4,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Search, User, Calendar, CreditCard, Edit, Trash2, X, CheckCircle, AlertCircle, Activity, UserRound, Pencil } from 'lucide-react';
+import EditPatientModal from '../components/EditPatientModal';
+import AksiTableButton from '../data-pasien/AksiTableButton';
 
 // Definisi tipe Patient
 interface Patient {
@@ -57,6 +59,11 @@ export default function CariPasienPage() {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
   const [initialSearch, setInitialSearch] = useState(true);
   const [pageLoaded, setPageLoaded] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
+  const [editLoading, setEditLoading] = useState(false);
+  const [editSuccess, setEditSuccess] = useState<string | null>(null);
+  const [editError, setEditError] = useState<string | null>(null);
   
   // Efek untuk animasi saat halaman dimuat
   useEffect(() => {
@@ -158,6 +165,45 @@ export default function CariPasienPage() {
       );
     }
     return badges;
+  };
+
+  // Handler untuk membuka modal edit
+  const handleOpenEditModal = (patient: Patient) => {
+    setSelectedPatient(patient);
+    setIsEditModalOpen(true);
+    setEditSuccess(null);
+    setEditError(null);
+  };
+
+  // Handler untuk menyimpan perubahan pasien
+  const handleSavePatient = async (updatedPatient: any) => {
+    setEditLoading(true);
+    setEditError(null);
+    try {
+      const response = await fetch(`/api/data-pasien/${updatedPatient.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedPatient),
+      });
+      if (!response.ok) {
+        const errorText = await response.text();
+        setEditError('Gagal update data pasien: ' + errorText);
+        throw new Error(errorText);
+      }
+      // Refresh data setelah update
+      const refreshed = await fetch('/api/data-pasien');
+      if (refreshed.ok) {
+        const data = await refreshed.json();
+        setAllPatients(data);
+        setResults(results => results.map(p => p.id === updatedPatient.id ? { ...p, ...updatedPatient } : p));
+      }
+      setEditSuccess('Data pasien berhasil diperbarui');
+      setIsEditModalOpen(false);
+    } catch (error) {
+      setEditError('Gagal update data pasien');
+    } finally {
+      setEditLoading(false);
+    }
   };
 
   return (
@@ -344,22 +390,24 @@ export default function CariPasienPage() {
                     </div>
                   </div>
 
-                  {/* Ganti tombol Edit agar memunculkan alert sementara (atau modal edit jika sudah ada) */}
                   <div className="bg-gradient-to-r from-gray-700 to-gray-800 px-5 py-3 flex justify-end">
-                    <button
-                      type="button"
-                      onClick={() => alert('Fitur edit langsung di halaman ini, bukan redirect. Silakan edit di halaman Data Pasien.')}
-                      className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-xl text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 shadow-md hover:shadow-blue-700/30 transition-all duration-200 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500"
-                    >
-                      <Pencil className="h-4 w-4 mr-2" />
-                      Edit
-                    </button>
+                    <AksiTableButton
+                      onEdit={() => handleOpenEditModal(patient)}
+                      onDelete={() => {}}
+                    />
                   </div>
                 </motion.div>
               ))
             ) : null}
           </div>
         </div>
+        {/* Modal Edit Pasien */}
+        <EditPatientModal
+          isOpen={isEditModalOpen}
+          onClose={() => setIsEditModalOpen(false)}
+          patient={selectedPatient}
+          onSave={handleSavePatient}
+        />
       </div>
     </div>
   );

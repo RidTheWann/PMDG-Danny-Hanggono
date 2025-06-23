@@ -176,6 +176,7 @@ export default function CariPasienPage() {
     setEditModalOpen(false);
     setSelectedPatient(null);
   };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -276,7 +277,6 @@ export default function CariPasienPage() {
         <div className={`transform transition-all duration-700 delay-300 ${pageLoaded ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {loading ? (
-              // Loading skeletons
               Array(4).fill(0).map((_, index) => (
                 <div key={index} className="bg-gray-800 rounded-xl p-4 animate-pulse">
                   <div className="flex items-center mb-4">
@@ -306,7 +306,7 @@ export default function CariPasienPage() {
                   </div>
                 </div>
               ))
-            : !initialSearch && results.length > 0 ? (
+            ) : !initialSearch && results.length > 0 ? (
               results.map((patient, index) => (
                 <motion.div
                   key={patient.id}
@@ -375,7 +375,7 @@ export default function CariPasienPage() {
                   </div>
                 </motion.div>
               ))
-            ) : null}
+            : null}
           </div>
         </div>
 

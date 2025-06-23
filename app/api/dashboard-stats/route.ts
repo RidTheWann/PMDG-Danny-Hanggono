@@ -3,8 +3,18 @@ import { NextRequest, NextResponse } from 'next/server';
 // Tambahkan revalidate = 0 untuk mencegah caching di Vercel
 export const revalidate = 0;
 
+// In-memory cache sederhana
+let cachedStats = null;
+let cachedAt = 0;
+const CACHE_DURATION = 30 * 1000; // 30 detik
+
 export async function GET(request: NextRequest) {
   try {
+    // Jika cache masih valid, return cache
+    if (cachedStats && Date.now() - cachedAt < CACHE_DURATION) {
+      return NextResponse.json(cachedStats);
+    }
+
     const today = new Date();
     const currentMonth = today.getMonth() + 1;
     const currentYear = today.getFullYear();
@@ -88,13 +98,17 @@ export async function GET(request: NextRequest) {
       }
     });
 
-    return NextResponse.json({
+    // Setelah dapat hasil:
+    const result = {
       totalPasienHariIni,
       totalPasienBulanIni,
       antreanTerakhir,
       pasiенBPJS,
       pasienUmum
-    });
+    };
+    cachedStats = result;
+    cachedAt = Date.now();
+    return NextResponse.json(result);
   } catch (error) {
     console.error('Error fetching dashboard stats:', error);
     return NextResponse.json(

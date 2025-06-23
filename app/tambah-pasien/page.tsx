@@ -56,6 +56,7 @@ export default function TambahPasienPage() {
   
   // State untuk animasi form
   const [formVisible, setFormVisible] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   
   // Efek untuk animasi form saat halaman dimuat
   useEffect(() => {
@@ -76,7 +77,7 @@ export default function TambahPasienPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-
+    setSubmitError(null);
     try {
       // Konversi gender dari kode ke teks lengkap
       const genderText = formData.kelamin === 'L' ? 'Laki-laki' : formData.kelamin === 'P' ? 'Perempuan' : '';
@@ -122,7 +123,7 @@ export default function TambahPasienPage() {
       // Form akan direset saat modal ditutup
     } catch (error) {
       console.error('Error:', error);
-      // Show error modal
+      setSubmitError('Gagal menyimpan data. Silakan coba lagi beberapa saat lagi.');
       setStatusModal({
         isOpen: true,
         status: 'error',
@@ -172,6 +173,11 @@ export default function TambahPasienPage() {
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="p-8 space-y-8">
+            {submitError && (
+              <div className="mb-4 text-red-500 bg-red-100 px-4 py-2 rounded-lg">
+                {submitError}
+              </div>
+            )}
             {/* Date */}
             <div className="relative group">
               <label htmlFor="tanggal" className="block text-sm font-medium text-blue-300 mb-2 transition-all group-focus-within:text-blue-400">
@@ -355,17 +361,10 @@ export default function TambahPasienPage() {
             <div className="flex justify-center pt-4">
               <button
                 type="submit"
+                className={`w-full py-3 px-6 rounded-lg font-semibold text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-200 shadow-lg ${loading ? 'opacity-60 cursor-not-allowed' : ''}`}
                 disabled={loading}
-                className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-4 px-10 rounded-xl transition-all duration-300 flex items-center space-x-3 shadow-lg hover:shadow-blue-700/30 transform hover:-translate-y-1 active:translate-y-0"
               >
-                {loading ? (
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                ) : (
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
-                  </svg>
-                )}
-                <span className="text-base">{loading ? 'Menyimpan...' : 'Submit Data'}</span>
+                {loading ? 'Menyimpan...' : 'Simpan Data'}
               </button>
             </div>
           </form>

@@ -55,6 +55,8 @@ export async function POST(request: NextRequest) {
     
     // 2. Kirim data ke Google Sheets
     try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 15000); // 15 detik
       // Siapkan data untuk Google Sheets dengan format yang sesuai
       const params = new URLSearchParams();
       params.append('action', 'add');
@@ -71,7 +73,6 @@ export async function POST(request: NextRequest) {
       params.append('Scaling', data["Scaling"]);
       params.append('Rujuk', data["Rujuk"]);
       params.append('Lainnya', data["Lainnya"] || "");
-      
       // Kirim data ke Google Sheets dengan format application/x-www-form-urlencoded
       const sheetsResponse = await fetch(googleSheetsUrl, {
         method: 'POST',
@@ -79,13 +80,18 @@ export async function POST(request: NextRequest) {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: params.toString(),
+        signal: controller.signal,
       });
-      
+      clearTimeout(timeout);
       if (!sheetsResponse.ok) {
         console.error('Gagal menyimpan ke Google Sheets:', await sheetsResponse.text());
       }
-    } catch (sheetsError) {
-      console.error('Error saat menyimpan ke Google Sheets:', sheetsError);
+    } catch (sheetsError: any) {
+      if (sheetsError.name === 'AbortError') {
+        console.error('Timeout Google Sheets, lanjutkan karena data sudah masuk DB');
+      } else {
+        console.error('Error saat menyimpan ke Google Sheets:', sheetsError);
+      }
       // Tetap lanjutkan karena data sudah tersimpan di database
     }
 

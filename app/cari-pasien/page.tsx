@@ -232,6 +232,7 @@ export default function CariPasienPage() {
         {/* Search Box */}
         <div className={`mb-8 transform transition-all duration-700 delay-100 ${pageLoaded ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
           <div className="bg-white dark:bg-gray-900 bg-opacity-90 backdrop-blur-sm rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-lg">
+            {/* Input dan icon search dibungkus dalam .relative tanpa padding tambahan */}
             <div className="relative">
               <span className="absolute left-4 inset-y-0 my-auto flex items-center pointer-events-none z-10">
                 <Search className="h-5 w-5 text-blue-500" />
@@ -244,39 +245,39 @@ export default function CariPasienPage() {
                 onChange={e => setSearchTerm(e.target.value)}
                 aria-label={`Cari pasien berdasarkan ${searchType === 'nama' ? 'nama' : searchType === 'rm' ? 'nomor rekam medis' : 'tindakan'}`}
               />
-              {/* Search Type Buttons */}
-              <div className="flex flex-wrap gap-2 mt-4">
-                <button
-                  className={`px-5 py-2.5 rounded-xl font-medium transition-all duration-200 flex items-center space-x-2 ${searchType === 'nama' 
-                    ? 'bg-blue-600 text-white' 
-                    : 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-300'}`}
-                  onClick={() => setSearchType('nama')}
-                  aria-label="Cari berdasarkan nama pasien"
-                >
-                  <User className="w-4 h-4" />
-                  Nama
-                </button>
-                <button
-                  className={`px-5 py-2.5 rounded-xl font-medium transition-all duration-200 flex items-center space-x-2 ${searchType === 'rm' 
-                    ? 'bg-blue-600 text-white' 
-                    : 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-300'}`}
-                  onClick={() => setSearchType('rm')}
-                  aria-label="Cari berdasarkan nomor rekam medis"
-                >
-                  <CreditCard className="w-4 h-4" />
-                  No. RM
-                </button>
-                <button
-                  className={`px-5 py-2.5 rounded-xl font-medium transition-all duration-200 flex items-center space-x-2 ${searchType === 'tindakan' 
-                    ? 'bg-blue-600 text-white' 
-                    : 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-300'}`}
-                  onClick={() => setSearchType('tindakan')}
-                  aria-label="Cari berdasarkan tindakan"
-                >
-                  <Activity className="w-4 h-4" />
-                  Tindakan
-                </button>
-              </div>
+            </div>
+            {/* Search Type Buttons */}
+            <div className="flex flex-wrap gap-2 mt-4">
+              <button
+                className={`px-5 py-2.5 rounded-xl font-medium transition-all duration-200 flex items-center space-x-2 ${searchType === 'nama' 
+                  ? 'bg-blue-600 text-white' 
+                  : 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-300'}`}
+                onClick={() => setSearchType('nama')}
+                aria-label="Cari berdasarkan nama pasien"
+              >
+                <User className="w-4 h-4" />
+                Nama
+              </button>
+              <button
+                className={`px-5 py-2.5 rounded-xl font-medium transition-all duration-200 flex items-center space-x-2 ${searchType === 'rm' 
+                  ? 'bg-blue-600 text-white' 
+                  : 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-300'}`}
+                onClick={() => setSearchType('rm')}
+                aria-label="Cari berdasarkan nomor rekam medis"
+              >
+                <CreditCard className="w-4 h-4" />
+                No. RM
+              </button>
+              <button
+                className={`px-5 py-2.5 rounded-xl font-medium transition-all duration-200 flex items-center space-x-2 ${searchType === 'tindakan' 
+                  ? 'bg-blue-600 text-white' 
+                  : 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-300'}`}
+                onClick={() => setSearchType('tindakan')}
+                aria-label="Cari berdasarkan tindakan"
+              >
+                <Activity className="w-4 h-4" />
+                Tindakan
+              </button>
             </div>
           </div>
         </div>

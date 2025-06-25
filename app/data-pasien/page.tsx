@@ -429,53 +429,53 @@ export default function DataPasienPage() {
                   <div className="overflow-hidden rounded-md">
                     <table className="w-full table-fixed">
                       <thead className="bg-gray-700">
-                        <tr>
-                          <th className="w-[40px] px-2 py-3 text-left text-xs font-medium text-gray-900 dark:text-gray-300 uppercase tracking-wider">No</th>
-                          <th className="w-[90px] px-2 py-3 text-left text-xs font-medium text-gray-900 dark:text-gray-300 uppercase tracking-wider">Tanggal</th>
-                          <th className="w-[180px] px-2 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Nama Pasien</th>
-                          <th className="w-[100px] px-2 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">No. RM</th>
-                          <th className="w-[250px] px-2 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Tindakan</th>
-                          <th className="w-[80px] px-2 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Jenis</th>
-                          <th className="w-[150px] px-2 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Lainnya</th>
-                          <th className="w-[80px] px-2 py-3 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">Aksi</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-gray-700">
-                        {paginatedPatients.map((patient, index) => (
-                          <tr key={index} className="hover:bg-gray-700 transition-colors">
-                            <td className="px-2 py-2 text-sm font-medium text-gray-900 dark:text-gray-300">{(currentPage - 1) * pageSize + index + 1}</td>
-                            <td className="px-2 py-2 text-sm text-gray-900 dark:text-gray-300">{patient.tanggal}</td>
-                            <td className="px-2 py-3">
-                              <div className="truncate">
-                                <div className="text-xs font-medium text-gray-900 dark:text-white truncate">{patient.nama_pasien}</div>
-                                <div className="text-xs text-gray-700 dark:text-gray-400 truncate">{patient.kelamin === 'L' ? 'Laki-laki' : patient.kelamin === 'P' ? 'Perempuan' : patient.kelamin}</div>
-                              </div>
-                            </td>
-                            <td className="px-2 py-3 text-xs text-white truncate">{patient.no_rm}</td>
-                            <td className="px-2 py-3">
-                              <div className="flex flex-wrap gap-1 max-w-[250px]">
-                                {patient.actions && patient.actions.length > 0 ? patient.actions.map((action, idx) => (
-                                  <span key={idx} className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-300">
-                                    {action}
-                                  </span>
-                                )) : <span className="text-xs text-gray-400">-</span>}
-                              </div>
-                            </td>
-                            <td className="px-2 py-3">
-                              <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${patient.jenis_pasien === 'BPJS' ? 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200' : 'bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-200'}`}>
-                                {patient.jenis_pasien}
-                              </span>
-                            </td>
-                            <td className="px-2 py-3 text-xs text-white truncate">{patient.lainnya || '-'}</td>
-                            <td className="px-2 py-3 text-center">
-                              <AksiTableButton
-                                onEdit={() => handleEditPatient(patient)}
-                                onDelete={() => handleDeletePatient(patient)}
-                              />
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
+  <tr>
+    <th className="w-[40px] px-2 py-3 text-left text-xs font-medium text-gray-900 dark:text-gray-300 uppercase tracking-wider">No</th>
+    <th className="w-[90px] px-2 py-3 text-left text-xs font-medium text-gray-900 dark:text-gray-300 uppercase tracking-wider">Tanggal</th>
+    <th className="w-[180px] px-2 py-3 text-left text-xs font-medium text-gray-900 dark:text-gray-300 uppercase tracking-wider">Nama Pasien</th>
+    <th className="w-[100px] px-2 py-3 text-left text-xs font-medium text-gray-900 dark:text-gray-300 uppercase tracking-wider">No. RM</th>
+    <th className="w-[250px] px-2 py-3 text-left text-xs font-medium text-gray-900 dark:text-gray-300 uppercase tracking-wider">Tindakan</th>
+    <th className="w-[80px] px-2 py-3 text-left text-xs font-medium text-gray-900 dark:text-gray-300 uppercase tracking-wider">Jenis</th>
+    <th className="w-[150px] px-2 py-3 text-left text-xs font-medium text-gray-900 dark:text-gray-300 uppercase tracking-wider">Lainnya</th>
+    <th className="w-[80px] px-2 py-3 text-center text-xs font-medium text-gray-900 dark:text-gray-300 uppercase tracking-wider">Aksi</th>
+  </tr>
+</thead>
+<tbody className="divide-y divide-gray-700">
+  {paginatedPatients.map((patient, index) => (
+    <tr key={index} className="hover:bg-gray-700 transition-colors">
+      <td className="px-2 py-2 text-sm font-medium text-gray-900 dark:text-gray-300">{(currentPage - 1) * pageSize + index + 1}</td>
+      <td className="px-2 py-2 text-sm text-gray-900 dark:text-gray-300">{patient.tanggal}</td>
+      <td className="px-2 py-3">
+        <div className="truncate">
+          <div className="text-xs font-medium text-gray-900 dark:text-white truncate">{patient.nama_pasien}</div>
+          <div className="text-xs text-gray-700 dark:text-gray-400 truncate">{patient.kelamin === 'L' ? 'Laki-laki' : patient.kelamin === 'P' ? 'Perempuan' : patient.kelamin}</div>
+        </div>
+      </td>
+      <td className="px-2 py-3 text-xs text-gray-900 dark:text-white truncate">{patient.no_rm}</td>
+      <td className="px-2 py-3">
+        <div className="flex flex-wrap gap-1 max-w-[250px]">
+          {patient.actions && patient.actions.length > 0 ? patient.actions.map((action, idx) => (
+            <span key={idx} className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-300">
+              {action}
+            </span>
+          )) : <span className="text-xs text-gray-400">-</span>}
+        </div>
+      </td>
+      <td className="px-2 py-3">
+        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${patient.jenis_pasien === 'BPJS' ? 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200' : 'bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-200'}`}>
+          {patient.jenis_pasien}
+        </span>
+      </td>
+      <td className="px-2 py-3 text-xs text-gray-900 dark:text-white truncate">{patient.lainnya || '-'}</td>
+      <td className="px-2 py-3 text-center">
+        <AksiTableButton
+          onEdit={() => handleEditPatient(patient)}
+          onDelete={() => handleDeletePatient(patient)}
+        />
+      </td>
+    </tr>
+  ))}
+</tbody>
                     </table>
                   </div>
                 </div>

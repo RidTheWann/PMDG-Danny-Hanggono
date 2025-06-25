@@ -63,16 +63,3 @@
     background-color: var(--table-scrollbar-thumb-dark);
   }
 }
-
-/* Tambahkan style untuk tabel desktop */
-@media (min-width: 640px) {
-  /* Tambahkan style untuk thead agar teks terlihat di light mode */
-  .mobile-table-container table thead th {
-    color: #374151 !important; /* text-gray-700 */
-    background: #f3f4f6 !important; /* bg-gray-100 */
-  }
-  html.dark .mobile-table-container table thead th {
-    color: #d1d5db !important; /* text-gray-300 */
-    background: #374151 !important; /* bg-gray-700 */
-  }
-}

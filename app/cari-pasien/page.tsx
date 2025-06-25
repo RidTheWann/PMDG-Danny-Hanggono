@@ -133,7 +133,7 @@ export default function CariPasienPage() {
         badges.push(
           <span
             key={key}
-            className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 mr-2 mb-2"
+            className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-700/80 text-white dark:bg-blue-900 dark:text-blue-200 mr-2 mb-2"
           >
             {label}
           </span>
@@ -144,7 +144,7 @@ export default function CariPasienPage() {
       badges.push(
         <span
           key="lainnya"
-          className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 mr-2 mb-2"
+          className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-700/80 text-white dark:bg-purple-900 dark:text-purple-200 mr-2 mb-2"
         >
           {patient.lainnya}
         </span>
@@ -214,8 +214,8 @@ export default function CariPasienPage() {
                 <Search className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold text-white tracking-tight">Cari Pasien</h1>
-                <p className="text-blue-200 mt-2">Temukan data pasien berdasarkan nama, nomor RM, atau tindakan</p>
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">Cari Pasien</h1>
+                <p className="mt-2 text-blue-700 dark:text-blue-200">Temukan data pasien berdasarkan nama, nomor RM, atau tindakan</p>
               </div>
             </div>
           </div>
@@ -238,7 +238,7 @@ export default function CariPasienPage() {
               </span>
               <input
                 type="text"
-                className="w-full px-4 py-2 pl-10 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 pl-12 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder={`Cari berdasarkan ${searchType === 'nama' ? 'nama pasien' : searchType === 'rm' ? 'nomor RM' : 'tindakan'}`}
                 value={searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}
@@ -349,44 +349,42 @@ export default function CariPasienPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.05 }}
-                  className="bg-gray-800 bg-opacity-90 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg border border-gray-700 hover:shadow-blue-900/20 hover:-translate-y-1 transition-all duration-300"
+                  className="bg-gray-800 bg-opacity-90 dark:bg-gray-800 dark:bg-opacity-90 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg border border-gray-700 hover:shadow-blue-900/20 hover:-translate-y-1 transition-all duration-300"
                   style={{
                     boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(255, 255, 255, 0.05) inset'
                   }}
                 >
-                  <div className="p-5">
+                  <div className="p-5 text-white">
                     <div className="flex items-center mb-4">
                       <div className="flex-shrink-0 h-12 w-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-md">
                         <UserRound className="h-6 w-6 text-white" />
                       </div>
                       <div className="ml-4 flex-1">
-                        <h3 className="text-lg font-medium text-gray-900 dark:text-white">{patient.nama_pasien}</h3>
-                        <p className="text-blue-700 dark:text-blue-300">{formatGender(patient.kelamin as string)}</p>
+                        <h3 className="text-lg font-medium text-white">{patient.nama_pasien}</h3>
+                        <p className="text-blue-200">{formatGender(patient.kelamin as string)}</p>
                       </div>
-                      <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full shadow-sm ${patient.jenis_pasien === 'BPJS' ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200' : 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200'}`}>
+                      <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full shadow-sm ${patient.jenis_pasien === 'BPJS' ? 'bg-green-200 dark:bg-green-900 text-green-900 dark:text-green-200' : 'bg-blue-200 dark:bg-blue-900 text-blue-900 dark:text-blue-200'}`}>
                         {patient.jenis_pasien}
                       </span>
                     </div>
-
                     <div className="grid grid-cols-2 gap-4 mb-4">
-                      <div className="bg-gray-700/50 p-3 rounded-lg">
-                        <p className="text-sm text-blue-700 dark:text-blue-300 flex items-center mb-1">
+                      <div className="bg-gray-700/70 p-3 rounded-lg">
+                        <p className="text-sm text-blue-200 flex items-center mb-1">
                           <Calendar className="h-4 w-4 mr-2" />
                           Tanggal
                         </p>
-                        <p className="text-sm text-gray-900 dark:text-white font-medium">{formatDate(patient.tanggal)}</p>
+                        <p className="text-sm text-white font-medium">{formatDate(patient.tanggal)}</p>
                       </div>
-                      <div className="bg-gray-700/50 p-3 rounded-lg">
-                        <p className="text-sm text-blue-700 dark:text-blue-300 flex items-center mb-1">
+                      <div className="bg-gray-700/70 p-3 rounded-lg">
+                        <p className="text-sm text-blue-200 flex items-center mb-1">
                           <CreditCard className="h-4 w-4 mr-2" />
                           No. RM
                         </p>
-                        <p className="text-sm text-gray-900 dark:text-white font-medium">{patient.no_rm}</p>
+                        <p className="text-sm text-white font-medium">{patient.no_rm}</p>
                       </div>
                     </div>
-
                     <div>
-                      <p className="text-sm text-blue-700 dark:text-blue-300 flex items-center mb-2">
+                      <p className="text-sm text-blue-200 flex items-center mb-2">
                         <Activity className="h-4 w-4 mr-2" />
                         Tindakan
                       </p>
@@ -395,7 +393,6 @@ export default function CariPasienPage() {
                       </div>
                     </div>
                   </div>
-
                   <div className="bg-gradient-to-r from-gray-700 to-gray-800 px-5 py-3 flex justify-end">
                     <button
                       type="button"

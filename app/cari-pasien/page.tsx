@@ -233,12 +233,12 @@ export default function CariPasienPage() {
         <div className={`mb-8 transform transition-all duration-700 delay-100 ${pageLoaded ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
           <div className="bg-white dark:bg-gray-900 bg-opacity-90 backdrop-blur-sm rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-lg">
             <div className="relative">
-              <span className="absolute left-3 inset-y-0 my-auto flex items-center h-full pointer-events-none z-10">
+              <span className="absolute left-4 inset-y-0 my-auto flex items-center pointer-events-none z-10">
                 <Search className="h-5 w-5 text-blue-500" />
               </span>
               <input
                 type="text"
-                className="w-full px-4 py-2 pl-12 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2.5 pl-12 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder={`Cari berdasarkan ${searchType === 'nama' ? 'nama pasien' : searchType === 'rm' ? 'nomor RM' : 'tindakan'}`}
                 value={searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}

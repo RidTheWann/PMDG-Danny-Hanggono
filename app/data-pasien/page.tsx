@@ -120,7 +120,7 @@ export default function DataPasienPage() {
     try {
       const response = await fetch('/api/data-pasien', {
         cache: 'no-store',
-        next: { revalidate: 0 }
+        // next: { revalidate: 0 } // Dihapus karena bukan properti valid
       });
       if (!response.ok) throw new Error('Gagal fetch data pasien');
       const data = await response.json();
@@ -304,18 +304,18 @@ export default function DataPasienPage() {
   const pasienUmumAll = patients.filter((p: Patient) => p.jenis_pasien === 'UMUM').length;
 
   // Statistik untuk card
-  const totalLaki = patients.filter(p => {
+  const totalLaki = patients.filter((p: Patient) => {
     const val = (p.kelamin || '').toLowerCase();
     return val === 'laki-laki' || val === 'l';
   }).length;
-  const totalPerempuan = patients.filter(p => p.kelamin === 'Perempuan' || p.kelamin === 'P').length;
+  const totalPerempuan = patients.filter((p: Patient) => p.kelamin === 'Perempuan' || p.kelamin === 'P').length;
   const totalSemuaPasien = patients.length;
   // Rata-rata kunjungan harian
-  const tanggalUnik = Array.from(new Set(patients.map(p => p.tanggal)));
+  const tanggalUnik = Array.from(new Set(patients.map((p: Patient) => p.tanggal)));
   const rataKunjunganHarian = tanggalUnik.length > 0 ? Math.round(totalSemuaPasien / tanggalUnik.length) : 0;
 
   // Hitung rata-rata laki-laki dan perempuan per bulan
-  const bulanUnik = Array.from(new Set(patients.map(p => (p.tanggal || '').slice(0, 7)))).filter(Boolean);
+  const bulanUnik = Array.from(new Set(patients.map((p: Patient) => (p.tanggal || '').slice(0, 7)))).filter(Boolean);
   const totalLakiPerBulan = bulanUnik.length > 0 ? Math.round(totalLaki / bulanUnik.length) : 0;
   const totalPerempuanPerBulan = bulanUnik.length > 0 ? Math.round(totalPerempuan / bulanUnik.length) : 0;
 
@@ -331,8 +331,8 @@ export default function DataPasienPage() {
   ];
   const tindakanCount: Record<string, number> = {};
   let tindakanLainnya = 0;
-  patients.forEach(p => {
-    p.actions?.forEach(a => {
+  patients.forEach((p: Patient) => {
+    p.actions?.forEach((a: string) => {
       const match = tindakanUtama.find(t => a.toLowerCase().includes(t.toLowerCase()));
       if (match) {
         tindakanCount[match] = (tindakanCount[match] || 0) + 1;

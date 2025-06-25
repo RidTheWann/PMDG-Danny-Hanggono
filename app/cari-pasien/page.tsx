@@ -393,7 +393,7 @@ export default function CariPasienPage() {
                       type="button"
                       onClick={() => handleOpenEditModal(patient)}
                       className="relative group inline-flex items-center justify-center w-10 h-10 rounded-full border-2 border-blue-700 bg-gradient-to-br from-blue-900 to-blue-700 text-blue-200 hover:text-white hover:border-blue-400 hover:from-blue-800 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 transition-all duration-200 shadow-lg"
-                      aria-label="Edit Data"
+                      aria-label={`Edit data pasien ${patient.nama_pasien}`}
                     >
                       <Pencil className="h-5 w-5" />
                       <span className="absolute left-12 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 bg-blue-800 text-white text-xs rounded px-2 py-1 shadow-lg transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10">Edit Data</span>

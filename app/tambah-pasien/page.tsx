@@ -175,7 +175,7 @@ export default function TambahPasienPage() {
             )}
             {/* Date */}
             <div className="relative group">
-              <label htmlFor="tanggal" className="block text-sm font-medium text-blue-300 mb-2 transition-all group-focus-within:text-blue-400">
+              <label htmlFor="tanggal" className="block text-sm font-medium text-blue-700 dark:text-blue-300 mb-2 transition-all group-focus-within:text-blue-400">
                 Tanggal
               </label>
               <div className="relative">
@@ -198,7 +198,7 @@ export default function TambahPasienPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Nama Pasien */}
               <div className="relative group">
-                <label htmlFor="nama_pasien" className="block text-sm font-medium text-blue-300 mb-2 transition-all group-focus-within:text-blue-400">
+                <label htmlFor="nama_pasien" className="block text-sm font-medium text-blue-700 dark:text-blue-300 mb-2 transition-all group-focus-within:text-blue-400">
                   Nama Pasien *
                 </label>
                 <div className="relative">
@@ -220,7 +220,7 @@ export default function TambahPasienPage() {
 
               {/* No. RM */}
               <div className="relative group">
-                <label htmlFor="no_rm" className="block text-sm font-medium text-blue-300 mb-2 transition-all group-focus-within:text-blue-400">
+                <label htmlFor="no_rm" className="block text-sm font-medium text-blue-700 dark:text-blue-300 mb-2 transition-all group-focus-within:text-blue-400">
                   No. RM *
                 </label>
                 <div className="relative">
@@ -245,7 +245,7 @@ export default function TambahPasienPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Kelamin */}
               <div className="relative group">
-                <label htmlFor="kelamin" className="block text-sm font-medium text-blue-300 mb-2 transition-all group-focus-within:text-blue-400">
+                <label htmlFor="kelamin" className="block text-sm font-medium text-blue-700 dark:text-blue-300 mb-2 transition-all group-focus-within:text-blue-400">
                   Kelamin *
                 </label>
                 <div className="relative">
@@ -271,7 +271,7 @@ export default function TambahPasienPage() {
 
               {/* Jenis Pasien */}
               <div className="relative group">
-                <label htmlFor="jenis_pasien" className="block text-sm font-medium text-blue-300 mb-2 transition-all group-focus-within:text-blue-400">
+                <label htmlFor="jenis_pasien" className="block text-sm font-medium text-blue-700 dark:text-blue-300 mb-2 transition-all group-focus-within:text-blue-400">
                   Jenis Pasien *
                 </label>
                 <div className="relative">
@@ -322,7 +322,7 @@ export default function TambahPasienPage() {
                       onChange={handleInputChange}
                       className="sr-only"
                     />
-                    <span className={`text-xs sm:text-sm font-medium ${formData[option.key as keyof PatientForm] ? 'text-white' : 'text-gray-200'}`}>{option.label}</span>
+                    <span className={`text-xs sm:text-sm font-medium ${formData[option.key as keyof PatientForm] ? 'text-white' : 'text-gray-900 dark:text-gray-200'}`}>{option.label}</span>
                   </label>
                 ))}
               </div>
@@ -330,7 +330,7 @@ export default function TambahPasienPage() {
 
             {/* Tindakan Lainnya */}
             <div className="relative group">
-              <label htmlFor="lainnya" className="block text-sm font-medium text-blue-300 mb-2 transition-all group-focus-within:text-blue-400">
+              <label htmlFor="lainnya" className="block text-sm font-medium text-blue-700 dark:text-blue-300 mb-2 transition-all group-focus-within:text-blue-400">
                 Tindakan Lainnya *
               </label>
               <div className="relative">
@@ -344,7 +344,7 @@ export default function TambahPasienPage() {
                   className="w-full px-4 py-3 bg-gray-100 dark:bg-gray-700/70 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all resize-none hover:border-gray-400 dark:hover:border-gray-500"
                 />
               </div>
-              <p className="text-xs text-blue-300/80 mt-2 flex items-center">
+              <p className="text-xs text-blue-700 dark:text-blue-300/80 mt-2 flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>

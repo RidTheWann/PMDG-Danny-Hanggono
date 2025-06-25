@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
 
 export default function LaporanPage() {
   const [loading, setLoading] = useState(true);
@@ -94,14 +93,7 @@ export default function LaporanPage() {
         </div>
 
         {/* Back Button */}
-        <div className="text-center mt-12">
-          <Link
-            href="/"
-            className="inline-flex items-center space-x-2 text-blue-400 hover:text-blue-300 transition-colors"
-          >
-            <span>← Kembali ke Beranda</span>
-          </Link>
-        </div>
+        {/* Tombol kembali dihapus sesuai permintaan */}
       </div>
     </div>
   );

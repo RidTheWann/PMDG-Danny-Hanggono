@@ -221,16 +221,24 @@ export default function CariPasienPage() {
           </div>
         </div>
 
+        {/* Tombol Kembali */}
+        <div className="mb-4">
+          <Link href="/data-pasien" className="inline-flex items-center px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium shadow transition-colors dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-gray-200">
+            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
+            Kembali
+          </Link>
+        </div>
+
         {/* Search Box */}
         <div className={`mb-8 transform transition-all duration-700 delay-100 ${pageLoaded ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
           <div className="bg-white dark:bg-gray-900 bg-opacity-90 backdrop-blur-sm rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-lg">
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                <Search className="h-5 w-5 text-blue-400" />
+              <div className="absolute left-0 top-1/2 -translate-y-1/2 pl-4 flex items-center pointer-events-none">
+                <Search className="h-5 w-5 text-blue-500" />
               </div>
               <input
                 type="text"
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 pl-12 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-700 dark:placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder={`Cari berdasarkan ${searchType === 'nama' ? 'nama pasien' : searchType === 'rm' ? 'nomor RM' : 'tindakan'}`}
                 value={searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}
@@ -352,8 +360,8 @@ export default function CariPasienPage() {
                         <UserRound className="h-6 w-6 text-white" />
                       </div>
                       <div className="ml-4 flex-1">
-                        <h3 className="text-lg font-medium text-white">{patient.nama_pasien}</h3>
-                        <p className="text-blue-300">{formatGender(patient.kelamin as string)}</p>
+                        <h3 className="text-lg font-medium text-gray-900 dark:text-white">{patient.nama_pasien}</h3>
+                        <p className="text-blue-700 dark:text-blue-300">{formatGender(patient.kelamin as string)}</p>
                       </div>
                       <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full shadow-sm ${patient.jenis_pasien === 'BPJS' ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200' : 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200'}`}>
                         {patient.jenis_pasien}
@@ -362,23 +370,23 @@ export default function CariPasienPage() {
 
                     <div className="grid grid-cols-2 gap-4 mb-4">
                       <div className="bg-gray-700/50 p-3 rounded-lg">
-                        <p className="text-sm text-blue-300 flex items-center mb-1">
+                        <p className="text-sm text-blue-700 dark:text-blue-300 flex items-center mb-1">
                           <Calendar className="h-4 w-4 mr-2" />
                           Tanggal
                         </p>
-                        <p className="text-sm font-medium">{formatDate(patient.tanggal)}</p>
+                        <p className="text-sm text-gray-900 dark:text-white font-medium">{formatDate(patient.tanggal)}</p>
                       </div>
                       <div className="bg-gray-700/50 p-3 rounded-lg">
-                        <p className="text-sm text-blue-300 flex items-center mb-1">
+                        <p className="text-sm text-blue-700 dark:text-blue-300 flex items-center mb-1">
                           <CreditCard className="h-4 w-4 mr-2" />
                           No. RM
                         </p>
-                        <p className="text-sm font-medium">{patient.no_rm}</p>
+                        <p className="text-sm text-gray-900 dark:text-white font-medium">{patient.no_rm}</p>
                       </div>
                     </div>
 
                     <div>
-                      <p className="text-sm text-blue-300 flex items-center mb-2">
+                      <p className="text-sm text-blue-700 dark:text-blue-300 flex items-center mb-2">
                         <Activity className="h-4 w-4 mr-2" />
                         Tindakan
                       </p>

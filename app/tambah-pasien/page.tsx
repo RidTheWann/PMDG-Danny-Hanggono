@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Calendar, User, CreditCard } from 'lucide-react';
 import StatusModal from '../components/StatusModal';
+import { getTodayJakarta } from '../utils/date';
 
 interface PatientForm {
   tanggal: string;
@@ -19,16 +20,6 @@ interface PatientForm {
   scaling: boolean;
   rujuk: boolean;
   lainnya: string;
-}
-
-// Helper untuk ambil tanggal hari ini di Asia/Jakarta
-function getTodayJakarta() {
-  const now = new Date();
-  // Ambil waktu UTC
-  const utc = now.getTime() + now.getTimezoneOffset() * 60000;
-  // Offset Jakarta (UTC+7)
-  const jakarta = new Date(utc + 7 * 60 * 60000);
-  return jakarta.toISOString().slice(0, 10);
 }
 
 export default function TambahPasienPage() {
@@ -122,12 +113,16 @@ export default function TambahPasienPage() {
 
       // Form akan direset saat modal ditutup
     } catch (error) {
-      console.error('Error:', error);
-      setSubmitError('Gagal menyimpan data. Silakan coba lagi beberapa saat lagi.');
+      // Tampilkan error di UI, jangan hanya di console
+      let message = 'Gagal menyimpan data. Silakan coba lagi beberapa saat lagi.';
+      if (error instanceof Error && error.message) {
+        message = error.message;
+      }
+      setSubmitError(message);
       setStatusModal({
         isOpen: true,
         status: 'error',
-        message: 'Terjadi kesalahan saat menyimpan data'
+        message,
       });
     } finally {
       setLoading(false);
@@ -174,7 +169,7 @@ export default function TambahPasienPage() {
           {/* Form */}
           <form onSubmit={handleSubmit} className="p-8 space-y-8">
             {submitError && (
-              <div className="mb-4 text-red-500 bg-red-100 px-4 py-2 rounded-lg">
+              <div className="mt-4 text-red-500 bg-red-100 dark:bg-red-200 px-4 py-2 rounded-lg text-center" role="alert">
                 {submitError}
               </div>
             )}

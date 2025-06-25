@@ -2,6 +2,40 @@
 
 Aplikasi ini digunakan untuk mengelola data pasien klinik, dengan fitur penyimpanan data ke database Neon PostgreSQL dan Google Sheets.
 
+---
+
+## Standar Kode & Pengembangan
+
+- **TypeScript**: Semua kode menggunakan type/interface yang konsisten dan type-safe.
+- **Aksesibilitas**: Semua elemen interaktif memiliki label/aria-label yang jelas.
+- **Error Handling**: Semua error API/fetch selalu tampil di UI, bukan hanya di console.
+- **Struktur Modular**: Helper dan tipe diletakkan di folder `utils` dan `types`.
+- **Linting & Formatting**: Menggunakan `.eslintrc.json` dan `.prettierrc` untuk menjaga kualitas kode.
+- **UI/UX**: Responsive, modern, dan ramah mobile.
+
+## Struktur Folder
+
+- `app/` - Semua halaman dan komponen utama
+- `app/components/` - Komponen UI reusable
+- `app/data-pasien/` - Halaman dan komponen data pasien
+- `app/types/` - Deklarasi tipe global (misal: `Patient`)
+- `app/utils/` - Helper function (misal: tanggal)
+
+## Konvensi Penamaan
+
+- File dan folder: kebab-case
+- Komponen React: PascalCase
+- Variabel dan fungsi: camelCase
+- Tipe/interface: PascalCase
+
+## Kontribusi
+
+1. Pastikan kode sudah sesuai standar di atas.
+2. Jalankan lint dan format sebelum commit.
+3. Tambahkan deskripsi singkat pada setiap PR.
+
+---
+
 ## Fitur
 
 - Input data pasien baru

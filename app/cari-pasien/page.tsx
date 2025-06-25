@@ -5,25 +5,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Search, User, Calendar, CreditCard, Edit, Trash2, X, CheckCircle, AlertCircle, Activity, UserRound, Pencil } from 'lucide-react';
 import EditPatientModal from '../components/EditPatientModal';
-
-// Definisi tipe Patient
-interface Patient {
-  id: string;
-  tanggal: string;
-  nama_pasien: string;
-  no_rm: string;
-  kelamin: string; // ubah ke string agar bisa handle 'L', 'Laki-laki', 'P', 'Perempuan'
-  jenis_pasien: string;
-  obat: boolean;
-  cabut_anak: boolean;
-  cabut_dewasa: boolean;
-  tambal_sementara: boolean;
-  tambal_tetap: boolean;
-  scaling: boolean;
-  rujuk: boolean;
-  lainnya?: string;
-  [key: string]: string | boolean | undefined;
-}
+import type { Patient } from '../types/patient';
 
 // Definisi label untuk tindakan
 const actionLabels: Record<string, string> = {
@@ -63,6 +45,7 @@ export default function CariPasienPage() {
   const [editLoading, setEditLoading] = useState(false);
   const [editSuccess, setEditSuccess] = useState<string | null>(null);
   const [editError, setEditError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   
   // Efek untuk animasi saat halaman dimuat
   useEffect(() => {
@@ -92,7 +75,11 @@ export default function CariPasienPage() {
         const data = await response.json();
         setAllPatients(data);
       } catch (error) {
-        console.error('Error fetching patients:', error);
+        let message = 'Gagal mengambil data pasien. Silakan coba lagi.';
+        if (error instanceof Error && error.message) {
+          message = error.message;
+        }
+        setError(message);
       } finally {
         setLoading(false);
       }
@@ -175,7 +162,7 @@ export default function CariPasienPage() {
   };
 
   // Handler untuk menyimpan perubahan pasien
-  const handleSavePatient = async (updatedPatient: any) => {
+  const handleSavePatient = async (updatedPatient: Patient) => {
     setEditLoading(true);
     setEditError(null);
     try {
@@ -194,7 +181,7 @@ export default function CariPasienPage() {
       if (refreshed.ok) {
         const data = await refreshed.json();
         setAllPatients(data);
-        setResults(results => results.map(p => p.id === updatedPatient.id ? { ...p, ...updatedPatient } : p));
+        setResults(results => results.map((p: Patient) => p.id === updatedPatient.id ? { ...p, ...updatedPatient } : p));
       }
       setEditSuccess('Data pasien berhasil diperbarui');
       setIsEditModalOpen(false);
@@ -206,7 +193,7 @@ export default function CariPasienPage() {
   };
 
   // Konversi Patient (id: string) ke PatientData (id: number)
-  function toPatientData(patient: Patient | null): any {
+  function toPatientData(patient: Patient | null): Patient | null {
     if (!patient) return null;
     return {
       ...patient,
@@ -243,41 +230,44 @@ export default function CariPasienPage() {
               </div>
               <input
                 type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full px-4 py-2 rounded-lg border border-gray-600 bg-gray-900 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder={`Cari berdasarkan ${searchType === 'nama' ? 'nama pasien' : searchType === 'rm' ? 'nomor RM' : 'tindakan'}`}
-                className="block w-full pl-12 pr-4 py-4 border border-gray-600 bg-gray-700/70 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-400 transition-all shadow-sm hover:border-gray-500"
+                value={searchTerm}
+                onChange={e => setSearchTerm(e.target.value)}
+                aria-label={`Cari pasien berdasarkan ${searchType === 'nama' ? 'nama' : searchType === 'rm' ? 'nomor rekam medis' : 'tindakan'}`}
               />
-            </div>
 
             {/* Search Type Buttons */}
             <div className="flex flex-wrap gap-2 mt-4">
               <button
-                onClick={() => setSearchType('nama')}
                 className={`px-5 py-2.5 rounded-xl font-medium transition-all duration-200 flex items-center space-x-2 ${searchType === 'nama' 
-                  ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-md' 
-                  : 'bg-gray-700/70 text-gray-300 hover:bg-gray-600/80 hover:-translate-y-0.5'}`}
+                  ? 'bg-blue-600 text-white' 
+                  : 'bg-gray-700 text-gray-300'}`}
+                onClick={() => setSearchType('nama')}
+                aria-label="Cari berdasarkan nama pasien"
               >
-                <User className="h-4 w-4" />
-                <span>Nama Pasien</span>
+                <User className="w-4 h-4" />
+                Nama
               </button>
               <button
-                onClick={() => setSearchType('rm')}
                 className={`px-5 py-2.5 rounded-xl font-medium transition-all duration-200 flex items-center space-x-2 ${searchType === 'rm' 
-                  ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-md' 
-                  : 'bg-gray-700/70 text-gray-300 hover:bg-gray-600/80 hover:-translate-y-0.5'}`}
+                  ? 'bg-blue-600 text-white' 
+                  : 'bg-gray-700 text-gray-300'}`}
+                onClick={() => setSearchType('rm')}
+                aria-label="Cari berdasarkan nomor rekam medis"
               >
-                <CreditCard className="h-4 w-4" />
-                <span>Nomor RM</span>
+                <CreditCard className="w-4 h-4" />
+                No. RM
               </button>
               <button
-                onClick={() => setSearchType('tindakan')}
                 className={`px-5 py-2.5 rounded-xl font-medium transition-all duration-200 flex items-center space-x-2 ${searchType === 'tindakan' 
-                  ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-md' 
-                  : 'bg-gray-700/70 text-gray-300 hover:bg-gray-600/80 hover:-translate-y-0.5'}`}
+                  ? 'bg-blue-600 text-white' 
+                  : 'bg-gray-700 text-gray-300'}`}
+                onClick={() => setSearchType('tindakan')}
+                aria-label="Cari berdasarkan tindakan"
               >
-                <Activity className="h-4 w-4" />
-                <span>Tindakan</span>
+                <Activity className="w-4 h-4" />
+                Tindakan
               </button>
             </div>
           </div>

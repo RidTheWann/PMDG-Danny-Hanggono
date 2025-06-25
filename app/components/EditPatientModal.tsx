@@ -1,40 +1,18 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from './Modal';
 import { User, Calendar, CreditCard, Activity, CheckCircle, Pill, Scissors, Smile, Wrench } from 'lucide-react';
 import { motion } from 'framer-motion';
-
-interface PatientData {
-  id?: number;
-  tanggal: string;
-  nama_pasien: string;
-  no_rm: string;
-  kelamin: string;
-  jenis_pasien: string;
-  actions?: string[];
-  lainnya?: string;
-  // Properti tambahan untuk keperluan edit di Google Sheets
-  tanggal_asli?: string;
-  nama_pasien_asli?: string;
-  no_rm_asli?: string;
-  // Properti untuk tindakan
-  obat?: boolean;
-  cabut_anak?: boolean;
-  cabut_dewasa?: boolean;
-  tambal_sementara?: boolean;
-  tambal_tetap?: boolean;
-  scaling?: boolean;
-  rujuk?: boolean;
-}
+import type { Patient } from '../types/patient';
 
 interface EditPatientModalProps {
   isOpen: boolean;
   onClose: () => void;
-  patient: PatientData | null;
-  onSave: (updatedPatient: PatientData) => Promise<void>;
+  patient: Patient | null;
+  onSave: (updatedPatient: Patient) => Promise<void>;
 }
 
 export default function EditPatientModal({ isOpen, onClose, patient, onSave }: EditPatientModalProps) {
-  const [formData, setFormData] = useState<PatientData>({
+  const [formData, setFormData] = useState<Patient>({
     tanggal: '',
     nama_pasien: '',
     no_rm: '',
@@ -63,9 +41,6 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
           }
         }
       }
-      
-      // Log untuk debugging
-      console.log('Patient actions:', actions);
       
       setFormData({
         id: patient.id,
@@ -97,9 +72,9 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
     
     if (type === 'checkbox') {
       const checked = (e.target as HTMLInputElement).checked;
-      setFormData(prev => ({ ...prev, [name]: checked }));
+      setFormData((prev: Patient) => ({ ...prev, [name]: checked }));
     } else {
-      setFormData(prev => ({ ...prev, [name]: value }));
+      setFormData((prev: Patient) => ({ ...prev, [name]: value }));
     }
   };
 
@@ -124,7 +99,6 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
         actions: selectedActions
       };
       
-      console.log('Saving patient with actions:', selectedActions);
       await onSave(updatedData);
       onClose();
     } catch (error) {

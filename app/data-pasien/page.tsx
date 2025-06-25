@@ -23,6 +23,8 @@ import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
 import SuccessModal from '../components/SuccessModal';
 import MobileTableGuide from '../components/MobileTableGuide';
 import './mobile-table.css';
+import { getTodayJakarta } from '../utils/date';
+import type { Patient } from '../types/patient';
 
 ChartJS.register(
   ArcElement,
@@ -33,22 +35,6 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-
-interface Patient {
-  id?: number;
-  tanggal: string;
-  nama_pasien: string;
-  no_rm: string;
-  kelamin: string;
-  jenis_pasien: string;
-  actions?: string[];
-  lainnya?: string;
-  description?: string;
-  // Properti tambahan untuk keperluan edit di Google Sheets
-  tanggal_asli?: string;
-  nama_pasien_asli?: string;
-  no_rm_asli?: string;
-}
 
 interface DashboardStats {
   totalPasienHariIni: number;
@@ -69,16 +55,7 @@ interface TreatmentStats {
   lainnya: number;
 }
 
-// Helper untuk ambil tanggal hari ini di Asia/Jakarta
-function getTodayJakarta() {
-  const now = new Date();
-  // Ambil waktu UTC
-  const utc = now.getTime() + now.getTimezoneOffset() * 60000;
-  // Offset Jakarta (UTC+7)
-  const jakarta = new Date(utc + 7 * 60 * 60000);
-  return jakarta.toISOString().slice(0, 10);
-}
-
+// Hapus function getTodayJakarta, gunakan dari utils
 export default function DataPasienPage() {
   const [patients, setPatients] = useState<Patient[]>([]);
   const [loading, setLoading] = useState(true);
@@ -148,7 +125,7 @@ export default function DataPasienPage() {
       if (!response.ok) throw new Error('Gagal fetch data pasien');
       const data = await response.json();
       // Pastikan actions selalu array string
-      setPatients(data.map((p: any) => {
+      setPatients(data.map((p: Patient) => {
         let actions = [];
         try {
           if (Array.isArray(p.actions)) {
@@ -157,9 +134,8 @@ export default function DataPasienPage() {
             actions = JSON.parse(p.actions);
           }
         } catch (e) {
-          console.error('Error parsing actions:', e);
+          // console.error('Error parsing actions:', e);
         }
-        
         return {
           ...p,
           id: p.id,
@@ -168,7 +144,11 @@ export default function DataPasienPage() {
       }));
       setLoading(false);
     } catch (error) {
-      console.error('Error fetching patient data:', error);
+      let message = 'Gagal mengambil data pasien. Silakan coba lagi.';
+      if (error instanceof Error && error.message) {
+        message = error.message;
+      }
+      setError(message);
       setLoading(false);
     }
   }, []);
@@ -231,7 +211,6 @@ export default function DataPasienPage() {
   // Fungsi untuk menyimpan perubahan data pasien
   const handleSavePatient = async (updatedPatient: Patient) => {
     try {
-      console.log('Sending updated patient to API:', updatedPatient);
       
       const response = await fetch(`/api/data-pasien/${updatedPatient.id}`, {
         method: 'PUT',
@@ -291,7 +270,7 @@ export default function DataPasienPage() {
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-400 mx-auto mb-4"></div>
           <p className="text-gray-400 dark:text-gray-600">Memuat data pasien...</p>
           {error && (
-            <div className="mt-4 text-red-500 bg-red-100 dark:bg-red-200 px-4 py-2 rounded-lg inline-block">
+            <div className="mt-4 text-red-500 bg-red-100 dark:bg-red-200 px-4 py-2 rounded-lg text-center" role="alert">
               {error}
               <button onClick={() => { setLoading(true); fetchDashboardStats(); }} className="ml-4 underline text-blue-700">Coba Lagi</button>
             </div>
@@ -303,8 +282,8 @@ export default function DataPasienPage() {
 
   // Filter pasien sesuai tanggal dan urutkan entry terbaru di atas
   const filteredPatients = patients
-    .filter((p) => p.tanggal && p.tanggal === filterDate)
-    .sort((a, b) => (b.id ?? 0) - (a.id ?? 0));
+    .filter((p: Patient) => p.tanggal && p.tanggal === filterDate)
+    .sort((a: Patient, b: Patient) => (Number(b.id) ?? 0) - (Number(a.id) ?? 0));
 
   // Pagination logic
   const totalPages = Math.ceil(filteredPatients.length / pageSize);
@@ -317,12 +296,12 @@ export default function DataPasienPage() {
   const now = new Date();
   const wib = new Date(now.getTime() + (7 * 60 - now.getTimezoneOffset()) * 60000);
   const bulanIniAll = wib.toISOString().slice(0, 7);
-  const totalPasienBulanIniAll = patients.filter(p => p.tanggal && p.tanggal.startsWith(bulanIniAll)).length;
+  const totalPasienBulanIniAll = patients.filter((p: Patient) => p.tanggal && p.tanggal.startsWith(bulanIniAll)).length;
   // Antrean terakhir (id terbesar di seluruh data)
-  const antreanTerakhirAll = patients.reduce((max, p) => p.id && p.id > max ? p.id : max, 0);
+  const antreanTerakhirAll = patients.reduce((max: number, p: Patient) => Number(p.id) && Number(p.id) > max ? Number(p.id) : max, 0);
   // Jumlah pasien BPJS dan UMUM seluruh waktu
-  const pasienBPJS = patients.filter(p => p.jenis_pasien === 'BPJS').length;
-  const pasienUmumAll = patients.filter(p => p.jenis_pasien === 'UMUM').length;
+  const pasienBPJS = patients.filter((p: Patient) => p.jenis_pasien === 'BPJS').length;
+  const pasienUmumAll = patients.filter((p: Patient) => p.jenis_pasien === 'UMUM').length;
 
   // Statistik untuk card
   const totalLaki = patients.filter(p => {
@@ -413,10 +392,12 @@ export default function DataPasienPage() {
                   className="w-full sm:w-auto bg-gray-900 text-white border border-gray-600 rounded px-2 py-2 text-sm"
                   value={filterDate}
                   onChange={e => setFilterDate(e.target.value)}
+                  aria-label="Filter tanggal kunjungan pasien"
                 />
                 <Link
                   href="/cari-pasien"
                   className="w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors text-sm text-center flex items-center justify-center gap-2"
+                  aria-label="Cari Data Pasien"
                 >
                   <Users className="h-4 w-4" />
                   Cari Data Pasien
@@ -549,12 +530,14 @@ export default function DataPasienPage() {
                           <button 
                             onClick={() => handleEditPatient(patient)}
                             className="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1 rounded-md transition-colors"
+                            aria-label={`Edit data pasien ${patient.nama_pasien}`}
                           >
                             Edit
                           </button>
                           <button 
                             onClick={() => handleDeletePatient(patient)}
                             className="bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-1 rounded-md transition-colors"
+                            aria-label={`Hapus data pasien ${patient.nama_pasien}`}
                           >
                             Hapus
                           </button>

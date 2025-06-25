@@ -46,7 +46,7 @@ export default function CariPasienPage() {
   const [editSuccess, setEditSuccess] = useState<string | null>(null);
   const [editError, setEditError] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  
+
   // Efek untuk animasi saat halaman dimuat
   useEffect(() => {
     setPageLoaded(true);

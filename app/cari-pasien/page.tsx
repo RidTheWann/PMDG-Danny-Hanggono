@@ -236,39 +236,39 @@ export default function CariPasienPage() {
                 onChange={e => setSearchTerm(e.target.value)}
                 aria-label={`Cari pasien berdasarkan ${searchType === 'nama' ? 'nama' : searchType === 'rm' ? 'nomor rekam medis' : 'tindakan'}`}
               />
-
-            {/* Search Type Buttons */}
-            <div className="flex flex-wrap gap-2 mt-4">
-              <button
-                className={`px-5 py-2.5 rounded-xl font-medium transition-all duration-200 flex items-center space-x-2 ${searchType === 'nama' 
-                  ? 'bg-blue-600 text-white' 
-                  : 'bg-gray-700 text-gray-300'}`}
-                onClick={() => setSearchType('nama')}
-                aria-label="Cari berdasarkan nama pasien"
-              >
-                <User className="w-4 h-4" />
-                Nama
-              </button>
-              <button
-                className={`px-5 py-2.5 rounded-xl font-medium transition-all duration-200 flex items-center space-x-2 ${searchType === 'rm' 
-                  ? 'bg-blue-600 text-white' 
-                  : 'bg-gray-700 text-gray-300'}`}
-                onClick={() => setSearchType('rm')}
-                aria-label="Cari berdasarkan nomor rekam medis"
-              >
-                <CreditCard className="w-4 h-4" />
-                No. RM
-              </button>
-              <button
-                className={`px-5 py-2.5 rounded-xl font-medium transition-all duration-200 flex items-center space-x-2 ${searchType === 'tindakan' 
-                  ? 'bg-blue-600 text-white' 
-                  : 'bg-gray-700 text-gray-300'}`}
-                onClick={() => setSearchType('tindakan')}
-                aria-label="Cari berdasarkan tindakan"
-              >
-                <Activity className="w-4 h-4" />
-                Tindakan
-              </button>
+              {/* Search Type Buttons */}
+              <div className="flex flex-wrap gap-2 mt-4">
+                <button
+                  className={`px-5 py-2.5 rounded-xl font-medium transition-all duration-200 flex items-center space-x-2 ${searchType === 'nama' 
+                    ? 'bg-blue-600 text-white' 
+                    : 'bg-gray-700 text-gray-300'}`}
+                  onClick={() => setSearchType('nama')}
+                  aria-label="Cari berdasarkan nama pasien"
+                >
+                  <User className="w-4 h-4" />
+                  Nama
+                </button>
+                <button
+                  className={`px-5 py-2.5 rounded-xl font-medium transition-all duration-200 flex items-center space-x-2 ${searchType === 'rm' 
+                    ? 'bg-blue-600 text-white' 
+                    : 'bg-gray-700 text-gray-300'}`}
+                  onClick={() => setSearchType('rm')}
+                  aria-label="Cari berdasarkan nomor rekam medis"
+                >
+                  <CreditCard className="w-4 h-4" />
+                  No. RM
+                </button>
+                <button
+                  className={`px-5 py-2.5 rounded-xl font-medium transition-all duration-200 flex items-center space-x-2 ${searchType === 'tindakan' 
+                    ? 'bg-blue-600 text-white' 
+                    : 'bg-gray-700 text-gray-300'}`}
+                  onClick={() => setSearchType('tindakan')}
+                  aria-label="Cari berdasarkan tindakan"
+                >
+                  <Activity className="w-4 h-4" />
+                  Tindakan
+                </button>
+              </div>
             </div>
           </div>
         </div>

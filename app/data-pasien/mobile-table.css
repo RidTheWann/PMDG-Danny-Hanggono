@@ -1,3 +1,11 @@
+/* Tambahkan custom property dan media query untuk mendukung light/dark mode pada tabel mobile */
+:root {
+  --table-bg-light: #fff;
+  --table-bg-dark: #111827;
+  --table-scrollbar-thumb-light: #d1d5db;
+  --table-scrollbar-thumb-dark: #374151;
+}
+
 /* Styles for mobile table */
 @media (max-width: 640px) {
   .mobile-table-container {
@@ -16,10 +24,14 @@
 
   .mobile-table-container table {
     display: block;
+    background: var(--table-bg-light);
+  }
+
+  html.dark .mobile-table-container table {
+    background: var(--table-bg-dark);
   }
 
   .mobile-table-container table {
-    background: rgba(31, 41, 55, 0.05);
     width: 100%;
   }
 
@@ -41,5 +53,13 @@
     height: 8px;
     background: #1f2937;
     border-radius: 4px;
+  }
+
+  .mobile-table-container::-webkit-scrollbar-thumb {
+    background-color: var(--table-scrollbar-thumb-light);
+  }
+
+  html.dark .mobile-table-container::-webkit-scrollbar-thumb {
+    background-color: var(--table-scrollbar-thumb-dark);
   }
 }

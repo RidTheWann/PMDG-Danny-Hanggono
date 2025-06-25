@@ -140,28 +140,28 @@ export default function TambahPasienPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800">
+    <div className="min-h-screen bg-white dark:bg-gradient-to-b dark:from-gray-900 dark:to-gray-800">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative">
 
 
         {/* Form Container */}
         <div 
-          className={`bg-gray-800 bg-opacity-90 backdrop-blur-sm rounded-2xl shadow-2xl overflow-hidden border border-gray-700 transform transition-all duration-500 ease-in-out ${formVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
+          className={`bg-gray-100 dark:bg-gray-800 bg-opacity-90 backdrop-blur-sm rounded-2xl shadow-2xl overflow-hidden border border-gray-200 dark:border-gray-700 transform transition-all duration-500 ease-in-out ${formVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
           style={{
-            boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.05) inset'
+            boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(255, 255, 255, 0.05) inset'
           }}
         >
           {/* Header */}
-          <div className="bg-gradient-to-r from-blue-900 to-gray-800 px-6 py-5 border-b border-gray-600 relative overflow-hidden">
+          <div className="bg-gradient-to-r from-blue-100 to-gray-100 dark:from-blue-900 dark:to-gray-800 px-6 py-5 border-b border-gray-200 dark:border-gray-600 relative overflow-hidden">
             <div className="absolute inset-0 bg-grid-white/[0.05] bg-[length:20px_20px]" aria-hidden="true"></div>
             <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-sm"></div>
             <div className="relative flex items-center space-x-4">
               <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg transform transition-transform hover:scale-105">
-                <Calendar className="w-5 h-5 text-white" />
+                <Calendar className="w-5 h-5 text-white dark:text-blue-900" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-white tracking-tight">Input Data Harian</h1>
-                <p className="text-sm text-blue-200">Catat tindakan medis dan rujukan hari ini</p>
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">Input Data Harian</h1>
+                <p className="text-sm text-blue-700 dark:text-blue-200">Catat tindakan medis dan rujukan hari ini</p>
               </div>
             </div>
           </div>
@@ -189,7 +189,7 @@ export default function TambahPasienPage() {
                   value={formData.tanggal}
                   onChange={handleInputChange}
                   required
-                  className="w-full max-w-xs pl-10 px-3 py-3 bg-gray-700/70 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all hover:border-gray-500"
+                  className="w-full max-w-xs pl-10 px-3 py-3 bg-gray-100 dark:bg-gray-700/70 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all hover:border-gray-400 dark:hover:border-gray-500"
                 />
               </div>
             </div>
@@ -213,7 +213,7 @@ export default function TambahPasienPage() {
                     onChange={handleInputChange}
                     required
                     placeholder="Masukkan nama lengkap pasien"
-                    className="w-full pl-10 px-3 py-3 bg-gray-700/70 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all hover:border-gray-500"
+                    className="w-full pl-10 px-3 py-3 bg-gray-100 dark:bg-gray-700/70 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all hover:border-gray-400 dark:hover:border-gray-500"
                   />
                 </div>
               </div>
@@ -235,7 +235,7 @@ export default function TambahPasienPage() {
                     onChange={handleInputChange}
                     required
                     placeholder="Contoh: 00.00.00"
-                    className="w-full pl-10 px-3 py-3 bg-gray-700/70 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all hover:border-gray-500"
+                    className="w-full pl-10 px-3 py-3 bg-gray-100 dark:bg-gray-700/70 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all hover:border-gray-400 dark:hover:border-gray-500"
                   />
                 </div>
               </div>
@@ -255,7 +255,7 @@ export default function TambahPasienPage() {
                     value={formData.kelamin}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-3 py-3 bg-gray-700/70 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all appearance-none hover:border-gray-500"
+                    className="w-full px-3 py-3 bg-gray-100 dark:bg-gray-700/70 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all appearance-none hover:border-gray-400 dark:hover:border-gray-500"
                   >
                     <option value="">Pilih jenis kelamin</option>
                     <option value="L">Laki-laki</option>
@@ -281,7 +281,7 @@ export default function TambahPasienPage() {
                     value={formData.jenis_pasien}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-3 py-3 bg-gray-700/70 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all appearance-none hover:border-gray-500"
+                    className="w-full px-3 py-3 bg-gray-100 dark:bg-gray-700/70 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all appearance-none hover:border-gray-400 dark:hover:border-gray-500"
                   >
                     <option value="">Pilih jenis pasien</option>
                     <option value="BPJS">BPJS</option>
@@ -312,7 +312,7 @@ export default function TambahPasienPage() {
                   <label 
                     key={option.key} 
                     className={`flex items-center justify-center text-center cursor-pointer rounded-lg px-2 py-3 border transition-all duration-200
-                      ${formData[option.key as keyof PatientForm] ? 'bg-blue-600 border-blue-500 shadow-lg' : 'bg-gray-700/70 border-gray-600 hover:bg-gray-600/90 hover:border-gray-500'}`}
+                      ${formData[option.key as keyof PatientForm] ? 'bg-blue-600 border-blue-500 shadow-lg text-white' : 'bg-gray-100 dark:bg-gray-700/70 border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-600/90 hover:border-gray-400 dark:hover:border-gray-500 text-gray-900 dark:text-gray-200'}`}
                     style={{ animationDelay: `${index * 50}ms` }}
                   >
                     <input
@@ -341,7 +341,7 @@ export default function TambahPasienPage() {
                   onChange={handleInputChange}
                   rows={4}
                   placeholder="Sebutkan tindakan lainnya, atau tindakan lainnya"
-                  className="w-full px-4 py-3 bg-gray-700/70 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all resize-none hover:border-gray-500"
+                  className="w-full px-4 py-3 bg-gray-100 dark:bg-gray-700/70 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all resize-none hover:border-gray-400 dark:hover:border-gray-500"
                 />
               </div>
               <p className="text-xs text-blue-300/80 mt-2 flex items-center">

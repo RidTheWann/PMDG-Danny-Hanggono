@@ -133,7 +133,7 @@ export default function CariPasienPage() {
         badges.push(
           <span
             key={key}
-            className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 mr-2 mb-2"
+            className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 mr-2 mb-2"
           >
             {label}
           </span>
@@ -144,7 +144,7 @@ export default function CariPasienPage() {
       badges.push(
         <span
           key="lainnya"
-          className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 mr-2 mb-2"
+          className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 mr-2 mb-2"
         >
           {patient.lainnya}
         </span>
@@ -202,11 +202,11 @@ export default function CariPasienPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white">
+    <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-500">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className={`mb-8 transform transition-all duration-700 ${pageLoaded ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
-          <div className="bg-gradient-to-r from-blue-900 to-gray-800 rounded-xl p-6 border border-gray-700 shadow-lg relative overflow-hidden">
+          <div className="bg-gradient-to-r from-blue-100 dark:from-blue-900 to-gray-100 dark:to-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-lg relative overflow-hidden">
             <div className="absolute inset-0 bg-grid-white/[0.05] bg-[length:20px_20px]" aria-hidden="true"></div>
             <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-sm"></div>
             <div className="relative flex items-center space-x-4">
@@ -223,14 +223,14 @@ export default function CariPasienPage() {
 
         {/* Search Box */}
         <div className={`mb-8 transform transition-all duration-700 delay-100 ${pageLoaded ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
-          <div className="bg-gray-800 bg-opacity-90 backdrop-blur-sm rounded-xl p-6 border border-gray-700 shadow-lg">
+          <div className="bg-white dark:bg-gray-900 bg-opacity-90 backdrop-blur-sm rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-lg">
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                 <Search className="h-5 w-5 text-blue-400" />
               </div>
               <input
                 type="text"
-                className="w-full px-4 py-2 rounded-lg border border-gray-600 bg-gray-900 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder={`Cari berdasarkan ${searchType === 'nama' ? 'nama pasien' : searchType === 'rm' ? 'nomor RM' : 'tindakan'}`}
                 value={searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}
@@ -241,7 +241,7 @@ export default function CariPasienPage() {
                 <button
                   className={`px-5 py-2.5 rounded-xl font-medium transition-all duration-200 flex items-center space-x-2 ${searchType === 'nama' 
                     ? 'bg-blue-600 text-white' 
-                    : 'bg-gray-700 text-gray-300'}`}
+                    : 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-300'}`}
                   onClick={() => setSearchType('nama')}
                   aria-label="Cari berdasarkan nama pasien"
                 >
@@ -251,7 +251,7 @@ export default function CariPasienPage() {
                 <button
                   className={`px-5 py-2.5 rounded-xl font-medium transition-all duration-200 flex items-center space-x-2 ${searchType === 'rm' 
                     ? 'bg-blue-600 text-white' 
-                    : 'bg-gray-700 text-gray-300'}`}
+                    : 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-300'}`}
                   onClick={() => setSearchType('rm')}
                   aria-label="Cari berdasarkan nomor rekam medis"
                 >
@@ -261,7 +261,7 @@ export default function CariPasienPage() {
                 <button
                   className={`px-5 py-2.5 rounded-xl font-medium transition-all duration-200 flex items-center space-x-2 ${searchType === 'tindakan' 
                     ? 'bg-blue-600 text-white' 
-                    : 'bg-gray-700 text-gray-300'}`}
+                    : 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-300'}`}
                   onClick={() => setSearchType('tindakan')}
                   aria-label="Cari berdasarkan tindakan"
                 >
@@ -275,7 +275,7 @@ export default function CariPasienPage() {
 
         {/* Results Header */}
         <div className={`mb-6 transform transition-all duration-700 delay-200 ${pageLoaded ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
-          <div className="bg-gray-800/70 backdrop-blur-sm rounded-xl px-6 py-4 border border-gray-700 shadow-md">
+          <div className="bg-gray-100 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl px-6 py-4 border border-gray-200 dark:border-gray-700 shadow-md">
             {loading ? (
               <h2 className="text-xl font-semibold flex items-center">
                 <div className="mr-3 h-5 w-5 rounded-full border-2 border-blue-500 border-t-transparent animate-spin"></div>
@@ -355,7 +355,7 @@ export default function CariPasienPage() {
                         <h3 className="text-lg font-medium text-white">{patient.nama_pasien}</h3>
                         <p className="text-blue-300">{formatGender(patient.kelamin as string)}</p>
                       </div>
-                      <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full shadow-sm ${patient.jenis_pasien === 'BPJS' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'}`}>
+                      <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full shadow-sm ${patient.jenis_pasien === 'BPJS' ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200' : 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200'}`}>
                         {patient.jenis_pasien}
                       </span>
                     </div>

@@ -44,12 +44,12 @@ export default function MobileTableGuide() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ type: 'spring', damping: 20 }}
-          className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white px-5 py-4 rounded-xl mb-4 shadow-lg border border-blue-500/30 backdrop-filter backdrop-blur-sm"
+          className="bg-gradient-to-r from-blue-100 to-indigo-200 dark:from-blue-600 dark:to-indigo-700 text-blue-900 dark:text-white px-5 py-4 rounded-xl mb-4 shadow-lg border border-blue-200 dark:border-blue-500/30 backdrop-filter backdrop-blur-sm"
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="bg-blue-500/30 p-2 rounded-full">
-                <Smartphone className="w-5 h-5 text-white" />
+              <div className="bg-blue-200 dark:bg-blue-500/30 p-2 rounded-full">
+                <Smartphone className="w-5 h-5 text-blue-700 dark:text-white" />
               </div>
               <span className="font-medium">Panduan Tabel Mobile</span>
             </div>
@@ -57,7 +57,7 @@ export default function MobileTableGuide() {
               whileHover={{ scale: 1.1, backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
               whileTap={{ scale: 0.9 }}
               onClick={dismissGuide}
-              className="p-1.5 rounded-full hover:bg-white/20 transition-all duration-200"
+              className="p-1.5 rounded-full hover:bg-blue-100 dark:hover:bg-white/20 transition-all duration-200"
             >
               <X className="w-4 h-4" />
             </motion.button>
@@ -68,13 +68,13 @@ export default function MobileTableGuide() {
               animate={{ x: [0, -5, 0] }} 
               transition={{ repeat: Infinity, duration: 1.5 }}
             >
-              <ChevronLeft className="w-5 h-5 text-blue-200" />
+              <ChevronLeft className="w-5 h-5 text-blue-400 dark:text-blue-200" />
             </motion.div>
             <motion.div 
               animate={{ x: [0, 5, 0] }} 
               transition={{ repeat: Infinity, duration: 1.5 }}
             >
-              <ChevronRight className="w-5 h-5 mr-3 text-blue-200" />
+              <ChevronRight className="w-5 h-5 mr-3 text-blue-400 dark:text-blue-200" />
             </motion.div>
             <span className="text-sm">Geser tabel ke kanan/kiri untuk melihat semua data</span>
           </div>

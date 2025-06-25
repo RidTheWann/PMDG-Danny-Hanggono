@@ -265,10 +265,10 @@ export default function DataPasienPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-900 dark:bg-gray-100">
+      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-400 mx-auto mb-4"></div>
-          <p className="text-gray-400 dark:text-gray-600">Memuat data pasien...</p>
+          <p className="text-gray-600 dark:text-gray-400">Memuat data pasien...</p>
           {error && (
             <div className="mt-4 text-red-500 bg-red-100 dark:bg-red-200 px-4 py-2 rounded-lg text-center" role="alert">
               {error}
@@ -374,22 +374,22 @@ export default function DataPasienPage() {
   const trafficPerempuan = trafficLabels.map(tgl => trafficData[tgl].perempuan);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 dark:from-gray-100 dark:to-gray-200 transition-colors duration-500">
+    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-500">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Kunjungan Harian Table - DIPINDAH KE ATAS */}
-        <div className="bg-gray-800 dark:bg-white rounded-2xl shadow-xl mb-8 transition-colors duration-500">
-          <div className="bg-gray-700 dark:bg-blue-100 px-6 py-4 rounded-t-2xl border-b border-gray-600 dark:border-blue-200">
+        <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl mb-8 transition-colors duration-500">
+          <div className="bg-gray-100 dark:bg-gray-800 px-6 py-4 rounded-t-2xl border-b border-gray-200 dark:border-gray-700">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
               <div className="flex items-center space-x-3">
                 <div className="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center">
                   <Calendar className="h-5 w-5 text-white" />
                 </div>
-                <h2 className="text-lg font-semibold text-white dark:text-blue-900">Kunjungan Harian</h2>
+                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Kunjungan Harian</h2>
               </div>
               <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">
                 <input
                   type="date"
-                  className="w-full sm:w-auto bg-gray-900 text-white border border-gray-600 rounded px-2 py-2 text-sm"
+                  className="w-full sm:w-auto bg-white dark:bg-gray-900 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 rounded px-2 py-2 text-sm"
                   value={filterDate}
                   onChange={e => setFilterDate(e.target.value)}
                   aria-label="Filter tanggal kunjungan pasien"
@@ -412,7 +412,7 @@ export default function DataPasienPage() {
           </div>
           
           {/* Table */}
-          <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800 mobile-table-container">
+          <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700 scrollbar-track-gray-100 dark:scrollbar-track-gray-900 mobile-table-container">
             {loading ? (
               <div className="space-y-4 p-4">
                 {[1, 2, 3].map((i) => (
@@ -464,7 +464,7 @@ export default function DataPasienPage() {
                               </div>
                             </td>
                             <td className="px-2 py-3">
-                              <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${patient.jenis_pasien === 'BPJS' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800'}`}>
+                              <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${patient.jenis_pasien === 'BPJS' ? 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200' : 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200'}`}>
                                 {patient.jenis_pasien}
                               </span>
                             </td>
@@ -492,7 +492,7 @@ export default function DataPasienPage() {
                             <div className="text-sm font-medium text-white">{patient.nama_pasien}</div>
                             <div className="text-xs text-gray-400">{patient.kelamin === 'L' ? 'Laki-laki' : patient.kelamin === 'P' ? 'Perempuan' : patient.kelamin}</div>
                           </div>
-                          <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${patient.jenis_pasien === 'BPJS' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800'}`}>
+                          <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${patient.jenis_pasien === 'BPJS' ? 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200' : 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200'}`}>
                             {patient.jenis_pasien}
                           </span>
                         </div>
@@ -741,4 +741,31 @@ export default function DataPasienPage() {
       />
     </div>
   );
+}
+
+// Untuk badge jenis pasien:
+<span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${patient.jenis_pasien === 'BPJS' ? 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200' : 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200'}`}>
+  {patient.jenis_pasien}
+</span>
+
+// Untuk mobile-table.css, gunakan CSS custom property:
+:root {
+  --table-bg-light: #fff;
+  --table-bg-dark: #111827;
+  --table-scrollbar-thumb-light: #d1d5db;
+  --table-scrollbar-thumb-dark: #374151;
+}
+@media (max-width: 640px) {
+  .mobile-table-container table {
+    background: var(--table-bg-light);
+  }
+  html.dark .mobile-table-container table {
+    background: var(--table-bg-dark);
+  }
+  .mobile-table-container::-webkit-scrollbar-thumb {
+    background-color: var(--table-scrollbar-thumb-light);
+  }
+  html.dark .mobile-table-container::-webkit-scrollbar-thumb {
+    background-color: var(--table-scrollbar-thumb-dark);
+  }
 }

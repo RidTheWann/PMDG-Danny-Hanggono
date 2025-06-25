@@ -127,8 +127,8 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3, delay: 0.1 }}
               >
-                <label className="block text-sm font-medium text-blue-300 mb-1.5 flex items-center">
-                  <Calendar className="h-4 w-4 mr-2 text-blue-400" />
+                <label className="block text-sm font-medium text-gray-900 dark:text-blue-300 mb-1.5 flex items-center">
+                  <Calendar className="h-4 w-4 mr-2 text-blue-500 dark:text-blue-400" />
                   Tanggal
                 </label>
                 <div className="relative">
@@ -138,7 +138,7 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
                     value={formData.tanggal}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2.5 bg-gray-700/80 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-400 transition-all shadow-sm hover:border-gray-500 group-hover:border-gray-500 backdrop-blur-sm"
+                    className="w-full px-4 py-2.5 bg-gray-100 dark:bg-gray-700/80 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-400 transition-all shadow-sm hover:border-gray-400 dark:hover:border-gray-500 group-hover:border-gray-400 dark:group-hover:border-gray-500 backdrop-blur-sm"
                   />
                 </div>
               </motion.div>
@@ -149,8 +149,8 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3, delay: 0.1 }}
               >
-                <label className="block text-sm font-medium text-blue-300 mb-1.5 flex items-center">
-                  <CreditCard className="h-4 w-4 mr-2 text-blue-400" />
+                <label className="block text-sm font-medium text-gray-900 dark:text-blue-300 mb-1.5 flex items-center">
+                  <CreditCard className="h-4 w-4 mr-2 text-blue-500 dark:text-blue-400" />
                   No. RM
                 </label>
                 <div className="relative">
@@ -160,7 +160,7 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
                     value={formData.no_rm}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2.5 bg-gray-700/80 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-400 transition-all shadow-sm hover:border-gray-500 group-hover:border-gray-500 backdrop-blur-sm"
+                    className="w-full px-4 py-2.5 bg-gray-100 dark:bg-gray-700/80 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-400 transition-all shadow-sm hover:border-gray-400 dark:hover:border-gray-500 group-hover:border-gray-400 dark:group-hover:border-gray-500 backdrop-blur-sm"
                   />
                 </div>
               </motion.div>
@@ -171,8 +171,8 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3, delay: 0.2 }}
               >
-                <label className="block text-sm font-medium text-blue-300 mb-1.5 flex items-center">
-                  <User className="h-4 w-4 mr-2 text-blue-400" />
+                <label className="block text-sm font-medium text-gray-900 dark:text-blue-300 mb-1.5 flex items-center">
+                  <User className="h-4 w-4 mr-2 text-blue-500 dark:text-blue-400" />
                   Nama Pasien
                 </label>
                 <div className="relative">
@@ -182,7 +182,7 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
                     value={formData.nama_pasien}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2.5 bg-gray-700/80 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-400 transition-all shadow-sm hover:border-gray-500 group-hover:border-gray-500 backdrop-blur-sm"
+                    className="w-full px-4 py-2.5 bg-gray-100 dark:bg-gray-700/80 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-400 transition-all shadow-sm hover:border-gray-400 dark:hover:border-gray-500 group-hover:border-gray-400 dark:group-hover:border-gray-500 backdrop-blur-sm"
                   />
                 </div>
               </motion.div>
@@ -193,8 +193,8 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3, delay: 0.2 }}
               >
-                <label className="block text-sm font-medium text-blue-300 mb-1.5 flex items-center">
-                  <User className="h-4 w-4 mr-2 text-blue-400" />
+                <label className="block text-sm font-medium text-gray-900 dark:text-blue-300 mb-1.5 flex items-center">
+                  <User className="h-4 w-4 mr-2 text-blue-500 dark:text-blue-400" />
                   Kelamin
                 </label>
                 <div className="relative">
@@ -203,7 +203,7 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
                     value={formData.kelamin}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2.5 bg-gray-700/80 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-400 transition-all shadow-sm hover:border-gray-500 group-hover:border-gray-500 backdrop-blur-sm appearance-none"
+                    className="w-full px-4 py-2.5 bg-gray-100 dark:bg-gray-700/80 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-400 transition-all shadow-sm hover:border-gray-400 dark:hover:border-gray-500 group-hover:border-gray-400 dark:group-hover:border-gray-500 backdrop-blur-sm appearance-none"
                   >
                     <option value="">Pilih jenis kelamin</option>
                     <option value="Laki-laki">Laki-laki</option>
@@ -223,8 +223,8 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: 0.3 }}
               >
-                <label className="block text-sm font-medium text-blue-300 mb-1.5 flex items-center">
-                  <CreditCard className="h-4 w-4 mr-2 text-blue-400" />
+                <label className="block text-sm font-medium text-gray-900 dark:text-blue-300 mb-1.5 flex items-center">
+                  <CreditCard className="h-4 w-4 mr-2 text-blue-500 dark:text-blue-400" />
                   Jenis Pasien
                 </label>
                 <div className="relative">
@@ -233,7 +233,7 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
                     value={formData.jenis_pasien}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2.5 bg-gray-700/80 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-400 transition-all shadow-sm hover:border-gray-500 group-hover:border-gray-500 backdrop-blur-sm appearance-none"
+                    className="w-full px-4 py-2.5 bg-gray-100 dark:bg-gray-700/80 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-400 transition-all shadow-sm hover:border-gray-400 dark:hover:border-gray-500 group-hover:border-gray-400 dark:group-hover:border-gray-500 backdrop-blur-sm appearance-none"
                   >
                     <option value="">Pilih jenis pasien</option>
                     <option value="BPJS">BPJS</option>

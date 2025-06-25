@@ -26,13 +26,13 @@ export default function StatusModal({ isOpen, onClose, status, message }: Status
           animate={{ scale: 1, rotate: 0 }}
           transition={{ type: 'spring', damping: 10, stiffness: 100 }}
           className={`w-20 h-20 rounded-full flex items-center justify-center mb-6 shadow-lg border ${status === 'success' 
-            ? 'bg-gradient-to-br from-green-400 to-green-600 shadow-green-500/20 border-green-400/30' 
-            : 'bg-gradient-to-br from-red-400 to-red-600 shadow-red-500/20 border-red-400/30'}`}
+            ? 'bg-green-100 dark:bg-gradient-to-br dark:from-green-400 dark:to-green-600 dark:shadow-green-500/20 dark:border-green-400/30 border-green-300 shadow-green-200/30' 
+            : 'bg-red-100 dark:bg-gradient-to-br dark:from-red-400 dark:to-red-600 dark:shadow-red-500/20 dark:border-red-400/30 border-red-300 shadow-red-200/30'}`}
         >
           {status === 'success' ? (
-            <CheckCircle className="w-10 h-10 text-white" />
+            <CheckCircle className="w-10 h-10 text-green-600 dark:text-white" />
           ) : (
-            <XCircle className="w-10 h-10 text-white" />
+            <XCircle className="w-10 h-10 text-red-600 dark:text-white" />
           )}
         </motion.div>
         
@@ -40,7 +40,7 @@ export default function StatusModal({ isOpen, onClose, status, message }: Status
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-lg text-white mb-8 bg-white/5 p-4 rounded-lg border border-white/10 shadow-inner"
+          className="text-lg text-gray-900 dark:text-white mb-8 bg-gray-100 dark:bg-white/5 p-4 rounded-lg border border-gray-200 dark:border-white/10 shadow-inner"
         >
           {message}
         </motion.p>
@@ -50,10 +50,10 @@ export default function StatusModal({ isOpen, onClose, status, message }: Status
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={onClose}
-            className={`px-6 py-3 rounded-lg text-white transition-all duration-300 shadow-lg flex items-center justify-center gap-2 font-medium ${
+            className={`px-6 py-3 rounded-lg text-gray-900 dark:text-white transition-all duration-300 shadow-lg flex items-center justify-center gap-2 font-medium ${
               status === 'success' 
-                ? 'bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 shadow-green-700/30' 
-                : 'bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 shadow-red-700/30'
+                ? 'bg-green-200 dark:bg-gradient-to-r dark:from-green-500 dark:to-emerald-600 dark:hover:from-green-600 dark:hover:to-emerald-700 dark:shadow-green-700/30 hover:bg-green-300' 
+                : 'bg-red-200 dark:bg-gradient-to-r dark:from-red-500 dark:to-rose-600 dark:hover:from-red-600 dark:hover:to-rose-700 dark:shadow-red-700/30 hover:bg-red-300'
             }`}
           >
             {status === 'success' ? (
@@ -69,9 +69,10 @@ export default function StatusModal({ isOpen, onClose, status, message }: Status
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleViewData}
-              className="px-6 py-3 rounded-lg text-white transition-all duration-300 shadow-lg flex items-center justify-center gap-2 font-medium bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 shadow-blue-700/30"
+              className="px-6 py-3 rounded-lg text-white bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 shadow-blue-700/30 transition-all duration-300 flex items-center justify-center gap-2 font-medium"
             >
-              Lihat Data <ArrowRight className="w-4 h-4" />
+              Lihat Data
+              <ArrowRight className="w-4 h-4" />
             </motion.button>
           )}
         </div>

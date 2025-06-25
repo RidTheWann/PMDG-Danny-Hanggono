@@ -20,19 +20,19 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.svg" />
       </head>
-      <body className={`font-sans antialiased bg-gradient-to-br from-gray-900 to-gray-800 text-white min-h-screen flex flex-col ${theme}`}> 
+      <body className={`font-sans antialiased bg-white dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-white min-h-screen flex flex-col ${theme}`}> 
         {/* Header Navigation */}
-        <header className="bg-gradient-to-r from-blue-900 to-blue-800 border-b border-blue-700 sticky top-0 z-50 shadow-lg">
+        <header className="bg-white dark:bg-gradient-to-r dark:from-blue-900 dark:to-blue-800 border-b border-blue-200 dark:border-blue-700 sticky top-0 z-50 shadow-lg">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
               {/* Logo and Title */}
               <div className="flex items-center space-x-3 group">
-                <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-md transform transition-transform duration-300 group-hover:scale-105">
+                <div className="w-10 h-10 bg-gray-100 dark:bg-white rounded-lg flex items-center justify-center shadow-md transform transition-transform duration-300 group-hover:scale-105">
                   <Image src="/favicon.ico" alt="Logo Praktek Mandiri drg. Danny Hanggono" width={40} height={40} priority />
                 </div>
                 <div>
-                  <h1 className="text-lg font-semibold text-white tracking-wide" aria-label="Praktek Mandiri drg. Danny Hanggono">Praktek Mandiri</h1>
-                  <p className="text-sm text-blue-200 opacity-90">drg. Danny Hanggono</p>
+                  <h1 className="text-lg font-semibold text-gray-900 dark:text-white tracking-wide" aria-label="Praktek Mandiri drg. Danny Hanggono">Praktek Mandiri</h1>
+                  <p className="text-sm text-blue-700 dark:text-blue-200 opacity-90">drg. Danny Hanggono</p>
                 </div>
               </div>
 
@@ -40,31 +40,31 @@ export default function RootLayout({
               <nav className="hidden md:flex items-center space-x-2">
                 <Link
                   href="/"
-                  className="px-4 py-2 rounded-lg text-white hover:bg-blue-700 hover:shadow-md transition-all duration-300 relative overflow-hidden group"
+                  className="px-4 py-2 rounded-lg text-gray-900 dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 hover:shadow-md transition-all duration-300 relative overflow-hidden group"
                 >
                   <span className="relative z-10">Beranda</span>
-                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-700 dark:bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
                 </Link>
                 <Link
                   href="/tambah-pasien"
-                  className="px-4 py-2 rounded-lg text-white hover:bg-blue-700 hover:shadow-md transition-all duration-300 relative overflow-hidden group"
+                  className="px-4 py-2 rounded-lg text-gray-900 dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 hover:shadow-md transition-all duration-300 relative overflow-hidden group"
                 >
                   <span className="relative z-10">Data Harian</span>
-                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-700 dark:bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
                 </Link>
                 <Link
                   href="/data-pasien"
-                  className="px-4 py-2 rounded-lg text-white hover:bg-blue-700 hover:shadow-md transition-all duration-300 relative overflow-hidden group"
+                  className="px-4 py-2 rounded-lg text-gray-900 dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 hover:shadow-md transition-all duration-300 relative overflow-hidden group"
                 >
                   <span className="relative z-10">Dashboard</span>
-                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-700 dark:bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
                 </Link>
                 <Link
                   href="/laporan"
-                  className="px-4 py-2 rounded-lg text-white hover:bg-blue-700 hover:shadow-md transition-all duration-300 relative overflow-hidden group"
+                  className="px-4 py-2 rounded-lg text-gray-900 dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 hover:shadow-md transition-all duration-300 relative overflow-hidden group"
                 >
                   <span className="relative z-10">Arship Tugas</span>
-                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-700 dark:bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
                 </Link>
               </nav>
 

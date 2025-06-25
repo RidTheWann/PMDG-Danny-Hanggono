@@ -13,7 +13,7 @@ interface EditPatientModalProps {
 
 export default function EditPatientModal({ isOpen, onClose, patient, onSave }: EditPatientModalProps) {
   const [formData, setFormData] = useState<Patient>({
-    id: '',
+    id: '', // Menambahkan id agar sesuai dengan tipe Patient
     tanggal: '',
     nama_pasien: '',
     no_rm: '',

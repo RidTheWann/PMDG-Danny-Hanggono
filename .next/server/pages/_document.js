@@ -1,4 +1,1 @@
-const CHUNK_PUBLIC_PATH = "server/pages/_document.js";
-const runtime = require("../chunks/[turbopack]_runtime.js");
-runtime.loadChunk("server/chunks/[root of the server]__cbda3c._.js");
-module.exports = runtime.getOrInstantiateRuntimeModule("[project]/node_modules/next/dist/esm/build/templates/pages.js/(INNER_PAGE)/[next]/entry/pages/_document.tsx [ssr] (ecmascript) {facade} (ecmascript)", CHUNK_PUBLIC_PATH).exports;
+"use strict";(()=>{var e={};e.id=660,e.ids=[660],e.modules={2785:e=>{e.exports=require("next/dist/compiled/next-server/pages.runtime.prod.js")},6689:e=>{e.exports=require("react")},1017:e=>{e.exports=require("path")}};var r=require("../webpack-runtime.js");r.C(e);var s=e=>r(r.s=e),t=r.X(0,[329],()=>s(2329));module.exports=t})();

@@ -1,1 +1,1 @@
-self.__NEXT_FONT_MANIFEST="{\n  \"pages\": {},\n  \"app\": {},\n  \"appUsingSizeAdjust\": false,\n  \"pagesUsingSizeAdjust\": false\n}"
+self.__NEXT_FONT_MANIFEST='{"pages":{},"app":{},"appUsingSizeAdjust":false,"pagesUsingSizeAdjust":false}';

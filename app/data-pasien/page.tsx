@@ -742,30 +742,3 @@ export default function DataPasienPage() {
     </div>
   );
 }
-
-// Untuk badge jenis pasien:
-<span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${patient.jenis_pasien === 'BPJS' ? 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200' : 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200'}`}>
-  {patient.jenis_pasien}
-</span>
-
-// Untuk mobile-table.css, gunakan CSS custom property:
-:root {
-  --table-bg-light: #fff;
-  --table-bg-dark: #111827;
-  --table-scrollbar-thumb-light: #d1d5db;
-  --table-scrollbar-thumb-dark: #374151;
-}
-@media (max-width: 640px) {
-  .mobile-table-container table {
-    background: var(--table-bg-light);
-  }
-  html.dark .mobile-table-container table {
-    background: var(--table-bg-dark);
-  }
-  .mobile-table-container::-webkit-scrollbar-thumb {
-    background-color: var(--table-scrollbar-thumb-light);
-  }
-  html.dark .mobile-table-container::-webkit-scrollbar-thumb {
-    background-color: var(--table-scrollbar-thumb-dark);
-  }
-}

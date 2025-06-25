@@ -430,14 +430,14 @@ export default function DataPasienPage() {
                     <table className="w-full table-fixed">
                       <thead className="bg-gray-700">
   <tr>
-    <th className="w-[40px] px-2 py-3 text-left text-xs font-medium text-gray-900 dark:text-gray-300 uppercase tracking-wider">No</th>
-    <th className="w-[90px] px-2 py-3 text-left text-xs font-medium text-gray-900 dark:text-gray-300 uppercase tracking-wider">Tanggal</th>
-    <th className="w-[180px] px-2 py-3 text-left text-xs font-medium text-gray-900 dark:text-gray-300 uppercase tracking-wider">Nama Pasien</th>
-    <th className="w-[100px] px-2 py-3 text-left text-xs font-medium text-gray-900 dark:text-gray-300 uppercase tracking-wider">No. RM</th>
-    <th className="w-[250px] px-2 py-3 text-left text-xs font-medium text-gray-900 dark:text-gray-300 uppercase tracking-wider">Tindakan</th>
-    <th className="w-[80px] px-2 py-3 text-left text-xs font-medium text-gray-900 dark:text-gray-300 uppercase tracking-wider">Jenis</th>
-    <th className="w-[150px] px-2 py-3 text-left text-xs font-medium text-gray-900 dark:text-gray-300 uppercase tracking-wider">Lainnya</th>
-    <th className="w-[80px] px-2 py-3 text-center text-xs font-medium text-gray-900 dark:text-gray-300 uppercase tracking-wider">Aksi</th>
+    <th className="w-[40px] px-2 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">No</th>
+    <th className="w-[90px] px-2 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Tanggal</th>
+    <th className="w-[180px] px-2 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Nama Pasien</th>
+    <th className="w-[100px] px-2 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">No. RM</th>
+    <th className="w-[250px] px-2 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Tindakan</th>
+    <th className="w-[80px] px-2 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Jenis</th>
+    <th className="w-[150px] px-2 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Lainnya</th>
+    <th className="w-[80px] px-2 py-3 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">Aksi</th>
   </tr>
 </thead>
 <tbody className="divide-y divide-gray-700">

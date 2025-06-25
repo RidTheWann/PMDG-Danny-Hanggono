@@ -31,6 +31,16 @@
     background: var(--table-bg-dark);
   }
 
+  /* Tambahkan agar th dan td pada light mode tetap terlihat */
+  .mobile-table-container th,
+  .mobile-table-container td {
+    color: #1f2937; /* text-gray-800 */
+  }
+  html.dark .mobile-table-container th,
+  html.dark .mobile-table-container td {
+    color: #fff;
+  }
+
   .mobile-table-container table {
     width: 100%;
   }

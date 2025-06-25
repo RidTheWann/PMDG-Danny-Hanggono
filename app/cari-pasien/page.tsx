@@ -233,12 +233,12 @@ export default function CariPasienPage() {
         <div className={`mb-8 transform transition-all duration-700 delay-100 ${pageLoaded ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
           <div className="bg-white dark:bg-gray-900 bg-opacity-90 backdrop-blur-sm rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-lg">
             <div className="relative">
-              <div className="absolute left-0 top-1/2 -translate-y-1/2 pl-4 flex items-center pointer-events-none">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center pointer-events-none z-10">
                 <Search className="h-5 w-5 text-blue-500" />
-              </div>
+              </span>
               <input
                 type="text"
-                className="w-full px-4 py-2 pl-12 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-700 dark:placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 pl-10 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder={`Cari berdasarkan ${searchType === 'nama' ? 'nama pasien' : searchType === 'rm' ? 'nomor RM' : 'tindakan'}`}
                 value={searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}
@@ -285,22 +285,22 @@ export default function CariPasienPage() {
         <div className={`mb-6 transform transition-all duration-700 delay-200 ${pageLoaded ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
           <div className="bg-gray-100 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl px-6 py-4 border border-gray-200 dark:border-gray-700 shadow-md">
             {loading ? (
-              <h2 className="text-xl font-semibold flex items-center">
+              <h2 className="text-xl font-semibold flex items-center text-gray-700 dark:text-blue-300">
                 <div className="mr-3 h-5 w-5 rounded-full border-2 border-blue-500 border-t-transparent animate-spin"></div>
                 Mencari...
               </h2>
             ) : initialSearch ? (
-              <h2 className="text-xl font-semibold flex items-center text-blue-300">
+              <h2 className="text-xl font-semibold flex items-center text-blue-600 dark:text-blue-300">
                 <Search className="h-5 w-5 mr-2" />
                 Masukkan kata kunci pencarian
               </h2>
             ) : results.length === 0 ? (
-              <h2 className="text-xl font-semibold flex items-center text-amber-300">
+              <h2 className="text-xl font-semibold flex items-center text-amber-600 dark:text-amber-300">
                 <AlertCircle className="h-5 w-5 mr-2" />
                 Tidak ada hasil ditemukan
               </h2>
             ) : (
-              <h2 className="text-xl font-semibold flex items-center text-green-300">
+              <h2 className="text-xl font-semibold flex items-center text-green-700 dark:text-green-300">
                 <CheckCircle className="h-5 w-5 mr-2" />
                 Ditemukan {results.length} hasil
               </h2>

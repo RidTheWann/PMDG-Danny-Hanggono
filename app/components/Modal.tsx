@@ -10,7 +10,13 @@ interface ModalProps {
   maxWidth?: string;
 }
 
-export default function Modal({ isOpen, onClose, title, children, maxWidth = 'max-w-md' }: ModalProps) {
+export default function Modal({
+  isOpen,
+  onClose,
+  title,
+  children,
+  maxWidth = 'max-w-md',
+}: ModalProps): JSX.Element | null {
   // Mencegah scroll pada body ketika modal terbuka
   useEffect(() => {
     if (isOpen) {
@@ -18,7 +24,7 @@ export default function Modal({ isOpen, onClose, title, children, maxWidth = 'ma
     } else {
       document.body.style.overflow = 'auto';
     }
-    
+
     return () => {
       document.body.style.overflow = 'auto';
     };
@@ -27,14 +33,14 @@ export default function Modal({ isOpen, onClose, title, children, maxWidth = 'ma
   if (!isOpen) return null;
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/60 dark:bg-black/60 bg-white/60 transition-all"
+      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/60 dark:bg-black/60 transition-all"
       onClick={onClose}
     >
-      <motion.div 
+      <motion.div
         initial={{ scale: 0.9, y: 20, opacity: 0 }}
         animate={{ scale: 1, y: 0, opacity: 1 }}
         transition={{ type: 'spring', damping: 25, stiffness: 300 }}
@@ -53,7 +59,10 @@ export default function Modal({ isOpen, onClose, title, children, maxWidth = 'ma
             <X className="w-5 h-5" />
           </motion.button>
         </div>
-        <div className="p-3 sm:p-6 max-h-[80vh] overflow-y-auto" style={{ willChange: 'transform', contain: 'layout paint' }}>
+        <div
+          className="p-3 sm:p-6 max-h-[80vh] overflow-y-auto"
+          style={{ willChange: 'transform', contain: 'layout paint' }}
+        >
           {children}
         </div>
       </motion.div>

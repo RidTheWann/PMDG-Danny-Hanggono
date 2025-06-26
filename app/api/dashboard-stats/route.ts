@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
 // Tambahkan revalidate = 0 untuk mencegah caching di Vercel
 export const revalidate = 0;
@@ -15,7 +15,7 @@ let cachedStats: DashboardStats | null = null;
 let cachedAt = 0;
 const CACHE_DURATION = 30 * 1000; // 30 detik
 
-export async function GET(request: NextRequest) {
+export async function GET(): Promise<NextResponse> {
   try {
     // Jika cache masih valid, return cache
     if (cachedStats && Date.now() - cachedAt < CACHE_DURATION) {
@@ -46,13 +46,13 @@ export async function GET(request: NextRequest) {
           'Content-Type': 'application/json',
         },
         cache: 'no-store',
-        signal: controller.signal
+        signal: controller.signal,
       });
-    } catch (err: any) {
-      if (err.name === 'AbortError') {
+    } catch (err: unknown) {
+      if (err instanceof Error && err.name === 'AbortError') {
         return NextResponse.json(
           { error: 'Timeout saat mengambil data Google Sheets' },
-          { status: 504 }
+          { status: 504 },
         );
       }
       throw err;
@@ -77,24 +77,16 @@ export async function GET(request: NextRequest) {
     let pasiенBPJS = 0;
     let pasienUmum = 0;
 
-    records.forEach((row: any[]) => {
-      if (row.length === 0) return;
-
-      const tanggalKunjungan = row[0] || '';
-      const noAntrean = row[1] || '';
-      const jenisPasien = row[5] || '';
-
-      totalPasienBulanIni++;
+    records.forEach((row: object[]) => {
+      const tanggalKunjungan = String(row[0] ?? '');
+      const noAntrean = String(row[1] ?? '');
+      const jenisPasien = String(row[5] ?? '');
 
       // Count patients for today
       if (tanggalKunjungan && tanggalKunjungan.includes(todayStr)) {
         totalPasienHariIni++;
-
-        // Get latest queue number for today
         const currentAntrean = parseInt(noAntrean) || 0;
-        if (currentAntrean > antreanTerakhir) {
-          antreanTerakhir = currentAntrean;
-        }
+        if (currentAntrean > antreanTerakhir) antreanTerakhir = currentAntrean;
       }
 
       // Count patient types
@@ -103,6 +95,7 @@ export async function GET(request: NextRequest) {
       } else if (jenisPasien === 'UMUM') {
         pasienUmum++;
       }
+      totalPasienBulanIni++;
     });
 
     // Setelah dapat hasil:
@@ -111,16 +104,13 @@ export async function GET(request: NextRequest) {
       totalPasienBulanIni,
       antreanTerakhir,
       pasiенBPJS,
-      pasienUmum
+      pasienUmum,
     };
     cachedStats = result;
     cachedAt = Date.now();
     return NextResponse.json(result);
   } catch (error) {
     console.error('Error fetching dashboard stats:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch dashboard stats' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Failed to fetch dashboard stats' }, { status: 500 });
   }
 }

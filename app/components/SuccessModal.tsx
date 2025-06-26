@@ -8,11 +8,11 @@ interface SuccessModalProps {
   message: string;
 }
 
-export default function SuccessModal({ isOpen, onClose, message }: SuccessModalProps) {
+export default function SuccessModal({ isOpen, onClose, message }: SuccessModalProps): JSX.Element {
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Berhasil" maxWidth="max-w-md">
       <div className="flex flex-col items-center text-center p-4">
-        <motion.div 
+        <motion.div
           initial={{ scale: 0, rotate: -180 }}
           animate={{ scale: 1, rotate: 0 }}
           transition={{ type: 'spring', damping: 10, stiffness: 100 }}
@@ -20,8 +20,8 @@ export default function SuccessModal({ isOpen, onClose, message }: SuccessModalP
         >
           <CheckCircle className="w-10 h-10 text-green-600 dark:text-white" />
         </motion.div>
-        
-        <motion.p 
+
+        <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
@@ -29,7 +29,7 @@ export default function SuccessModal({ isOpen, onClose, message }: SuccessModalP
         >
           {message}
         </motion.p>
-        
+
         <motion.button
           whileHover={{ scale: 1.05, backgroundColor: '#059669' }}
           whileTap={{ scale: 0.95 }}

@@ -1,14 +1,13 @@
-
 import { NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     const { searchParams } = new URL(request.url);
     const month = searchParams.get('month') || (new Date().getMonth() + 1).toString();
     const year = searchParams.get('year') || new Date().getFullYear().toString();
-    
+
     // Fetch data from Google Sheets
     const sheetsUrl = process.env.GOOGLE_SHEETS_URL;
     if (!sheetsUrl) {
@@ -33,18 +32,17 @@ export async function GET(request: NextRequest) {
     const records = sheetData.slice(1);
 
     // Process data for reports
-    const dailyData: { [key: string]: any } = {};
+    const dailyData: { [key: string]: unknown } = {};
     const treatmentCounts: { [key: string]: number } = {};
     let totalPatients = 0;
     let bpjsPatients = 0;
     let umumPatients = 0;
 
-    records.forEach((row: any[]) => {
-      if (row.length === 0) return;
-      
-      const tanggalKunjungan = row[0];
-      const jenisPasien = row[5] || '';
-      
+    records.forEach((row: unknown[]) => {
+      if (!Array.isArray(row) || row.length === 0) return;
+      const tanggalKunjungan = String(row[0] ?? '');
+      const jenisPasien = String(row[5] ?? '');
+
       // Extract treatments
       const treatments = {
         obat: row[6] === 'Ya',
@@ -54,7 +52,7 @@ export async function GET(request: NextRequest) {
         tambal_tetap: row[10] === 'Ya',
         scaling: row[11] === 'Ya',
         rujuk: row[12] === 'Ya',
-        lainnya: row[13] && row[13].trim() !== ''
+        lainnya: typeof row[13] === 'string' && row[13].trim() !== '',
       };
 
       // Count treatments
@@ -72,24 +70,23 @@ export async function GET(request: NextRequest) {
           totalPatients: 0,
           bpjsPatients: 0,
           umumPatients: 0,
-          treatments: {}
+          treatments: {} as Record<string, number>,
         };
       }
-
-      dailyData[dateKey].totalPatients += 1;
-      
+      const daily = dailyData[dateKey] as DailyData;
+      daily.totalPatients += 1;
       if (jenisPasien === 'BPJS') {
-        dailyData[dateKey].bpjsPatients += 1;
+        daily.bpjsPatients += 1;
         bpjsPatients += 1;
       } else if (jenisPasien === 'UMUM') {
-        dailyData[dateKey].umumPatients += 1;
+        daily.umumPatients += 1;
         umumPatients += 1;
       }
 
       // Count daily treatments
       Object.entries(treatments).forEach(([treatment, isTrue]) => {
         if (isTrue) {
-          dailyData[dateKey].treatments[treatment] = (dailyData[dateKey].treatments[treatment] || 0) + 1;
+          daily.treatments[treatment] = (daily.treatments[treatment] || 0) + 1;
         }
       });
 
@@ -97,12 +94,12 @@ export async function GET(request: NextRequest) {
     });
 
     // Find most popular treatment
-    const mostPopularTreatment = Object.entries(treatmentCounts)
-      .sort(([,a], [,b]) => b - a)[0]?.[0] || 'Tidak ada';
+    const mostPopularTreatment =
+      Object.entries(treatmentCounts).sort(([, a], [, b]) => b - a)[0]?.[0] || 'Tidak ada';
 
     // Convert to array and sort by date
-    const dailyDataArray = Object.values(dailyData).sort((a: any, b: any) => 
-      new Date(a.date).getTime() - new Date(b.date).getTime()
+    const dailyDataArray = Object.values(dailyData).sort((a, b) =>
+      String((a as DailyData).date).localeCompare(String((b as DailyData).date)),
     );
 
     // Calculate average per day
@@ -115,14 +112,11 @@ export async function GET(request: NextRequest) {
       umumPatients,
       averagePerDay,
       mostPopularTreatment: getTreatmentLabel(mostPopularTreatment),
-      dailyData: dailyDataArray
+      dailyData: dailyDataArray,
     });
   } catch (error) {
     console.error('Error generating report:', error);
-    return NextResponse.json(
-      { error: 'Failed to generate report' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Failed to generate report' }, { status: 500 });
   }
 }
 
@@ -135,8 +129,16 @@ function getTreatmentLabel(treatment: string): string {
     tambal_tetap: 'Tambal Tetap',
     scaling: 'Scaling',
     rujuk: 'Rujuk',
-    lainnya: 'Lainnya'
+    lainnya: 'Lainnya',
   };
-  
+
   return labels[treatment] || treatment;
+}
+
+interface DailyData {
+  date: string;
+  totalPatients: number;
+  bpjsPatients: number;
+  umumPatients: number;
+  treatments: Record<string, number>;
 }

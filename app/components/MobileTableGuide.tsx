@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { ChevronRight, ChevronLeft, Smartphone, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function MobileTableGuide() {
+export default function MobileTableGuide(): JSX.Element | null {
   const [isVisible, setIsVisible] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -13,33 +13,33 @@ export default function MobileTableGuide() {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
-    
+
     // Initial check
     checkMobile();
-    
+
     // Add resize listener
     window.addEventListener('resize', checkMobile);
-    
+
     // Check if user has dismissed the guide before
     const dismissed = localStorage.getItem('tableGuideDismissed');
     if (dismissed === 'true') {
       setIsVisible(false);
     }
-    
+
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
-  
+
   const dismissGuide = () => {
     setIsVisible(false);
     localStorage.setItem('tableGuideDismissed', 'true');
   };
-  
+
   if (!isMobile) return null;
-  
+
   return (
     <AnimatePresence>
       {isVisible && (
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
@@ -53,7 +53,7 @@ export default function MobileTableGuide() {
               </div>
               <span className="font-medium">Panduan Tabel Mobile</span>
             </div>
-            <motion.button 
+            <motion.button
               whileHover={{ scale: 1.1, backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
               whileTap={{ scale: 0.9 }}
               onClick={dismissGuide}
@@ -62,24 +62,21 @@ export default function MobileTableGuide() {
               <X className="w-4 h-4" />
             </motion.button>
           </div>
-          
+
           <div className="mt-3 flex items-center bg-blue-500/20 p-3 rounded-lg border border-blue-400/20">
-            <motion.div 
-              animate={{ x: [0, -5, 0] }} 
+            <motion.div
+              animate={{ x: [0, -5, 0] }}
               transition={{ repeat: Infinity, duration: 1.5 }}
             >
               <ChevronLeft className="w-5 h-5 text-blue-400 dark:text-blue-200" />
             </motion.div>
-            <motion.div 
-              animate={{ x: [0, 5, 0] }} 
-              transition={{ repeat: Infinity, duration: 1.5 }}
-            >
+            <motion.div animate={{ x: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}>
               <ChevronRight className="w-5 h-5 mr-3 text-blue-400 dark:text-blue-200" />
             </motion.div>
             <span className="text-sm">Geser tabel ke kanan/kiri untuk melihat semua data</span>
           </div>
-          
-          <motion.button 
+
+          <motion.button
             whileHover={{ scale: 1.03, backgroundColor: '#2563EB' }}
             whileTap={{ scale: 0.97 }}
             onClick={dismissGuide}

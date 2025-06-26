@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { CalendarPlus, BarChart3, ClipboardList, TrendingUp, CheckSquare } from 'lucide-react';
 
-export default function Homepage() {
+export default function Homepage(): JSX.Element {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -17,18 +17,19 @@ export default function Homepage() {
   const features = [
     {
       icon: ClipboardList,
-      title: "Data Harian",
-      description: "Catat semua tindakan medis dan rujukan pasien dengan mudah dan terstruktur.",
+      title: 'Data Harian',
+      description: 'Catat semua tindakan medis dan rujukan pasien dengan mudah dan terstruktur.',
     },
     {
       icon: TrendingUp,
-      title: "Dashboard Analytics",
-      description: "Monitor statistik praktek dengan visualisasi data yang interaktif dan real-time.",
+      title: 'Dashboard Analytics',
+      description:
+        'Monitor statistik praktek dengan visualisasi data yang interaktif dan real-time.',
     },
     {
       icon: CheckSquare,
-      title: "Manajemen Tugas",
-      description: "Kelola tugas dan arship dengan sistem galeri yang terorganisir dengan baik.",
+      title: 'Manajemen Tugas',
+      description: 'Kelola tugas dan arship dengan sistem galeri yang terorganisir dengan baik.',
     },
   ];
 
@@ -65,11 +66,13 @@ export default function Homepage() {
           </div>
           <div className="max-w-3xl mx-auto">
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-              Selamat Datang di<br />
+              Selamat Datang di
+              <br />
               <span className="text-blue-700 dark:text-blue-600">Praktek Mandiri</span>
             </h1>
             <p className="text-xl text-gray-700 dark:text-gray-300 mb-8">
-              Sistem Manajemen Digital untuk Praktek Dokter Gigi<br />
+              Sistem Manajemen Digital untuk Praktek Dokter Gigi
+              <br />
               drg. Danny Hanggono
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -123,7 +126,9 @@ export default function Homepage() {
                 >
                   <feature.icon className="h-8 w-8" />
                 </motion.div>
-                <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-blue-100">{feature.title}</h3>
+                <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-blue-100">
+                  {feature.title}
+                </h3>
                 <p className="text-gray-700 dark:text-gray-300">{feature.description}</p>
               </div>
             </motion.div>

@@ -1,19 +1,15 @@
-"use client";
+'use client';
 
-import Link from 'next/link'
-import './globals.css'
-import { SpeedInsights } from "@vercel/speed-insights/next"
-import { Analytics } from "@vercel/analytics/react"
+import Link from 'next/link';
+import './globals.css';
+import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from '@vercel/analytics/react';
 import { useTheme } from './hooks/useTheme';
 import { Sun, Moon } from 'lucide-react';
 import Image from 'next/image';
 import MobileMenu from './components/MobileMenu';
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }): JSX.Element {
   const { theme, toggleTheme } = useTheme();
   return (
     <html lang="id" suppressHydrationWarning>
@@ -21,7 +17,9 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.svg" />
       </head>
-      <body className={`font-sans antialiased bg-white dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-white min-h-screen flex flex-col ${theme}`}> 
+      <body
+        className={`font-sans antialiased bg-white dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-white min-h-screen flex flex-col ${theme}`}
+      >
         {/* Header Navigation */}
         <header className="bg-white dark:bg-gradient-to-r dark:from-blue-900 dark:to-blue-800 border-b border-blue-200 dark:border-blue-700 sticky top-0 z-50 shadow-lg">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -29,11 +27,24 @@ export default function RootLayout({
               {/* Logo and Title */}
               <div className="flex items-center space-x-3 group">
                 <div className="w-10 h-10 bg-gray-100 dark:bg-white rounded-lg flex items-center justify-center shadow-md transform transition-transform duration-300 group-hover:scale-105">
-                  <Image src="/favicon.ico" alt="Logo Praktek Mandiri drg. Danny Hanggono" width={40} height={40} priority />
+                  <Image
+                    src="/favicon.ico"
+                    alt="Logo Praktek Mandiri drg. Danny Hanggono"
+                    width={40}
+                    height={40}
+                    priority
+                  />
                 </div>
                 <div>
-                  <h1 className="text-lg font-semibold text-gray-900 dark:text-white tracking-wide" aria-label="Praktek Mandiri drg. Danny Hanggono">Praktek Mandiri</h1>
-                  <p className="text-sm text-blue-700 dark:text-blue-200 opacity-90">drg. Danny Hanggono</p>
+                  <h1
+                    className="text-lg font-semibold text-gray-900 dark:text-white tracking-wide"
+                    aria-label="Praktek Mandiri drg. Danny Hanggono"
+                  >
+                    Praktek Mandiri
+                  </h1>
+                  <p className="text-sm text-blue-700 dark:text-blue-200 opacity-90">
+                    drg. Danny Hanggono
+                  </p>
                 </div>
               </div>
 
@@ -85,23 +96,21 @@ export default function RootLayout({
               {/* Mobile Menu Button & Menu (React) */}
               <MobileMenu />
             </div>
-            
+
             {/* Mobile Menu */}
             {/* <div id="mobileMenu" className="mobile-menu ..."> ... </div> */}
           </div>
         </header>
 
         <main className="flex-1 bg-gradient-to-br from-gray-900 to-gray-800 py-6">
-          <div className="fade-in">
-            {children}
-          </div>
+          <div className="fade-in">{children}</div>
         </main>
-        
+
         {/* Script untuk menu mobile dengan animasi */}
         {/* <script dangerouslySetInnerHTML={{ __html: ` ... `}} /> */}
         <SpeedInsights />
         <Analytics />
       </body>
     </html>
-  )
+  );
 }

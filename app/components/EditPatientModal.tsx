@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import Modal from './Modal';
-import { User, Calendar, CreditCard, Activity, CheckCircle, Pill, Scissors, Smile, Wrench } from 'lucide-react';
+import {
+  User,
+  Calendar,
+  CreditCard,
+  Activity,
+  CheckCircle,
+  Pill,
+  Scissors,
+  Smile,
+  Wrench,
+} from 'lucide-react';
 import { motion } from 'framer-motion';
 import type { Patient } from '../types/patient';
 
@@ -11,7 +21,12 @@ interface EditPatientModalProps {
   onSave: (updatedPatient: Patient) => Promise<void>;
 }
 
-export default function EditPatientModal({ isOpen, onClose, patient, onSave }: EditPatientModalProps) {
+export default function EditPatientModal({
+  isOpen,
+  onClose,
+  patient,
+  onSave,
+}: EditPatientModalProps): JSX.Element | null {
   const [formData, setFormData] = useState<Patient>({
     id: '', // Menambahkan id agar sesuai dengan tipe Patient
     tanggal: '',
@@ -19,7 +34,7 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
     no_rm: '',
     kelamin: '',
     jenis_pasien: '',
-    lainnya: ''
+    lainnya: '',
   });
   const [loading, setLoading] = useState(false);
 
@@ -28,7 +43,7 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
     if (patient) {
       // Konversi array actions menjadi properti boolean
       let actions = [];
-      
+
       // Pastikan actions adalah array
       if (patient.actions) {
         if (Array.isArray(patient.actions)) {
@@ -42,7 +57,7 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
           }
         }
       }
-      
+
       setFormData({
         id: patient.id,
         tanggal: patient.tanggal,
@@ -63,14 +78,16 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
         tambal_sementara: actions.includes('Tambal Sementara'),
         tambal_tetap: actions.includes('Tambal Tetap'),
         scaling: actions.includes('Scaling'),
-        rujuk: actions.includes('Rujuk')
+        rujuk: actions.includes('Rujuk'),
       });
     }
   }, [patient]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value, type } = e.target;
-    
+
     if (type === 'checkbox') {
       const checked = (e.target as HTMLInputElement).checked;
       setFormData((prev: Patient) => ({ ...prev, [name]: checked }));
@@ -82,7 +99,7 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    
+
     try {
       // Kumpulkan tindakan yang dipilih
       const selectedActions = [];
@@ -93,13 +110,13 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
       if (formData.tambal_tetap) selectedActions.push('Tambal Tetap');
       if (formData.scaling) selectedActions.push('Scaling');
       if (formData.rujuk) selectedActions.push('Rujuk');
-      
+
       // Update formData dengan actions terbaru
       const updatedData = {
         ...formData,
-        actions: selectedActions
+        actions: selectedActions,
       };
-      
+
       await onSave(updatedData);
       onClose();
     } catch (error) {
@@ -121,13 +138,13 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
           <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 pointer-events-none"></div>
           <div className="relative">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 mb-6">
-              <motion.div 
-                className="group" 
+              <motion.div
+                className="group"
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3, delay: 0.1 }}
               >
-                <label className="block text-sm font-medium text-gray-900 dark:text-blue-300 mb-1.5 flex items-center">
+                <label className="text-sm font-medium text-gray-900 dark:text-blue-300 mb-1.5 flex items-center">
                   <Calendar className="h-4 w-4 mr-2 text-blue-500 dark:text-blue-400" />
                   Tanggal
                 </label>
@@ -142,14 +159,14 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
                   />
                 </div>
               </motion.div>
-              
-              <motion.div 
-                className="group" 
+
+              <motion.div
+                className="group"
                 initial={{ opacity: 0, x: 10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3, delay: 0.1 }}
               >
-                <label className="block text-sm font-medium text-gray-900 dark:text-blue-300 mb-1.5 flex items-center">
+                <label className="text-sm font-medium text-gray-900 dark:text-blue-300 mb-1.5 flex items-center">
                   <CreditCard className="h-4 w-4 mr-2 text-blue-500 dark:text-blue-400" />
                   No. RM
                 </label>
@@ -164,14 +181,14 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
                   />
                 </div>
               </motion.div>
-              
-              <motion.div 
-                className="group" 
+
+              <motion.div
+                className="group"
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3, delay: 0.2 }}
               >
-                <label className="block text-sm font-medium text-gray-900 dark:text-blue-300 mb-1.5 flex items-center">
+                <label className="text-sm font-medium text-gray-900 dark:text-blue-300 mb-1.5 flex items-center">
                   <User className="h-4 w-4 mr-2 text-blue-500 dark:text-blue-400" />
                   Nama Pasien
                 </label>
@@ -186,14 +203,14 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
                   />
                 </div>
               </motion.div>
-              
-              <motion.div 
-                className="group" 
+
+              <motion.div
+                className="group"
                 initial={{ opacity: 0, x: 10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3, delay: 0.2 }}
               >
-                <label className="block text-sm font-medium text-gray-900 dark:text-blue-300 mb-1.5 flex items-center">
+                <label className="text-sm font-medium text-gray-900 dark:text-blue-300 mb-1.5 flex items-center">
                   <User className="h-4 w-4 mr-2 text-blue-500 dark:text-blue-400" />
                   Kelamin
                 </label>
@@ -210,20 +227,29 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
                     <option value="Perempuan">Perempuan</option>
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-400">
-                    <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                    <svg
+                      className="h-5 w-5"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                        clipRule="evenodd"
+                      />
                     </svg>
                   </div>
                 </div>
               </motion.div>
-              
-              <motion.div 
-                className="group md:col-span-2" 
+
+              <motion.div
+                className="group md:col-span-2"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: 0.3 }}
               >
-                <label className="block text-sm font-medium text-gray-900 dark:text-blue-300 mb-1.5 flex items-center">
+                <label className="text-sm font-medium text-gray-900 dark:text-blue-300 mb-1.5 flex items-center">
                   <CreditCard className="h-4 w-4 mr-2 text-blue-500 dark:text-blue-400" />
                   Jenis Pasien
                 </label>
@@ -240,30 +266,37 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
                     <option value="UMUM">UMUM</option>
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-400">
-                    <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                    <svg
+                      className="h-5 w-5"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                        clipRule="evenodd"
+                      />
                     </svg>
                   </div>
                 </div>
               </motion.div>
             </div>
-            
+
             {/* Tindakan Section */}
-            <motion.div 
-              className="mb-6" 
+            <motion.div
+              className="mb-6"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.4 }}
             >
               <div className="flex items-center mb-3">
                 <Activity className="h-5 w-5 mr-2 text-blue-400" />
-                <label className="text-sm font-medium text-blue-300">
-                  Tindakan
-                </label>
+                <label className="text-sm font-medium text-blue-300">Tindakan</label>
               </div>
               <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-4 shadow-inner">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                  <motion.label 
+                  <motion.label
                     className={`flex items-center space-x-3 cursor-pointer rounded-xl p-3 transition-all duration-200 transform hover:-translate-y-1 hover:shadow-md ${formData.obat ? 'bg-blue-600/20 border border-blue-500/30' : 'bg-gray-700/80 border border-gray-600 hover:bg-gray-600/80'}`}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -276,15 +309,17 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
                         onChange={handleChange}
                         className="w-4 h-4 text-blue-600 bg-gray-700 border-gray-500 rounded focus:ring-blue-500 focus:ring-2 transition-all"
                       />
-                      {formData.obat && <div className="absolute inset-0 bg-blue-500 rounded scale-150 opacity-20 animate-pulse"></div>}
+                      {formData.obat && (
+                        <div className="absolute inset-0 bg-blue-500 rounded scale-150 opacity-20 animate-pulse"></div>
+                      )}
                     </div>
                     <div className="flex items-center">
                       <Pill className="h-4 w-4 mr-2 text-blue-300" />
                       <span className="text-sm font-medium text-gray-200">Obat</span>
                     </div>
                   </motion.label>
-                  
-                  <motion.label 
+
+                  <motion.label
                     className={`flex items-center space-x-3 cursor-pointer rounded-xl p-3 transition-all duration-200 transform hover:-translate-y-1 hover:shadow-md ${formData.cabut_anak ? 'bg-blue-600/20 border border-blue-500/30' : 'bg-gray-700/80 border border-gray-600 hover:bg-gray-600/80'}`}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -297,15 +332,17 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
                         onChange={handleChange}
                         className="w-4 h-4 text-blue-600 bg-gray-700 border-gray-500 rounded focus:ring-blue-500 focus:ring-2 transition-all"
                       />
-                      {formData.cabut_anak && <div className="absolute inset-0 bg-blue-500 rounded scale-150 opacity-20 animate-pulse"></div>}
+                      {formData.cabut_anak && (
+                        <div className="absolute inset-0 bg-blue-500 rounded scale-150 opacity-20 animate-pulse"></div>
+                      )}
                     </div>
                     <div className="flex items-center">
                       <Scissors className="h-4 w-4 mr-2 text-blue-300" />
                       <span className="text-sm font-medium text-gray-200">Cabut Anak</span>
                     </div>
                   </motion.label>
-                  
-                  <motion.label 
+
+                  <motion.label
                     className={`flex items-center space-x-3 cursor-pointer rounded-xl p-3 transition-all duration-200 transform hover:-translate-y-1 hover:shadow-md ${formData.cabut_dewasa ? 'bg-blue-600/20 border border-blue-500/30' : 'bg-gray-700/80 border border-gray-600 hover:bg-gray-600/80'}`}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -318,15 +355,17 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
                         onChange={handleChange}
                         className="w-4 h-4 text-blue-600 bg-gray-700 border-gray-500 rounded focus:ring-blue-500 focus:ring-2 transition-all"
                       />
-                      {formData.cabut_dewasa && <div className="absolute inset-0 bg-blue-500 rounded scale-150 opacity-20 animate-pulse"></div>}
+                      {formData.cabut_dewasa && (
+                        <div className="absolute inset-0 bg-blue-500 rounded scale-150 opacity-20 animate-pulse"></div>
+                      )}
                     </div>
                     <div className="flex items-center">
                       <Scissors className="h-4 w-4 mr-2 text-blue-300" />
                       <span className="text-sm font-medium text-gray-200">Cabut Dewasa</span>
                     </div>
                   </motion.label>
-                  
-                  <motion.label 
+
+                  <motion.label
                     className={`flex items-center space-x-3 cursor-pointer rounded-xl p-3 transition-all duration-200 transform hover:-translate-y-1 hover:shadow-md ${formData.tambal_sementara ? 'bg-blue-600/20 border border-blue-500/30' : 'bg-gray-700/80 border border-gray-600 hover:bg-gray-600/80'}`}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -339,15 +378,17 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
                         onChange={handleChange}
                         className="w-4 h-4 text-blue-600 bg-gray-700 border-gray-500 rounded focus:ring-blue-500 focus:ring-2 transition-all"
                       />
-                      {formData.tambal_sementara && <div className="absolute inset-0 bg-blue-500 rounded scale-150 opacity-20 animate-pulse"></div>}
+                      {formData.tambal_sementara && (
+                        <div className="absolute inset-0 bg-blue-500 rounded scale-150 opacity-20 animate-pulse"></div>
+                      )}
                     </div>
                     <div className="flex items-center">
                       <Wrench className="h-4 w-4 mr-2 text-blue-300" />
                       <span className="text-sm font-medium text-gray-200">Tambal Sementara</span>
                     </div>
                   </motion.label>
-                  
-                  <motion.label 
+
+                  <motion.label
                     className={`flex items-center space-x-3 cursor-pointer rounded-xl p-3 transition-all duration-200 transform hover:-translate-y-1 hover:shadow-md ${formData.tambal_tetap ? 'bg-blue-600/20 border border-blue-500/30' : 'bg-gray-700/80 border border-gray-600 hover:bg-gray-600/80'}`}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -360,15 +401,17 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
                         onChange={handleChange}
                         className="w-4 h-4 text-blue-600 bg-gray-700 border-gray-500 rounded focus:ring-blue-500 focus:ring-2 transition-all"
                       />
-                      {formData.tambal_tetap && <div className="absolute inset-0 bg-blue-500 rounded scale-150 opacity-20 animate-pulse"></div>}
+                      {formData.tambal_tetap && (
+                        <div className="absolute inset-0 bg-blue-500 rounded scale-150 opacity-20 animate-pulse"></div>
+                      )}
                     </div>
                     <div className="flex items-center">
                       <Wrench className="h-4 w-4 mr-2 text-blue-300" />
                       <span className="text-sm font-medium text-gray-200">Tambal Tetap</span>
                     </div>
                   </motion.label>
-                  
-                  <motion.label 
+
+                  <motion.label
                     className={`flex items-center space-x-3 cursor-pointer rounded-xl p-3 transition-all duration-200 transform hover:-translate-y-1 hover:shadow-md ${formData.scaling ? 'bg-blue-600/20 border border-blue-500/30' : 'bg-gray-700/80 border border-gray-600 hover:bg-gray-600/80'}`}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -381,15 +424,17 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
                         onChange={handleChange}
                         className="w-4 h-4 text-blue-600 bg-gray-700 border-gray-500 rounded focus:ring-blue-500 focus:ring-2 transition-all"
                       />
-                      {formData.scaling && <div className="absolute inset-0 bg-blue-500 rounded scale-150 opacity-20 animate-pulse"></div>}
+                      {formData.scaling && (
+                        <div className="absolute inset-0 bg-blue-500 rounded scale-150 opacity-20 animate-pulse"></div>
+                      )}
                     </div>
                     <div className="flex items-center">
                       <Wrench className="h-4 w-4 mr-2 text-blue-300" />
                       <span className="text-sm font-medium text-gray-200">Scaling</span>
                     </div>
                   </motion.label>
-                  
-                  <motion.label 
+
+                  <motion.label
                     className={`flex items-center space-x-3 cursor-pointer rounded-xl p-3 transition-all duration-200 transform hover:-translate-y-1 hover:shadow-md ${formData.rujuk ? 'bg-blue-600/20 border border-blue-500/30' : 'bg-gray-700/80 border border-gray-600 hover:bg-gray-600/80'}`}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -402,7 +447,9 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
                         onChange={handleChange}
                         className="w-4 h-4 text-blue-600 bg-gray-700 border-gray-500 rounded focus:ring-blue-500 focus:ring-2 transition-all"
                       />
-                      {formData.rujuk && <div className="absolute inset-0 bg-blue-500 rounded scale-150 opacity-20 animate-pulse"></div>}
+                      {formData.rujuk && (
+                        <div className="absolute inset-0 bg-blue-500 rounded scale-150 opacity-20 animate-pulse"></div>
+                      )}
                     </div>
                     <div className="flex items-center">
                       <Smile className="h-4 w-4 mr-2 text-blue-300" />
@@ -412,19 +459,17 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
                 </div>
               </div>
             </motion.div>
-            
+
             {/* Tindakan Lainnya */}
-            <motion.div 
-              className="mb-6" 
+            <motion.div
+              className="mb-6"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.5 }}
             >
               <div className="flex items-center mb-3">
                 <CheckCircle className="h-5 w-5 mr-2 text-blue-400" />
-                <label className="text-sm font-medium text-blue-300">
-                  Tindakan Lainnya
-                </label>
+                <label className="text-sm font-medium text-blue-300">Tindakan Lainnya</label>
               </div>
               <textarea
                 name="lainnya"
@@ -435,8 +480,8 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
                 placeholder="Masukkan tindakan lainnya jika ada..."
               />
             </motion.div>
-            
-            <motion.div 
+
+            <motion.div
               className="flex flex-col sm:flex-row justify-end gap-3 mt-4 sm:mt-8 sticky bottom-0 bg-gradient-to-t from-gray-900/90 to-transparent pt-3 z-10"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}

@@ -1,69 +1,70 @@
 {
   "pages": {
     "/_not-found": [
-      "static/chunks/webpack-1d0a85bc44040a7f.js",
+      "static/chunks/webpack-d773f6505752246c.js",
       "static/chunks/fd9d1056-d402c3289b63a580.js",
       "static/chunks/938-c942f0a7a53c1653.js",
-      "static/chunks/main-app-d4e15aaceb9bff48.js",
+      "static/chunks/main-app-016c9ac8cf6d37f9.js",
       "static/chunks/app/_not-found-b7427e8c91861b33.js"
     ],
     "/layout": [
-      "static/chunks/webpack-1d0a85bc44040a7f.js",
+      "static/chunks/webpack-d773f6505752246c.js",
       "static/chunks/fd9d1056-d402c3289b63a580.js",
       "static/chunks/938-c942f0a7a53c1653.js",
-      "static/chunks/main-app-d4e15aaceb9bff48.js",
+      "static/chunks/main-app-016c9ac8cf6d37f9.js",
       "static/chunks/396-12ce36ad869be358.js",
       "static/chunks/691-49a8f6e2b8c84ded.js",
-      "static/css/1901b14ff3d09393.css",
-      "static/chunks/app/layout-b72b4fbbe03d4461.js"
-    ],
-    "/data-pasien/page": [
-      "static/chunks/webpack-1d0a85bc44040a7f.js",
-      "static/chunks/fd9d1056-d402c3289b63a580.js",
-      "static/chunks/938-c942f0a7a53c1653.js",
-      "static/chunks/main-app-d4e15aaceb9bff48.js",
-      "static/chunks/ca377847-5f1512bbeef42521.js",
-      "static/chunks/287-f642316ce8c2a202.js",
-      "static/chunks/396-12ce36ad869be358.js",
-      "static/chunks/238-d8cd89c7fe788e5c.js",
-      "static/chunks/8-8799f74a779c3052.js",
-      "static/css/7998cc2631b46cf9.css",
-      "static/chunks/app/data-pasien/page-4a871e3c9eade097.js"
-    ],
-    "/laporan/page": [
-      "static/chunks/webpack-1d0a85bc44040a7f.js",
-      "static/chunks/fd9d1056-d402c3289b63a580.js",
-      "static/chunks/938-c942f0a7a53c1653.js",
-      "static/chunks/main-app-d4e15aaceb9bff48.js",
-      "static/chunks/396-12ce36ad869be358.js",
-      "static/chunks/app/laporan/page-71f8fd5c1892537f.js"
+      "static/css/d62757f20c03bac8.css",
+      "static/chunks/app/layout-d7ab04becb26b4ee.js"
     ],
     "/cari-pasien/page": [
-      "static/chunks/webpack-1d0a85bc44040a7f.js",
+      "static/chunks/webpack-d773f6505752246c.js",
       "static/chunks/fd9d1056-d402c3289b63a580.js",
       "static/chunks/938-c942f0a7a53c1653.js",
-      "static/chunks/main-app-d4e15aaceb9bff48.js",
+      "static/chunks/main-app-016c9ac8cf6d37f9.js",
       "static/chunks/287-f642316ce8c2a202.js",
-      "static/chunks/8-8799f74a779c3052.js",
-      "static/chunks/app/cari-pasien/page-3c051ad03bc3f223.js"
+      "static/chunks/396-12ce36ad869be358.js",
+      "static/chunks/8-8c7d32497b864a5f.js",
+      "static/chunks/app/cari-pasien/page-4109304aee217ab3.js"
+    ],
+    "/data-pasien/page": [
+      "static/chunks/webpack-d773f6505752246c.js",
+      "static/chunks/fd9d1056-d402c3289b63a580.js",
+      "static/chunks/938-c942f0a7a53c1653.js",
+      "static/chunks/main-app-016c9ac8cf6d37f9.js",
+      "static/chunks/ca377847-d6376cb5599df334.js",
+      "static/chunks/287-f642316ce8c2a202.js",
+      "static/chunks/396-12ce36ad869be358.js",
+      "static/chunks/238-b6d75bbfafb1d766.js",
+      "static/chunks/8-8c7d32497b864a5f.js",
+      "static/css/7998cc2631b46cf9.css",
+      "static/chunks/app/data-pasien/page-974f1737ecd65192.js"
+    ],
+    "/laporan/page": [
+      "static/chunks/webpack-d773f6505752246c.js",
+      "static/chunks/fd9d1056-d402c3289b63a580.js",
+      "static/chunks/938-c942f0a7a53c1653.js",
+      "static/chunks/main-app-016c9ac8cf6d37f9.js",
+      "static/chunks/691-49a8f6e2b8c84ded.js",
+      "static/chunks/app/laporan/page-21310df432a3c3d7.js"
     ],
     "/page": [
-      "static/chunks/webpack-1d0a85bc44040a7f.js",
+      "static/chunks/webpack-d773f6505752246c.js",
       "static/chunks/fd9d1056-d402c3289b63a580.js",
       "static/chunks/938-c942f0a7a53c1653.js",
-      "static/chunks/main-app-d4e15aaceb9bff48.js",
+      "static/chunks/main-app-016c9ac8cf6d37f9.js",
       "static/chunks/287-f642316ce8c2a202.js",
       "static/chunks/396-12ce36ad869be358.js",
       "static/chunks/691-49a8f6e2b8c84ded.js",
-      "static/chunks/app/page-35444396299f8495.js"
+      "static/chunks/app/page-5397b50e528b44c8.js"
     ],
     "/tambah-pasien/page": [
-      "static/chunks/webpack-1d0a85bc44040a7f.js",
+      "static/chunks/webpack-d773f6505752246c.js",
       "static/chunks/fd9d1056-d402c3289b63a580.js",
       "static/chunks/938-c942f0a7a53c1653.js",
-      "static/chunks/main-app-d4e15aaceb9bff48.js",
+      "static/chunks/main-app-016c9ac8cf6d37f9.js",
       "static/chunks/287-f642316ce8c2a202.js",
-      "static/chunks/app/tambah-pasien/page-f9d42d4bf16441ca.js"
+      "static/chunks/app/tambah-pasien/page-b7071e1fd95868d3.js"
     ]
   }
 }

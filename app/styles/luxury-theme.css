@@ -1,0 +1,9 @@
+@layer base {
+  html {
+    font-family: 'Inter', 'Poppins', system-ui, sans-serif;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  }
+  body.dark {
+    background: linear-gradient(135deg, #18181b 0%, #27272a 100%);
+  }
+}

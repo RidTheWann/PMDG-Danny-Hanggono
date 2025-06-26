@@ -5,7 +5,7 @@ interface AksiTableButtonProps {
   onDelete: () => void;
 }
 
-export default function AksiTableButton({ onEdit, onDelete }: AksiTableButtonProps) {
+export default function AksiTableButton({ onEdit, onDelete }: AksiTableButtonProps): JSX.Element {
   return (
     <div className="flex gap-2">
       <button

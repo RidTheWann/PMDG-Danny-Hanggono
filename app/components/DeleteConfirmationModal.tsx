@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Modal from './Modal';
-import { AlertTriangle, X, Trash2 } from 'lucide-react';
+import { AlertTriangle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface DeleteConfirmationModalProps {
@@ -10,12 +10,12 @@ interface DeleteConfirmationModalProps {
   onConfirm: () => Promise<void>;
 }
 
-export default function DeleteConfirmationModal({ 
-  isOpen, 
-  onClose, 
-  patientName, 
-  onConfirm 
-}: DeleteConfirmationModalProps) {
+export default function DeleteConfirmationModal({
+  isOpen,
+  onClose,
+  patientName,
+  onConfirm,
+}: DeleteConfirmationModalProps): JSX.Element {
   const [loading, setLoading] = useState(false);
 
   const handleDelete = async () => {
@@ -34,7 +34,7 @@ export default function DeleteConfirmationModal({
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Konfirmasi Hapus" maxWidth="max-w-md">
       <div className="flex flex-col items-center text-center">
-        <motion.div 
+        <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: 'spring', damping: 10, stiffness: 100 }}
@@ -42,8 +42,8 @@ export default function DeleteConfirmationModal({
         >
           <AlertTriangle className="w-10 h-10 text-red-600 dark:text-white" />
         </motion.div>
-        
-        <motion.h3 
+
+        <motion.h3
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
@@ -51,15 +51,18 @@ export default function DeleteConfirmationModal({
         >
           Hapus Data Pasien
         </motion.h3>
-        
-        <motion.p 
+
+        <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
           className="text-gray-700 dark:text-gray-300 mb-8 bg-gray-100 dark:bg-white/5 p-4 rounded-lg border border-gray-200 dark:border-white/10 shadow-inner"
         >
-          Apakah Anda yakin ingin menghapus data pasien <span className="font-semibold text-red-700 dark:text-white bg-red-200 dark:bg-red-500/20 px-2 py-0.5 rounded">{patientName}</span>? 
-          <span className="block mt-2 text-red-300">Tindakan ini tidak dapat dibatalkan.</span>
+          Apakah Anda yakin ingin menghapus data pasien{' '}
+          <span className="font-semibold text-red-700 dark:text-white bg-red-200 dark:bg-red-500/20 px-2 py-0.5 rounded">
+            {patientName}
+          </span>
+          ?<span className="block mt-2 text-red-300">Tindakan ini tidak dapat dibatalkan.</span>
         </motion.p>
         <div className="flex gap-3 w-full mt-2">
           <button

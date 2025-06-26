@@ -12,7 +12,7 @@ const pool = new Pool({
 // Tambahkan revalidate = 0 untuk mencegah caching di Vercel
 export const revalidate = 0;
 
-export async function GET(req: Request) {
+export async function GET(req: Request): Promise<NextResponse> {
   try {
     const { searchParams } = new URL(req.url);
     const search = searchParams.get('search')?.toLowerCase() || '';
@@ -34,7 +34,7 @@ export async function GET(req: Request) {
       FROM data_entries
     `;
     let where = '';
-    const values: any[] = [];
+    const values: unknown[] = [];
     if (search) {
       if (searchType === 'nama') {
         where = `WHERE LOWER(patient_name) LIKE $1`;
@@ -57,6 +57,9 @@ export async function GET(req: Request) {
     const result = await pool.query(query, values);
     return NextResponse.json(result.rows);
   } catch (error) {
-    return NextResponse.json({ error: 'Gagal mengambil data pasien', detail: error }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Gagal mengambil data pasien', detail: error },
+      { status: 500 },
+    );
   }
 }

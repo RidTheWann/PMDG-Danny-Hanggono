@@ -31,14 +31,14 @@ export default function Modal({ isOpen, onClose, title, children, maxWidth = 'ma
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/60 dark:bg-black/60 bg-white/60 backdrop-blur-md transition-all"
+      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/60 dark:bg-black/60 bg-white/60 transition-all"
       onClick={onClose}
     >
       <motion.div 
         initial={{ scale: 0.9, y: 20, opacity: 0 }}
         animate={{ scale: 1, y: 0, opacity: 1 }}
         transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-        className={`w-[98vw] sm:w-full ${maxWidth} bg-white dark:bg-gradient-to-br dark:from-gray-800 dark:to-gray-900 rounded-xl shadow-[0_0_25px_rgba(0,0,0,0.08)] dark:shadow-[0_0_25px_rgba(0,0,0,0.3)] border border-gray-200 dark:border-gray-700/50 backdrop-filter backdrop-blur-sm transform transition-all overflow-hidden`}
+        className={`w-[98vw] sm:w-full ${maxWidth} bg-white dark:bg-gradient-to-br dark:from-gray-800 dark:to-gray-900 rounded-xl shadow-[0_0_25px_rgba(0,0,0,0.08)] dark:shadow-[0_0_25px_rgba(0,0,0,0.3)] border border-gray-200 dark:border-gray-700/50 transform transition-all overflow-hidden`}
         style={{ maxWidth: '98vw', willChange: 'transform', contain: 'layout paint' }}
         onClick={(e) => e.stopPropagation()}
       >

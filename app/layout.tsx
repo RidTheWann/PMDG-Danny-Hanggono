@@ -7,6 +7,7 @@ import { Analytics } from "@vercel/analytics/react"
 import { useTheme } from './hooks/useTheme';
 import { Sun, Moon } from 'lucide-react';
 import Image from 'next/image';
+import MobileMenu from './components/MobileMenu';
 
 export default function RootLayout({
   children,
@@ -81,62 +82,12 @@ export default function RootLayout({
                 )}
               </button>
 
-              {/* Mobile Menu Button */}
-              <div className="flex md:hidden items-center">
-                <button 
-                  id="mobileMenuButton"
-                  className="p-2 rounded-lg hover:bg-blue-700 transition-all duration-300 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-                  aria-label="Menu"
-                  aria-expanded="false"
-                >
-                  <svg className="w-6 h-6 text-gray-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                  </svg>
-                </button>
-              </div>
+              {/* Mobile Menu Button & Menu (React) */}
+              <MobileMenu />
             </div>
             
             {/* Mobile Menu */}
-            <div id="mobileMenu" className="mobile-menu fixed top-0 right-0 h-full w-64 bg-white dark:bg-gray-900 shadow-2xl z-50 transform translate-x-full transition-transform duration-300">
-              <nav className="flex flex-col space-y-2 mt-20 px-4">
-                <Link
-                  href="/"
-                  className="px-4 py-3 rounded-lg text-white hover:bg-blue-700 transition-all duration-300 hover:shadow-md flex items-center space-x-2"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                  </svg>
-                  <span>Beranda</span>
-                </Link>
-                <Link
-                  href="/tambah-pasien"
-                  className="px-4 py-3 rounded-lg text-white hover:bg-blue-700 transition-all duration-300 hover:shadow-md flex items-center space-x-2"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                  <span>Data Harian</span>
-                </Link>
-                <Link
-                  href="/data-pasien"
-                  className="px-4 py-3 rounded-lg text-white hover:bg-blue-700 transition-all duration-300 hover:shadow-md flex items-center space-x-2"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                  </svg>
-                  <span>Dashboard</span>
-                </Link>
-                <Link
-                  href="/laporan"
-                  className="px-4 py-3 rounded-lg text-white hover:bg-blue-700 transition-all duration-300 hover:shadow-md flex items-center space-x-2"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                  <span>Arship Tugas</span>
-                </Link>
-              </nav>
-            </div>
+            {/* <div id="mobileMenu" className="mobile-menu ..."> ... </div> */}
           </div>
         </header>
 
@@ -147,68 +98,9 @@ export default function RootLayout({
         </main>
         
         {/* Script untuk menu mobile dengan animasi */}
+        {/* <script dangerouslySetInnerHTML={{ __html: ` ... `}} /> */}
         <SpeedInsights />
         <Analytics />
-        <script dangerouslySetInnerHTML={{ __html: `
-          (function() {
-            const mobileMenuButton = document.getElementById('mobileMenuButton');
-            const mobileMenu = document.getElementById('mobileMenu');
-            
-            if (mobileMenuButton && mobileMenu) {
-              // Toggle menu saat tombol diklik dengan animasi
-              mobileMenuButton.addEventListener('click', function() {
-                if (mobileMenu.classList.contains('active')) {
-                  // Animasi menutup
-                  mobileMenu.classList.add('opacity-0', 'scale-95');
-                  mobileMenu.classList.remove('opacity-100', 'scale-100');
-                  
-                  setTimeout(() => {
-                    mobileMenu.classList.remove('active');
-                    mobileMenuButton.setAttribute('aria-expanded', 'false');
-                  }, 300);
-                } else {
-                  // Animasi membuka
-                  mobileMenu.classList.add('active');
-                  mobileMenuButton.setAttribute('aria-expanded', 'true');
-                  
-                  setTimeout(() => {
-                    mobileMenu.classList.remove('opacity-0', 'scale-95');
-                    mobileMenu.classList.add('opacity-100', 'scale-100');
-                  }, 10);
-                }
-              });
-              
-              // Tutup menu saat link diklik dengan animasi
-              const mobileLinks = mobileMenu.querySelectorAll('a');
-              mobileLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                  // Animasi menutup
-                  mobileMenu.classList.add('opacity-0', 'scale-95');
-                  mobileMenu.classList.remove('opacity-100', 'scale-100');
-                  
-                  setTimeout(() => {
-                    mobileMenu.classList.remove('active');
-                    mobileMenuButton.setAttribute('aria-expanded', 'false');
-                  }, 300);
-                });
-              });
-            }
-            
-            // Tambahkan efek hover pada link desktop
-            const desktopLinks = document.querySelectorAll('nav.md\\\\:flex a');
-            desktopLinks.forEach(link => {
-              link.addEventListener('mouseenter', function() {
-                this.classList.add('pulse-animation');
-              });
-              link.addEventListener('mouseleave', function() {
-                this.classList.remove('pulse-animation');
-              });
-            });
-          })();
-        `}} />
-        
-
-
       </body>
     </html>
   )

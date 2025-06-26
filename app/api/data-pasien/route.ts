@@ -12,10 +12,13 @@ const pool = new Pool({
 // Tambahkan revalidate = 0 untuk mencegah caching di Vercel
 export const revalidate = 0;
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
-    // Ambil seluruh data dari tabel data_entries, tanpa LIMIT
-    const result = await pool.query(`
+    const { searchParams } = new URL(req.url);
+    const search = searchParams.get('search')?.toLowerCase() || '';
+    const searchType = searchParams.get('type') || 'nama';
+
+    let query = `
       SELECT 
         id,
         to_char(date, 'YYYY-MM-DD') as tanggal,
@@ -27,8 +30,24 @@ export async function GET() {
         other_actions as lainnya,
         description
       FROM data_entries
-      ORDER BY date DESC, id DESC
-    `);
+    `;
+    let where = '';
+    const values: any[] = [];
+    if (search) {
+      if (searchType === 'nama') {
+        where = `WHERE LOWER(patient_name) LIKE $1`;
+        values.push(`%${search}%`);
+      } else if (searchType === 'rm') {
+        where = `WHERE LOWER(medical_record_number) LIKE $1`;
+        values.push(`%${search}%`);
+      } else if (searchType === 'tindakan') {
+        where = `WHERE LOWER(actions::text) LIKE $1 OR LOWER(other_actions) LIKE $1`;
+        values.push(`%${search}%`);
+      }
+    }
+    if (where) query += ` ${where}`;
+    query += ` ORDER BY date DESC, id DESC`;
+    const result = await pool.query(query, values);
     return NextResponse.json(result.rows);
   } catch (error) {
     return NextResponse.json({ error: 'Gagal mengambil data pasien', detail: error }, { status: 500 });

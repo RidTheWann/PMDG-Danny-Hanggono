@@ -88,43 +88,35 @@ export default function CariPasienPage() {
     fetchAllPatients();
   }, []);
 
-  // Handle search when debounced term changes
+  // Fetch patients from server with search
   useEffect(() => {
-    if (debouncedSearchTerm) {
-      handleSearch();
-      setInitialSearch(false);
-    }
-  }, [debouncedSearchTerm, searchType]);
-
-  const handleSearch = useCallback(() => {
-    setLoading(true);
-    let filteredResults: Patient[] = [];
-    if (searchType === 'nama') {
-      filteredResults = allPatients.filter((patient: Patient) =>
-        patient.nama_pasien.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
-      );
-    } else if (searchType === 'rm') {
-      filteredResults = allPatients.filter((patient: Patient) =>
-        patient.no_rm.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
-      );
-    } else if (searchType === 'tindakan') {
-      filteredResults = allPatients.filter((patient: Patient) => {
-        // Cek apakah ada tindakan yang cocok
-        const tindakanMatch = Object.entries(actionLabels).some(([key, label]: [string, string]) => {
-          if (patient[key] === true || patient[key] === 'Ya') {
-            return label.toLowerCase().includes(debouncedSearchTerm.toLowerCase());
-          }
-          return false;
+    const fetchPatients = async () => {
+      setLoading(true);
+      try {
+        if (!debouncedSearchTerm) {
+          setResults([]);
+          setInitialSearch(true);
+          setLoading(false);
+          return;
+        }
+        const params = new URLSearchParams({
+          search: debouncedSearchTerm,
+          type: searchType
         });
-        // Cek apakah ada tindakan lainnya yang cocok
-        const lainnyaMatch = patient.lainnya &&
-          (patient.lainnya as string).toLowerCase().includes(debouncedSearchTerm.toLowerCase());
-        return tindakanMatch || lainnyaMatch;
-      });
-    }
-    setResults(filteredResults);
-    setLoading(false);
-  }, [allPatients, debouncedSearchTerm, searchType]);
+        const response = await fetch(`/api/data-pasien?${params.toString()}`);
+        if (!response.ok) throw new Error('Gagal mencari pasien');
+        const data = await response.json();
+        setResults(data);
+        setInitialSearch(false);
+      } catch (error) {
+        setResults([]);
+        setError('Gagal mencari pasien');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPatients();
+  }, [debouncedSearchTerm, searchType]);
 
   const renderActionBadges = (patient: Patient) => {
     const badges: JSX.Element[] = [];

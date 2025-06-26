@@ -39,7 +39,7 @@ export default function Modal({ isOpen, onClose, title, children, maxWidth = 'ma
         animate={{ scale: 1, y: 0, opacity: 1 }}
         transition={{ type: 'spring', damping: 25, stiffness: 300 }}
         className={`w-[98vw] sm:w-full ${maxWidth} bg-white dark:bg-gradient-to-br dark:from-gray-800 dark:to-gray-900 rounded-xl shadow-[0_0_25px_rgba(0,0,0,0.08)] dark:shadow-[0_0_25px_rgba(0,0,0,0.3)] border border-gray-200 dark:border-gray-700/50 backdrop-filter backdrop-blur-sm transform transition-all overflow-hidden`}
-        style={{ maxWidth: '98vw' }}
+        style={{ maxWidth: '98vw', willChange: 'transform', contain: 'layout paint' }}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between p-3 sm:p-4 border-b border-gray-200 dark:border-gray-700/50 bg-white dark:bg-gradient-to-r dark:from-gray-800 dark:to-gray-900">
@@ -53,7 +53,7 @@ export default function Modal({ isOpen, onClose, title, children, maxWidth = 'ma
             <X className="w-5 h-5" />
           </motion.button>
         </div>
-        <div className="p-3 sm:p-6 max-h-[90vh] overflow-y-auto">
+        <div className="p-3 sm:p-6 max-h-[80vh] overflow-y-auto" style={{ willChange: 'transform', contain: 'layout paint' }}>
           {children}
         </div>
       </motion.div>

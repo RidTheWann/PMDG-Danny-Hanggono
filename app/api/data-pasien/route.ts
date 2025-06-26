@@ -48,8 +48,12 @@ export async function GET(req: Request) {
       }
     }
     if (where) query += ` ${where}`;
-    query += ` ORDER BY date DESC, id DESC LIMIT $${values.length + 1} OFFSET $${values.length + 2}`;
-    values.push(limit, offset);
+    query += ` ORDER BY date DESC, id DESC`;
+    // Hanya tambahkan LIMIT/OFFSET jika ada pencarian
+    if (search) {
+      query += ` LIMIT $${values.length + 1} OFFSET $${values.length + 2}`;
+      values.push(limit, offset);
+    }
     const result = await pool.query(query, values);
     return NextResponse.json(result.rows);
   } catch (error) {

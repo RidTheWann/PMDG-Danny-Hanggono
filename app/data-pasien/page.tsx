@@ -11,7 +11,30 @@ import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
 import SuccessModal from '../components/SuccessModal';
 import MobileTableGuide from '../components/MobileTableGuide';
 import './mobile-table.css';
+import {
+  Chart as ChartJS,
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
 import { Pie, Line } from 'react-chartjs-2';
+
+// Register ChartJS components
+ChartJS.register(
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+);
 
 export default function DataPasienPage(): JSX.Element {
   const [patients, setPatients] = useState<Patient[]>([]);

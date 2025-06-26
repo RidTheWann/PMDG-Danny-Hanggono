@@ -48,7 +48,7 @@ export default function CariPasienPage() {
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(false);
-  const PAGE_SIZE = 30;
+  const PAGE_SIZE = 10;
 
   // Efek untuk animasi saat halaman dimuat
   useEffect(() => {

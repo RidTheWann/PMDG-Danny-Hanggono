@@ -53,8 +53,7 @@ export default function MobileMenu(): JSX.Element {
       <nav
         className={`fixed top-0 right-0 h-full w-64 bg-white dark:bg-gray-900 shadow-2xl z-50 transform transition-transform duration-300 ${open ? 'translate-x-0' : 'translate-x-full'}`}
         style={{ color: theme === 'dark' ? '#fff' : '#222' }}
-        tabIndex={-1}
-        aria-hidden={!open}
+        {...(!open && { inert: true })}
       >
         <div className="flex items-center justify-between px-4 py-4 border-b border-gray-200 dark:border-gray-700">
           <div className="flex items-center space-x-2">

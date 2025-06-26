@@ -9,7 +9,7 @@ import AksiTableButton from './AksiTableButton';
 import EditPatientModal from '../components/EditPatientModal';
 import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
 import SuccessModal from '../components/SuccessModal';
-import MobileTableGuide from '../components/MobileTableGuide';
+
 import './mobile-table.css';
 import {
   Chart as ChartJS,
@@ -356,13 +356,6 @@ export default function DataPasienPage(): JSX.Element {
                   Cari Data Pasien
                 </Link>
               </div>
-            </div>
-
-            {/* Mobile Table Guide - with animation */}
-            <div
-              className={`transform transition-all duration-700 delay-100 ${pageLoaded ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}
-            >
-              <MobileTableGuide />
             </div>
           </div>
 

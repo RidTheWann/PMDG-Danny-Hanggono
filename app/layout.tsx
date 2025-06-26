@@ -18,7 +18,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }):
         <link rel="apple-touch-icon" href="/apple-touch-icon.svg" />
       </head>
       <body
-        className={`font-sans antialiased bg-white dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-white min-h-screen flex flex-col ${theme}`}
+        className="font-sans antialiased bg-white dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-white min-h-screen flex flex-col"
+        suppressHydrationWarning
       >
         {/* Header Navigation */}
         <header className="bg-white dark:bg-gradient-to-r dark:from-blue-900 dark:to-blue-800 border-b border-blue-200 dark:border-blue-700 sticky top-0 z-50 shadow-lg">

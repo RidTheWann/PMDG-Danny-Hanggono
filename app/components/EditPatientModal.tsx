@@ -26,10 +26,7 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
   // Mengisi form dengan data pasien ketika modal dibuka
   useEffect(() => {
     if (patient) {
-      // Konversi array actions menjadi properti boolean
       let actions = [];
-      
-      // Pastikan actions adalah array
       if (patient.actions) {
         if (Array.isArray(patient.actions)) {
           actions = patient.actions;
@@ -37,12 +34,10 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
           try {
             actions = JSON.parse(patient.actions);
           } catch (e) {
-            console.error('Error parsing actions:', e);
             actions = [];
           }
         }
       }
-      
       setFormData({
         id: patient.id,
         tanggal: patient.tanggal,
@@ -52,11 +47,9 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
         jenis_pasien: patient.jenis_pasien,
         actions: actions,
         lainnya: patient.lainnya || '',
-        // Menyimpan data asli untuk keperluan edit di Google Sheets
         tanggal_asli: patient.tanggal_asli || patient.tanggal,
         nama_pasien_asli: patient.nama_pasien_asli || patient.nama_pasien,
         no_rm_asli: patient.no_rm_asli || patient.no_rm,
-        // Set properti tindakan berdasarkan array actions
         obat: actions.includes('Obat'),
         cabut_anak: actions.includes('Cabut Anak'),
         cabut_dewasa: actions.includes('Cabut Dewasa'),
@@ -121,12 +114,8 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
           <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 pointer-events-none"></div>
           <div className="relative">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 mb-6">
-              <motion.div 
-                className="group" 
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3, delay: 0.1 }}
-              >
+              {/* Hapus animasi framer-motion pada field input */}
+              <div className="group">
                 <label className="block text-sm font-medium text-gray-900 dark:text-blue-300 mb-1.5 flex items-center">
                   <Calendar className="h-4 w-4 mr-2 text-blue-500 dark:text-blue-400" />
                   Tanggal
@@ -141,14 +130,8 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
                     className="w-full px-4 py-2.5 bg-gray-100 dark:bg-gray-700/80 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-400 transition-all shadow-sm hover:border-gray-400 dark:hover:border-gray-500 group-hover:border-gray-400 dark:group-hover:border-gray-500 backdrop-blur-sm"
                   />
                 </div>
-              </motion.div>
-              
-              <motion.div 
-                className="group" 
-                initial={{ opacity: 0, x: 10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3, delay: 0.1 }}
-              >
+              </div>
+              <div className="group">
                 <label className="block text-sm font-medium text-gray-900 dark:text-blue-300 mb-1.5 flex items-center">
                   <CreditCard className="h-4 w-4 mr-2 text-blue-500 dark:text-blue-400" />
                   No. RM
@@ -163,14 +146,8 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
                     className="w-full px-4 py-2.5 bg-gray-100 dark:bg-gray-700/80 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-400 transition-all shadow-sm hover:border-gray-400 dark:hover:border-gray-500 group-hover:border-gray-400 dark:group-hover:border-gray-500 backdrop-blur-sm"
                   />
                 </div>
-              </motion.div>
-              
-              <motion.div 
-                className="group" 
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3, delay: 0.2 }}
-              >
+              </div>
+              <div className="group">
                 <label className="block text-sm font-medium text-gray-900 dark:text-blue-300 mb-1.5 flex items-center">
                   <User className="h-4 w-4 mr-2 text-blue-500 dark:text-blue-400" />
                   Nama Pasien
@@ -185,14 +162,9 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
                     className="w-full px-4 py-2.5 bg-gray-100 dark:bg-gray-700/80 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-400 transition-all shadow-sm hover:border-gray-400 dark:hover:border-gray-500 group-hover:border-gray-400 dark:group-hover:border-gray-500 backdrop-blur-sm"
                   />
                 </div>
-              </motion.div>
+              </div>
               
-              <motion.div 
-                className="group" 
-                initial={{ opacity: 0, x: 10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3, delay: 0.2 }}
-              >
+              <div className="group">
                 <label className="block text-sm font-medium text-gray-900 dark:text-blue-300 mb-1.5 flex items-center">
                   <User className="h-4 w-4 mr-2 text-blue-500 dark:text-blue-400" />
                   Kelamin
@@ -215,14 +187,9 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
                     </svg>
                   </div>
                 </div>
-              </motion.div>
+              </div>
               
-              <motion.div 
-                className="group md:col-span-2" 
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.3 }}
-              >
+              <div className="group md:col-span-2">
                 <label className="block text-sm font-medium text-gray-900 dark:text-blue-300 mb-1.5 flex items-center">
                   <CreditCard className="h-4 w-4 mr-2 text-blue-500 dark:text-blue-400" />
                   Jenis Pasien
@@ -245,7 +212,7 @@ export default function EditPatientModal({ isOpen, onClose, patient, onSave }: E
                     </svg>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             </div>
             
             {/* Tindakan Section */}

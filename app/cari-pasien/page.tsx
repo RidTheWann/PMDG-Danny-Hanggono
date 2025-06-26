@@ -46,17 +46,20 @@ export default function CariPasienPage() {
   const [editSuccess, setEditSuccess] = useState<string | null>(null);
   const [editError, setEditError] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(false);
+  const PAGE_SIZE = 30;
 
   // Efek untuk animasi saat halaman dimuat
   useEffect(() => {
     setPageLoaded(true);
   }, []);
 
-  // Debounce search term
+  // Debounce search term (optimasi: 1000ms)
   useEffect(() => {
     const timerId = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm);
-    }, 700); // debounce lebih lama
+    }, 1000); // debounce lebih lama (1000ms)
 
     return () => {
       clearTimeout(timerId);
@@ -88,7 +91,7 @@ export default function CariPasienPage() {
     fetchAllPatients();
   }, []);
 
-  // Fetch patients from server with search
+  // Fetch patients from server with search, paginasi
   useEffect(() => {
     const fetchPatients = async () => {
       setLoading(true);
@@ -96,26 +99,36 @@ export default function CariPasienPage() {
         if (!debouncedSearchTerm) {
           setResults([]);
           setInitialSearch(true);
+          setHasMore(false);
           setLoading(false);
           return;
         }
         const params = new URLSearchParams({
           search: debouncedSearchTerm,
-          type: searchType
+          type: searchType,
+          limit: PAGE_SIZE.toString(),
+          offset: ((page - 1) * PAGE_SIZE).toString()
         });
         const response = await fetch(`/api/data-pasien?${params.toString()}`);
         if (!response.ok) throw new Error('Gagal mencari pasien');
         const data = await response.json();
         setResults(data);
         setInitialSearch(false);
+        setHasMore(data.length === PAGE_SIZE);
       } catch (error) {
         setResults([]);
         setError('Gagal mencari pasien');
+        setHasMore(false);
       } finally {
         setLoading(false);
       }
     };
     fetchPatients();
+  }, [debouncedSearchTerm, searchType, page]);
+
+  // Reset ke halaman 1 jika search term/type berubah
+  useEffect(() => {
+    setPage(1);
   }, [debouncedSearchTerm, searchType]);
 
   const renderActionBadges = (patient: Patient) => {
@@ -401,6 +414,26 @@ export default function CariPasienPage() {
               ))
             ) : null}
           </div>
+          {/* Pagination Controls */}
+          {!loading && results.length > 0 && (
+            <div className="flex justify-center items-center gap-4 mt-8">
+              <button
+                className="px-4 py-2 rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-semibold disabled:opacity-50"
+                onClick={() => setPage(p => Math.max(1, p - 1))}
+                disabled={page === 1}
+              >
+                Sebelumnya
+              </button>
+              <span className="font-medium text-gray-700 dark:text-gray-200">Halaman {page}</span>
+              <button
+                className="px-4 py-2 rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-semibold disabled:opacity-50"
+                onClick={() => setPage(p => hasMore ? p + 1 : p)}
+                disabled={!hasMore}
+              >
+                Selanjutnya
+              </button>
+            </div>
+          )}
         </div>
         {/* Modal Edit Pasien */}
         <EditPatientModal

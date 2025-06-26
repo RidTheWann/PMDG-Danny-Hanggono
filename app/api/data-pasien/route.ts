@@ -17,6 +17,8 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const search = searchParams.get('search')?.toLowerCase() || '';
     const searchType = searchParams.get('type') || 'nama';
+    const limit = parseInt(searchParams.get('limit') || '30', 10);
+    const offset = parseInt(searchParams.get('offset') || '0', 10);
 
     let query = `
       SELECT 
@@ -46,7 +48,8 @@ export async function GET(req: Request) {
       }
     }
     if (where) query += ` ${where}`;
-    query += ` ORDER BY date DESC, id DESC`;
+    query += ` ORDER BY date DESC, id DESC LIMIT $${values.length + 1} OFFSET $${values.length + 2}`;
+    values.push(limit, offset);
     const result = await pool.query(query, values);
     return NextResponse.json(result.rows);
   } catch (error) {

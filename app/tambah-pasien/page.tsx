@@ -186,7 +186,7 @@ export default function TambahPasienPage(): JSX.Element {
               </div>
             )}
             {/* Date */}
-            <div className="relative w-full max-w-xs group">
+            <div className="relative group" style={{ maxWidth: 240 }}>
               <label
                 htmlFor="tanggal"
                 className="block mb-2 text-sm font-medium text-blue-700 transition-all dark:text-blue-300 group-focus-within:text-blue-400"

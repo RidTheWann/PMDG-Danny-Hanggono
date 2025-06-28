@@ -2,12 +2,13 @@
 
 import Link from 'next/link';
 import './globals.css';
+import './components/bottom-nav.css';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
 import { useTheme } from './hooks/useTheme';
 import { Sun, Moon } from 'lucide-react';
 import Image from 'next/image';
-import MobileMenu from './components/MobileMenu';
+import BottomNav from './components/BottomNav';
 
 export default function RootLayout({ children }: { children: React.ReactNode }): JSX.Element {
   const { theme, toggleTheme } = useTheme();
@@ -110,19 +111,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }):
                   <Moon className="w-5 h-5 text-blue-300" />
                 )}
               </button>
-
-              {/* Mobile Menu Button & Menu (React) */}
-              <MobileMenu />
             </div>
-
-            {/* Mobile Menu */}
-            {/* <div id="mobileMenu" className="mobile-menu ..."> ... </div> */}
           </div>
         </header>
 
         <main className="flex-1 bg-white dark:bg-gray-900 py-6">
           <div className="fade-in">{children}</div>
         </main>
+
+        {/* Bottom Navigation hanya tampil di mobile */}
+        <BottomNav />
 
         {/* Script untuk menu mobile dengan animasi */}
         {/* <script dangerouslySetInnerHTML={{ __html: ` ... `}} /> */}

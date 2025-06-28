@@ -1,0 +1,6 @@
+@media (max-width: 767px) {
+  .bottom-nav-blur {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+}

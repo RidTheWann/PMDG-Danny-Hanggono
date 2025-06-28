@@ -39,7 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }):
         suppressHydrationWarning
       >
         {/* Header Navigation */}
-        <header className="bg-white dark:bg-gradient-to-r dark:from-blue-900 dark:to-blue-800 border-b-0 dark:border-b-0 sticky top-0 z-50">
+        <header className="bg-white dark:bg-gradient-to-r dark:from-blue-900 dark:to-blue-800 border-b-0 dark:border-b-0 sticky top-0 z-50 shadow-lg">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
               {/* Logo and Title */}
@@ -120,7 +120,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }):
           </div>
         </header>
 
-        <main className="flex-1 bg-gradient-to-br from-gray-900 to-gray-800 py-6">
+        <main className="flex-1 bg-white dark:bg-gray-900 py-6">
           <div className="fade-in">{children}</div>
         </main>
 

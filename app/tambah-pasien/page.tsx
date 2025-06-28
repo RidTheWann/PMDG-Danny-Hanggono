@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Calendar, User, CreditCard } from 'lucide-react';
+import { Calendar } from 'lucide-react';
 import StatusModal from '../components/StatusModal';
 import ModernSelect from '../components/ModernSelect';
 import { getTodayJakarta } from '../utils/date';
@@ -186,33 +186,21 @@ export default function TambahPasienPage(): JSX.Element {
               </div>
             )}
             {/* Date */}
-            <div className="relative group">
-              <label
-                htmlFor="tanggal"
-                className="block mb-2 text-sm font-medium text-blue-700 transition-all dark:text-blue-300 group-focus-within:text-blue-400"
-              >
-                Tanggal
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                  <Calendar className="w-5 h-5 text-gray-400 transition-colors group-focus-within:text-blue-500" />
-                </div>
-                <input
-                  type="date"
-                  id="tanggal"
-                  name="tanggal"
-                  value={formData.tanggal}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full max-w-xs px-3 py-3 pl-10 text-gray-900 transition-all bg-gray-100 border border-gray-300 dark:bg-gray-700/70 dark:border-gray-600 rounded-xl dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 hover:border-gray-400 dark:hover:border-gray-500"
-                />
-              </div>
-            </div>
+            <ModernSelect
+              id="tanggal"
+              name="tanggal"
+              value={formData.tanggal}
+              onChange={handleInputChange}
+              required
+              options={[]}
+              placeholder="Pilih tanggal"
+              label="Tanggal"
+            />
 
             {/* Patient Info Row */}
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
               {/* Nama Pasien */}
-              <div className="relative group">
+              <div className="relative w-full group">
                 <label
                   htmlFor="nama_pasien"
                   className="block mb-2 text-sm font-medium text-blue-700 transition-all dark:text-blue-300 group-focus-within:text-blue-400"
@@ -220,9 +208,6 @@ export default function TambahPasienPage(): JSX.Element {
                   Nama Pasien *
                 </label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                    <User className="w-5 h-5 text-gray-400 transition-colors group-focus-within:text-blue-500" />
-                  </div>
                   <input
                     type="text"
                     id="nama_pasien"
@@ -231,13 +216,13 @@ export default function TambahPasienPage(): JSX.Element {
                     onChange={handleInputChange}
                     required
                     placeholder="Masukkan nama lengkap pasien"
-                    className="w-full px-3 py-3 pl-10 text-gray-900 transition-all bg-gray-100 border border-gray-300 dark:bg-gray-700/70 dark:border-gray-600 rounded-xl dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 hover:border-gray-400 dark:hover:border-gray-500"
+                    className="w-full px-4 py-3 text-gray-900 transition-all bg-white border border-gray-300 shadow-md outline-none dark:bg-gray-700/80 dark:border-gray-600 rounded-2xl dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 hover:border-blue-400 dark:hover:border-blue-500 focus:shadow-lg"
                   />
                 </div>
               </div>
 
               {/* No. RM */}
-              <div className="relative group">
+              <div className="relative w-full group">
                 <label
                   htmlFor="no_rm"
                   className="block mb-2 text-sm font-medium text-blue-700 transition-all dark:text-blue-300 group-focus-within:text-blue-400"
@@ -245,9 +230,6 @@ export default function TambahPasienPage(): JSX.Element {
                   No. RM *
                 </label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                    <CreditCard className="w-5 h-5 text-gray-400 transition-colors group-focus-within:text-blue-500" />
-                  </div>
                   <input
                     type="text"
                     id="no_rm"
@@ -256,7 +238,7 @@ export default function TambahPasienPage(): JSX.Element {
                     onChange={handleInputChange}
                     required
                     placeholder="Contoh: 00.00.00"
-                    className="w-full px-3 py-3 pl-10 text-gray-900 placeholder-gray-400 transition-all bg-gray-100 border border-gray-300 dark:bg-gray-700/70 dark:border-gray-600 rounded-xl dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 hover:border-gray-400 dark:hover:border-gray-500"
+                    className="w-full px-4 py-3 text-gray-900 placeholder-gray-400 transition-all bg-white border border-gray-300 shadow-md outline-none dark:bg-gray-700/80 dark:border-gray-600 rounded-2xl dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 hover:border-blue-400 dark:hover:border-blue-500 focus:shadow-lg"
                   />
                 </div>
               </div>
@@ -314,77 +296,52 @@ export default function TambahPasienPage(): JSX.Element {
                     />
                   </svg>
                 </span>
-                Tindakan *
+                Pilih Tindakan
               </h3>
-
-              <div className="grid grid-cols-2 gap-4 mb-6 md:grid-cols-3 lg:grid-cols-4">
-                {treatmentOptions.map((option, index) => (
+              <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+                {treatmentOptions.map((option) => (
                   <label
                     key={option.key}
-                    className={`flex items-center justify-center text-center cursor-pointer rounded-lg px-2 py-3 border transition-all duration-200
-                      ${formData[option.key as keyof PatientForm] ? 'bg-blue-600 border-blue-500 shadow-lg text-white' : 'bg-gray-100 dark:bg-gray-700/70 border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-600/90 hover:border-gray-400 dark:hover:border-gray-500 text-gray-900 dark:text-gray-200'}`}
-                    style={{ animationDelay: `${index * 50}ms` }}
+                    className={`flex flex-col items-center justify-center px-2 py-3 rounded-2xl cursor-pointer border-2 transition-all duration-200 shadow-sm text-sm font-medium select-none
+                      ${formData[option.key as keyof typeof formData] ? 'bg-blue-100 border-blue-500 text-blue-700 dark:bg-blue-900/60 dark:border-blue-400 dark:text-blue-200 scale-105 shadow-md' : 'bg-white border-gray-300 dark:bg-gray-700/60 dark:border-gray-600 dark:text-gray-200 hover:bg-blue-50 hover:border-blue-400 dark:hover:bg-blue-800/40 dark:hover:border-blue-500'}`}
                   >
                     <input
                       type="checkbox"
                       name={option.key}
-                      checked={formData[option.key as keyof PatientForm] as boolean}
+                      checked={!!formData[option.key as keyof typeof formData]}
                       onChange={handleInputChange}
-                      className="sr-only"
+                      className="hidden"
                     />
-                    <span
-                      className={`text-xs sm:text-sm font-medium ${formData[option.key as keyof PatientForm] ? 'text-white' : 'text-gray-900 dark:text-gray-200'}`}
-                    >
-                      {option.label}
-                    </span>
+                    <span>{option.label}</span>
                   </label>
                 ))}
               </div>
             </div>
 
             {/* Tindakan Lainnya */}
-            <div className="relative group">
+            <div className="relative w-full group">
               <label
                 htmlFor="lainnya"
                 className="block mb-2 text-sm font-medium text-blue-700 transition-all dark:text-blue-300 group-focus-within:text-blue-400"
               >
-                Tindakan Lainnya *
+                Tindakan Lainnya
               </label>
-              <div className="relative">
-                <textarea
-                  id="lainnya"
-                  name="lainnya"
-                  value={formData.lainnya}
-                  onChange={handleInputChange}
-                  rows={4}
-                  placeholder="Sebutkan tindakan lainnya, atau tindakan lainnya"
-                  className="w-full px-4 py-3 text-gray-900 placeholder-gray-400 transition-all bg-gray-100 border border-gray-300 resize-none dark:bg-gray-700/70 dark:border-gray-600 rounded-xl dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 hover:border-gray-400 dark:hover:border-gray-500"
-                />
-              </div>
-              <p className="flex items-center mt-2 text-xs text-blue-700 dark:text-blue-300/80">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-4 h-4 mr-1 text-blue-400"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-                Pilih minimal satu tindakan di atas, atau tindakan lainnya
-              </p>
+              <textarea
+                id="lainnya"
+                name="lainnya"
+                value={formData.lainnya}
+                onChange={handleInputChange}
+                rows={2}
+                placeholder="Tindakan lain..."
+                className="w-full px-4 py-3 text-gray-900 placeholder-gray-400 transition-all bg-white border border-gray-300 shadow-md outline-none resize-none dark:bg-gray-700/80 dark:border-gray-600 rounded-2xl dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 hover:border-blue-400 dark:hover:border-blue-500 focus:shadow-lg"
+              />
             </div>
 
             {/* Submit Button */}
             <div className="flex justify-center pt-4">
               <button
                 type="submit"
-                className={`w-full py-3 px-6 rounded-lg font-semibold text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-200 shadow-lg ${loading ? 'opacity-60 cursor-not-allowed' : ''}`}
+                className={`w-full py-3 px-6 rounded-2xl font-semibold text-white bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 transition-all duration-200 shadow-xl focus:ring-2 focus:ring-blue-400 focus:outline-none ${loading ? 'opacity-60 cursor-not-allowed' : ''}`}
                 disabled={loading}
               >
                 {loading ? 'Menyimpan...' : 'Simpan Data'}

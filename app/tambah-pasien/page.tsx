@@ -186,16 +186,28 @@ export default function TambahPasienPage(): JSX.Element {
               </div>
             )}
             {/* Date */}
-            <ModernSelect
-              id="tanggal"
-              name="tanggal"
-              value={formData.tanggal}
-              onChange={handleInputChange}
-              required
-              options={[]}
-              placeholder="Pilih tanggal"
-              label="Tanggal"
-            />
+            <div className="relative group">
+              <label
+                htmlFor="tanggal"
+                className="block mb-2 text-sm font-medium text-blue-700 transition-all dark:text-blue-300 group-focus-within:text-blue-400"
+              >
+                Tanggal
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                  <Calendar className="w-5 h-5 text-gray-400 transition-colors group-focus-within:text-blue-500" />
+                </div>
+                <input
+                  type="date"
+                  id="tanggal"
+                  name="tanggal"
+                  value={formData.tanggal}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full max-w-xs px-3 py-3 pl-10 text-gray-900 transition-all bg-white border border-gray-300 shadow-md outline-none dark:bg-gray-700/80 dark:border-gray-600 rounded-2xl dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 hover:border-blue-400 dark:hover:border-blue-500 focus:shadow-lg"
+                />
+              </div>
+            </div>
 
             {/* Patient Info Row */}
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">

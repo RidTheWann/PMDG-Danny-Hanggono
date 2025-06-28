@@ -186,7 +186,7 @@ export default function TambahPasienPage(): JSX.Element {
               </div>
             )}
             {/* Date */}
-            <div className="relative group">
+            <div className="relative w-full max-w-xs group">
               <label
                 htmlFor="tanggal"
                 className="block mb-2 text-sm font-medium text-blue-700 transition-all dark:text-blue-300 group-focus-within:text-blue-400"
@@ -204,7 +204,8 @@ export default function TambahPasienPage(): JSX.Element {
                   value={formData.tanggal}
                   onChange={handleInputChange}
                   required
-                  className="w-full max-w-xs px-3 py-3 pl-10 text-gray-900 transition-all bg-white border border-gray-300 shadow-md outline-none sm:max-w-sm md:max-w-md dark:bg-gray-700/80 dark:border-gray-600 rounded-2xl dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 hover:border-blue-400 dark:hover:border-blue-500 focus:shadow-lg"
+                  className="w-full px-3 py-3 pl-10 text-gray-900 transition-all bg-white border border-gray-300 shadow-md outline-none dark:bg-gray-700/80 dark:border-gray-600 rounded-2xl dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 hover:border-blue-400 dark:hover:border-blue-500 focus:shadow-lg"
+                  style={{ maxWidth: '100%' }}
                 />
               </div>
             </div>

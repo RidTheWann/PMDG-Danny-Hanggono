@@ -9,6 +9,7 @@ import AksiTableButton from './AksiTableButton';
 import EditPatientModal from '../components/EditPatientModal';
 import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
 import SuccessModal from '../components/SuccessModal';
+import { useTheme } from '../hooks/useTheme';
 
 import './mobile-table.css';
 import {
@@ -37,6 +38,7 @@ ChartJS.register(
 );
 
 export default function DataPasienPage(): JSX.Element {
+  const { theme } = useTheme();
   const [patients, setPatients] = useState<Patient[]>([]);
   const [loading, setLoading] = useState(true);
   const [filterDate, setFilterDate] = useState(() => getTodayJakarta());
@@ -614,44 +616,44 @@ export default function DataPasienPage(): JSX.Element {
           </div>
           {/* Statistik Cards - Atas */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-4">
-            <div className="bg-gray-800 rounded-2xl shadow-xl p-6 flex flex-col items-center">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 flex flex-col items-center">
               <div className="text-blue-400 text-3xl font-bold">{totalLaki}</div>
-              <div className="text-gray-300 mt-2">Total Laki-laki</div>
+              <div className="text-gray-700 dark:text-gray-300 mt-2">Total Laki-laki</div>
               <div className="text-xs text-gray-400 mt-1">keseluruhan</div>
             </div>
-            <div className="bg-gray-800 rounded-2xl shadow-xl p-6 flex flex-col items-center">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 flex flex-col items-center">
               <div className="text-pink-400 text-3xl font-bold">{totalPerempuan}</div>
-              <div className="text-gray-300 mt-2">Total Perempuan</div>
+              <div className="text-gray-700 dark:text-gray-300 mt-2">Total Perempuan</div>
               <div className="text-xs text-gray-400 mt-1">keseluruhan</div>
             </div>
-            <div className="bg-gray-800 rounded-2xl shadow-xl p-6 flex flex-col items-center">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 flex flex-col items-center">
               <div className="text-purple-400 text-3xl font-bold">{totalSemuaPasien}</div>
-              <div className="text-gray-300 mt-2">Total Semua Pasien</div>
+              <div className="text-gray-700 dark:text-gray-300 mt-2">Total Semua Pasien</div>
               <div className="text-xs text-gray-400 mt-1">keseluruhan</div>
             </div>
           </div>
           {/* Statistik Cards - Bawah */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-8">
-            <div className="bg-gray-800 rounded-2xl shadow-xl p-6 flex flex-col items-center">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 flex flex-col items-center">
               <div className="text-blue-400 text-3xl font-bold">{totalLakiPerBulan}</div>
-              <div className="text-gray-300 mt-2">Total Laki-laki perbulan</div>
+              <div className="text-gray-700 dark:text-gray-300 mt-2">Total Laki-laki perbulan</div>
               <div className="text-xs text-gray-400 mt-1">rata-rata</div>
             </div>
-            <div className="bg-gray-800 rounded-2xl shadow-xl p-6 flex flex-col items-center">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 flex flex-col items-center">
               <div className="text-pink-400 text-3xl font-bold">{totalPerempuanPerBulan}</div>
-              <div className="text-gray-300 mt-2">Total Perempuan perbulan</div>
+              <div className="text-gray-700 dark:text-gray-300 mt-2">Total Perempuan perbulan</div>
               <div className="text-xs text-gray-400 mt-1">rata-rata</div>
             </div>
-            <div className="bg-gray-800 rounded-2xl shadow-xl p-6 flex flex-col items-center">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 flex flex-col items-center">
               <div className="text-green-400 text-3xl font-bold">{rataKunjunganHarian}</div>
-              <div className="text-gray-300 mt-2">Kunjungan Harian</div>
+              <div className="text-gray-700 dark:text-gray-300 mt-2">Kunjungan Harian</div>
               <div className="text-xs text-gray-400 mt-1">rata-rata</div>
             </div>
           </div>
           {/* Chart Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-8 md:gap-3">
-            <div className="bg-gray-800 rounded-2xl shadow-xl p-5 flex flex-col items-center">
-              <h3 className="text-lg font-semibold text-white mb-4">Distribusi Tindakan</h3>
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-5 flex flex-col items-center">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Distribusi Tindakan</h3>
               <div className="w-full flex justify-center" style={{ maxWidth: 320 }}>
                 <Pie
                   data={{
@@ -668,7 +670,7 @@ export default function DataPasienPage(): JSX.Element {
                       legend: {
                         display: true,
                         position: 'right',
-                        labels: { color: '#fff', font: { size: 12 } },
+                        labels: { color: theme === 'dark' ? '#fff' : '#222', font: { size: 12 } },
                       },
                     },
                     maintainAspectRatio: false,
@@ -677,8 +679,8 @@ export default function DataPasienPage(): JSX.Element {
                 />
               </div>
             </div>
-            <div className="bg-gray-800 rounded-2xl shadow-xl p-5 flex flex-col items-center">
-              <h3 className="text-lg font-semibold text-white mb-4">Distribusi Biaya</h3>
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-5 flex flex-col items-center">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Distribusi Biaya</h3>
               <div className="w-full flex justify-center" style={{ maxWidth: 320 }}>
                 <Pie
                   data={{
@@ -695,7 +697,7 @@ export default function DataPasienPage(): JSX.Element {
                       legend: {
                         display: true,
                         position: 'right',
-                        labels: { color: '#fff', font: { size: 10 } },
+                        labels: { color: theme === 'dark' ? '#fff' : '#222', font: { size: 10 } },
                       },
                     },
                     maintainAspectRatio: false,
@@ -706,8 +708,8 @@ export default function DataPasienPage(): JSX.Element {
             </div>
           </div>
           {/* Traffic Kunjungan Pasien Chart */}
-          <div className="bg-gray-800 rounded-2xl shadow-xl p-5 mb-8 flex flex-col items-center max-w-full md:max-w-3xl mx-auto">
-            <h3 className="text-lg font-semibold text-white mb-4">Traffic Kunjungan Pasien</h3>
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-5 mb-8 flex flex-col items-center max-w-full md:max-w-3xl mx-auto">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Traffic Kunjungan Pasien</h3>
             <div className="w-full flex justify-center" style={{ maxWidth: 700 }}>
               <Line
                 data={{

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Calendar, User, CreditCard } from 'lucide-react';
 import StatusModal from '../components/StatusModal';
+import ModernSelect from '../components/ModernSelect';
 import { getTodayJakarta } from '../utils/date';
 
 interface PatientForm {
@@ -264,82 +265,34 @@ export default function TambahPasienPage(): JSX.Element {
             {/* Gender and Type Row */}
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
               {/* Kelamin */}
-              <div className="relative group">
-                <label
-                  htmlFor="kelamin"
-                  className="block mb-2 text-sm font-medium text-blue-700 transition-all dark:text-blue-300 group-focus-within:text-blue-400"
-                >
-                  Kelamin *
-                </label>
-                <div className="relative">
-                  <select
-                    id="kelamin"
-                    name="kelamin"
-                    value={formData.kelamin}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-3 py-3 text-gray-900 transition-all bg-gray-100 border border-gray-300 appearance-none dark:bg-gray-700/70 dark:border-gray-600 rounded-xl dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 hover:border-gray-400 dark:hover:border-gray-500"
-                  >
-                    <option value="">Pilih jenis kelamin</option>
-                    <option value="L">Laki-laki</option>
-                    <option value="P">Perempuan</option>
-                  </select>
-                  <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                    <svg
-                      className="w-5 h-5 text-gray-400"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </div>
-                </div>
-              </div>
+              <ModernSelect
+                id="kelamin"
+                name="kelamin"
+                value={formData.kelamin}
+                onChange={handleInputChange}
+                required
+                options={[
+                  { value: 'L', label: 'Laki-laki' },
+                  { value: 'P', label: 'Perempuan' },
+                ]}
+                placeholder="Pilih jenis kelamin"
+                label="Kelamin *"
+              />
 
               {/* Jenis Pasien */}
-              <div className="relative group">
-                <label
-                  htmlFor="jenis_pasien"
-                  className="block mb-2 text-sm font-medium text-blue-700 transition-all dark:text-blue-300 group-focus-within:text-blue-400"
-                >
-                  Jenis Pasien *
-                </label>
-                <div className="relative">
-                  <select
-                    id="jenis_pasien"
-                    name="jenis_pasien"
-                    value={formData.jenis_pasien}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-3 py-3 text-gray-900 transition-all bg-gray-100 border border-gray-300 appearance-none dark:bg-gray-700/70 dark:border-gray-600 rounded-xl dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 hover:border-gray-400 dark:hover:border-gray-500"
-                  >
-                    <option value="">Pilih jenis pasien</option>
-                    <option value="BPJS">BPJS</option>
-                    <option value="UMUM">UMUM</option>
-                  </select>
-                  <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                    <svg
-                      className="w-5 h-5 text-gray-400"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </div>
-                </div>
-              </div>
+              <ModernSelect
+                id="jenis_pasien"
+                name="jenis_pasien"
+                value={formData.jenis_pasien}
+                onChange={handleInputChange}
+                required
+                options={[
+                  { value: 'BPJS', label: 'BPJS' },
+                  { value: 'UMUM', label: 'UMUM' },
+                ]}
+                placeholder="Pilih jenis pasien"
+                label="Jenis Pasien *"
+              />
             </div>
 
             {/* Tindakan Section */}

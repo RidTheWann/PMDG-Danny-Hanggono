@@ -28,14 +28,15 @@ const nextConfig = {
     domains: [],
     formats: ['image/avif', 'image/webp'],
   },
+  // Konfigurasi untuk PWA
+  // Jika ingin menggunakan PWA, tambahkan package next-pwa dan uncomment kode di bawah
+  pwa: {
+    dest: 'public',
+    register: true,
+    skipWaiting: true,
+    disable: process.env.NODE_ENV === 'development',
+  },
 };
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const withPWA = require('next-pwa')({
-  dest: 'public',
-  register: true,
-  skipWaiting: true,
-  disable: process.env.NODE_ENV === 'development',
-});
-
-module.exports = withPWA(nextConfig);
+import withPWA from 'next-pwa';
+export default withPWA(nextConfig);

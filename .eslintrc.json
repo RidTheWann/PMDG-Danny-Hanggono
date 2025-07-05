@@ -7,13 +7,5 @@
     "react/react-in-jsx-scope": "off",
     "no-console": ["error", { "allow": ["warn", "error"] }],
     "react/jsx-key": "warn"
-  },
-  "overrides": [
-    {
-      "files": ["next.config.js"],
-      "rules": {
-        "@typescript-eslint/no-var-requires": "off"
-      }
-    }
-  ]
+  }
 }

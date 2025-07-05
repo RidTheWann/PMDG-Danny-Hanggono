@@ -1,4 +1,11 @@
-import withPWA from 'next-pwa';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const withPWA = require('next-pwa')({
+  dest: 'public',
+  register: true,
+  skipWaiting: true,
+  disable: process.env.NODE_ENV === 'development',
+  runtimeCaching: [],
+});
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -20,13 +27,4 @@ const nextConfig = {
   },
 };
 
-// Konfigurasi PWA yang diperbaiki
-const withPWAConfig = withPWA({
-  dest: 'public',
-  register: true,
-  skipWaiting: true,
-  disable: process.env.NODE_ENV === 'development',
-  runtimeCaching: [],
-});
-
-export default withPWAConfig(nextConfig);
+module.exports = withPWA(nextConfig);

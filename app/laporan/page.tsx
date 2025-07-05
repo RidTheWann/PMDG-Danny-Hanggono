@@ -40,7 +40,7 @@ export default function LaporanPage(): JSX.Element {
               {/* Kessan Image */}
               <div className="w-48 h-48 mx-auto mb-6 overflow-hidden rounded-lg">
                 <Image
-                  src="/Kessan.jpg"
+                  src="/Kessan.webp"
                   alt="Survey BPJS Kesehatan"
                   width={192}
                   height={192}
@@ -77,7 +77,7 @@ export default function LaporanPage(): JSX.Element {
               {/* Kepuasan Image */}
               <div className="w-48 h-48 mx-auto mb-6 overflow-hidden rounded-lg">
                 <Image
-                  src="/Kepuasan.png"
+                  src="/Kepuasan.webp"
                   alt="Survey Kepuasan Pasien Kemenkes"
                   width={192}
                   height={192}

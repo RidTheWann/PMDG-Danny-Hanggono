@@ -56,7 +56,7 @@ export default function Homepage(): JSX.Element {
         >
           <div className="mb-8 rounded-2xl overflow-hidden shadow-2xl max-w-4xl mx-auto">
             <Image
-              src="/Praktek.png"
+              src="/Praktek.webp"
               alt="Praktek Mandiri drg. Danny Hanggono"
               width={800}
               height={450}

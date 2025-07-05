@@ -6,10 +6,7 @@ import { ArrowLeft, ArrowRight, Users, Activity, Calendar } from 'lucide-react';
 import { getTodayJakarta } from '../utils/date';
 import type { Patient } from '../types/patient';
 import AksiTableButton from './AksiTableButton';
-import EditPatientModal from '../components/EditPatientModal';
-import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
-import SuccessModal from '../components/SuccessModal';
-import { useTheme } from '../hooks/useTheme';
+import dynamic from 'next/dynamic';
 
 import './mobile-table.css';
 import {
@@ -23,7 +20,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { Pie, Line } from 'react-chartjs-2';
+import { useTheme } from '../hooks/useTheme';
 
 // Register ChartJS components
 ChartJS.register(
@@ -36,6 +33,17 @@ ChartJS.register(
   Tooltip,
   Legend,
 );
+
+// Ganti import Pie, Line dari react-chartjs-2 menjadi dynamic import agar tidak membebani initial load
+const Pie = dynamic(() => import('react-chartjs-2').then((mod) => mod.Pie), { ssr: false });
+const Line = dynamic(() => import('react-chartjs-2').then((mod) => mod.Line), { ssr: false });
+
+// Lazy load komponen modal agar initial load lebih ringan
+const EditPatientModal = dynamic(() => import('../components/EditPatientModal'), { ssr: false });
+const DeleteConfirmationModal = dynamic(() => import('../components/DeleteConfirmationModal'), {
+  ssr: false,
+});
+const SuccessModal = dynamic(() => import('../components/SuccessModal'), { ssr: false });
 
 export default function DataPasienPage(): JSX.Element {
   const { theme } = useTheme();
@@ -653,7 +661,9 @@ export default function DataPasienPage(): JSX.Element {
           {/* Chart Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-8 md:gap-3">
             <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-5 flex flex-col items-center">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Distribusi Tindakan</h3>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                Distribusi Tindakan
+              </h3>
               <div className="w-full flex justify-center" style={{ maxWidth: 320 }}>
                 <Pie
                   data={{
@@ -680,7 +690,9 @@ export default function DataPasienPage(): JSX.Element {
               </div>
             </div>
             <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-5 flex flex-col items-center">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Distribusi Biaya</h3>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                Distribusi Biaya
+              </h3>
               <div className="w-full flex justify-center" style={{ maxWidth: 320 }}>
                 <Pie
                   data={{
@@ -709,7 +721,9 @@ export default function DataPasienPage(): JSX.Element {
           </div>
           {/* Traffic Kunjungan Pasien Chart */}
           <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-5 mb-8 flex flex-col items-center max-w-full md:max-w-3xl mx-auto">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Traffic Kunjungan Pasien</h3>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+              Traffic Kunjungan Pasien
+            </h3>
             <div className="w-full flex justify-center" style={{ maxWidth: 700 }}>
               <Line
                 data={{

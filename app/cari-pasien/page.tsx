@@ -4,7 +4,10 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Search, User, Calendar, CreditCard, Activity, UserRound, Pencil } from 'lucide-react';
-import EditPatientModal from '../components/EditPatientModal';
+import dynamic from 'next/dynamic';
+
+const EditPatientModal = dynamic(() => import('../components/EditPatientModal'), { ssr: false });
+
 import type { Patient } from '../types/patient';
 
 // Definisi label untuk tindakan

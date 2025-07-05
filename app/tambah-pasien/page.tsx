@@ -2,9 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import { Calendar } from 'lucide-react';
-import StatusModal from '../components/StatusModal';
-import ModernSelect from '../components/ModernSelect';
+import dynamic from 'next/dynamic';
 import { getTodayJakarta } from '../utils/date';
+
+const StatusModal = dynamic(() => import('../components/StatusModal'), { ssr: false });
+const ModernSelect = dynamic(() => import('../components/ModernSelect'), { ssr: false });
 
 interface PatientForm {
   tanggal: string;

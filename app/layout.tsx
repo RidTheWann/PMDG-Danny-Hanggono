@@ -9,11 +9,14 @@ import { useTheme } from './hooks/useTheme';
 import { Sun, Moon } from 'lucide-react';
 import Image from 'next/image';
 import BottomNav from './components/BottomNav';
+import { Inter } from 'next/font/google';
+
+const inter = Inter({ subsets: ['latin'], display: 'swap', variable: '--font-inter' });
 
 export default function RootLayout({ children }: { children: React.ReactNode }): JSX.Element {
   const { theme, toggleTheme } = useTheme();
   return (
-    <html lang="id" suppressHydrationWarning>
+    <html lang="id" suppressHydrationWarning className={inter.variable}>
       <head>
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.svg" />

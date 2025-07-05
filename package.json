@@ -2,6 +2,7 @@
   "name": "praktek-mandiri-drg-danny",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev --turbo",
     "build": "next build",
@@ -9,7 +10,7 @@
     "start": "next start",
     "lint": "next lint",
     "analyze": "ANALYZE=true next build",
-    "prepare": "husky install"
+    "prepare": "husky install || true"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
@@ -59,6 +60,5 @@
       "prettier --write",
       "eslint --fix"
     ]
-  },
-  "postinstall": "npx shadcn-ui@latest init --yes"
+  }
 }

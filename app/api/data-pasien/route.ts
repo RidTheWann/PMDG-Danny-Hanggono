@@ -29,21 +29,20 @@ export async function GET(req: Request): Promise<NextResponse> {
         gender as kelamin,
         payment_type as jenis_pasien,
         actions,
-        other_actions as lainnya,
-        description
+        other_actions as lainnya
       FROM data_entries
     `;
     let where = '';
     const values: unknown[] = [];
     if (search) {
       if (searchType === 'nama') {
-        where = `WHERE LOWER(patient_name) LIKE $1`;
+        where = `WHERE patient_name ILIKE $1`;
         values.push(`%${search}%`);
       } else if (searchType === 'rm') {
-        where = `WHERE LOWER(medical_record_number) LIKE $1`;
+        where = `WHERE medical_record_number ILIKE $1`;
         values.push(`%${search}%`);
       } else if (searchType === 'tindakan') {
-        where = `WHERE LOWER(actions::text) LIKE $1 OR LOWER(other_actions) LIKE $1`;
+        where = `WHERE actions::text ILIKE $1 OR other_actions ILIKE $1`;
         values.push(`%${search}%`);
       }
     }

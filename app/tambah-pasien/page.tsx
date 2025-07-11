@@ -96,6 +96,9 @@ export default function TambahPasienPage(): JSX.Element {
       };
 
       // Kirim data ke API untuk disimpan di database dan Google Sheets
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 detik timeout
+
       const response = await fetch('/api/tambah-pasien', {
         method: 'POST',
         headers: {
@@ -103,7 +106,10 @@ export default function TambahPasienPage(): JSX.Element {
         },
         body: JSON.stringify(patientData),
         cache: 'no-store',
+        signal: controller.signal,
       });
+
+      clearTimeout(timeoutId);
 
       if (!response.ok) {
         throw new Error('Gagal menyimpan data');
@@ -356,10 +362,17 @@ export default function TambahPasienPage(): JSX.Element {
             <div className="flex justify-center pt-4">
               <button
                 type="submit"
-                className={`w-full py-3 px-6 rounded-2xl font-semibold text-white bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 transition-all duration-200 shadow-xl focus:ring-2 focus:ring-blue-400 focus:outline-none ${loading ? 'opacity-60 cursor-not-allowed' : ''}`}
+                className={`w-full py-3 px-6 rounded-2xl font-semibold text-white bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 transition-all duration-200 shadow-xl focus:ring-2 focus:ring-blue-400 focus:outline-none ${loading ? 'opacity-60 cursor-not-allowed' : 'hover:scale-105'}`}
                 disabled={loading}
               >
-                {loading ? 'Menyimpan...' : 'Simpan Data'}
+                {loading ? (
+                  <div className="flex items-center justify-center">
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                    Menyimpan...
+                  </div>
+                ) : (
+                  'Simpan Data'
+                )}
               </button>
             </div>
           </form>

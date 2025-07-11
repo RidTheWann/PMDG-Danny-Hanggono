@@ -39,69 +39,67 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     // Konversi array actions menjadi JSON string
     const actionsJson = JSON.stringify(actions);
 
-    // 1. Simpan ke database Neon PostgreSQL
-    const result = await pool.query(
-      `INSERT INTO data_entries 
-       (date, patient_name, medical_record_number, gender, payment_type, actions, other_actions) 
-       VALUES ($1, $2, $3, $4, $5, $6, $7) 
-       RETURNING id`,
-      [
-        data['Tanggal Kunjungan'],
-        data['Nama Pasien'],
-        data['No.RM'],
-        data['Kelamin'],
-        data['Biaya'],
-        actionsJson,
-        data['Lainnya'] || null,
-      ],
-    );
+    // Siapkan data untuk Google Sheets dengan format yang sesuai
+    const params = new URLSearchParams();
+    params.append('action', 'add');
+    params.append('Tanggal Kunjungan', data['Tanggal Kunjungan']);
+    params.append('Nama Pasien', data['Nama Pasien']);
+    params.append('No.RM', data['No.RM']);
+    params.append('Kelamin', data['Kelamin']);
+    params.append('Biaya', data['Biaya']);
+    params.append('Obat', data['Obat']);
+    params.append('Cabut Anak', data['Cabut Anak']);
+    params.append('Cabut Dewasa', data['Cabut Dewasa']);
+    params.append('Tambal Sementara', data['Tambal Sementara']);
+    params.append('Tambal Tetap', data['Tambal Tetap']);
+    params.append('Scaling', data['Scaling']);
+    params.append('Rujuk', data['Rujuk']);
+    params.append('Lainnya', data['Lainnya'] || '');
 
-    // 2. Kirim data ke Google Sheets
-    try {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 15000); // 15 detik
-      // Siapkan data untuk Google Sheets dengan format yang sesuai
-      const params = new URLSearchParams();
-      params.append('action', 'add');
-      params.append('Tanggal Kunjungan', data['Tanggal Kunjungan']);
-      params.append('Nama Pasien', data['Nama Pasien']);
-      params.append('No.RM', data['No.RM']);
-      params.append('Kelamin', data['Kelamin']);
-      params.append('Biaya', data['Biaya']);
-      params.append('Obat', data['Obat']);
-      params.append('Cabut Anak', data['Cabut Anak']);
-      params.append('Cabut Dewasa', data['Cabut Dewasa']);
-      params.append('Tambal Sementara', data['Tambal Sementara']);
-      params.append('Tambal Tetap', data['Tambal Tetap']);
-      params.append('Scaling', data['Scaling']);
-      params.append('Rujuk', data['Rujuk']);
-      params.append('Lainnya', data['Lainnya'] || '');
-      // Kirim data ke Google Sheets dengan format application/x-www-form-urlencoded
-      const sheetsResponse = await fetch(googleSheetsUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: params.toString(),
-        signal: controller.signal,
-      });
-      clearTimeout(timeout);
-      if (!sheetsResponse.ok) {
-        console.error('Gagal menyimpan ke Google Sheets:', await sheetsResponse.text());
-      }
-    } catch (sheetsError: unknown) {
-      if (sheetsError instanceof Error && sheetsError.name === 'AbortError') {
-        console.error('Timeout Google Sheets, lanjutkan karena data sudah masuk DB');
-      } else {
-        console.error('Error saat menyimpan ke Google Sheets:', sheetsError);
-      }
-      // Tetap lanjutkan karena data sudah tersimpan di database
+    // Jalankan database dan Google Sheets secara paralel untuk performa lebih cepat
+    const [result] = await Promise.allSettled([
+      // 1. Simpan ke database Neon PostgreSQL
+      pool.query(
+        `INSERT INTO data_entries 
+         (date, patient_name, medical_record_number, gender, payment_type, actions, other_actions) 
+         VALUES ($1, $2, $3, $4, $5, $6, $7) 
+         RETURNING id`,
+        [
+          data['Tanggal Kunjungan'],
+          data['Nama Pasien'],
+          data['No.RM'],
+          data['Kelamin'],
+          data['Biaya'],
+          actionsJson,
+          data['Lainnya'] || null,
+        ],
+      ),
+      // 2. Kirim data ke Google Sheets (dengan timeout lebih pendek)
+      Promise.race([
+        fetch(googleSheetsUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: params.toString(),
+        }),
+        new Promise(
+          (_, reject) => setTimeout(() => reject(new Error('Timeout')), 8000), // 8 detik timeout
+        ),
+      ]),
+    ]);
+
+    // Periksa hasil database
+    if (result.status === 'rejected') {
+      throw new Error('Gagal menyimpan ke database');
     }
+
+    const dbResult = result.value as { rows: Array<{ id: string }> };
 
     return NextResponse.json({
       success: true,
       message: 'Data berhasil disimpan',
-      id: result.rows[0].id,
+      id: dbResult.rows[0].id,
     });
   } catch (error) {
     console.error('Error saat menyimpan data:', error);

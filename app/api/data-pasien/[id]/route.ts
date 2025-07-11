@@ -25,75 +25,76 @@ export async function PUT(
       return NextResponse.json({ error: 'Data tidak lengkap' }, { status: 400 });
     }
 
-    // 1. Update di database Neon PostgreSQL
-    const result = await pool.query(
-      `UPDATE data_entries 
-       SET date = $1, patient_name = $2, medical_record_number = $3, 
-           gender = $4, payment_type = $5, other_actions = $6, actions = $7
-       WHERE id = $8
-       RETURNING *`,
-      [
-        data.tanggal,
-        data.nama_pasien,
-        data.no_rm,
-        data.kelamin,
-        data.jenis_pasien,
-        data.lainnya || null,
-        JSON.stringify(data.actions || []),
-        id,
-      ],
-    );
+    // Siapkan data untuk Google Sheets
+    const sheetsParams = new URLSearchParams();
+    sheetsParams.append('action', 'edit');
+    sheetsParams.append('Tanggal Kunjungan_asli', data.tanggal_asli || data.tanggal);
+    sheetsParams.append('Nama Pasien_asli', data.nama_pasien_asli || data.nama_pasien);
+    sheetsParams.append('No.RM_asli', data.no_rm_asli || data.no_rm);
+    sheetsParams.append('Tanggal Kunjungan', data.tanggal);
+    sheetsParams.append('Nama Pasien', data.nama_pasien);
+    sheetsParams.append('No.RM', data.no_rm);
+    sheetsParams.append('Kelamin', data.kelamin);
+    sheetsParams.append('Biaya', data.jenis_pasien);
+    sheetsParams.append('Lainnya', data.lainnya || '');
 
-    if (result.rowCount === 0) {
-      return NextResponse.json({ error: 'Data pasien tidak ditemukan' }, { status: 404 });
+    // Tambahkan tindakan ke Google Sheets
+    if (Array.isArray(data.actions)) {
+      sheetsParams.append('Obat', data.actions.includes('Obat') ? 'Ya' : 'Tidak');
+      sheetsParams.append('Cabut Anak', data.actions.includes('Cabut Anak') ? 'Ya' : 'Tidak');
+      sheetsParams.append('Cabut Dewasa', data.actions.includes('Cabut Dewasa') ? 'Ya' : 'Tidak');
+      sheetsParams.append(
+        'Tambal Sementara',
+        data.actions.includes('Tambal Sementara') ? 'Ya' : 'Tidak',
+      );
+      sheetsParams.append('Tambal Tetap', data.actions.includes('Tambal Tetap') ? 'Ya' : 'Tidak');
+      sheetsParams.append('Scaling', data.actions.includes('Scaling') ? 'Ya' : 'Tidak');
+      sheetsParams.append('Rujuk', data.actions.includes('Rujuk') ? 'Ya' : 'Tidak');
     }
 
-    // 2. Update di Google Sheets
-    try {
-      // Siapkan data untuk Google Sheets
-      const params = new URLSearchParams();
-      params.append('action', 'edit');
-      params.append('Tanggal Kunjungan_asli', data.tanggal_asli || data.tanggal);
-      params.append('Nama Pasien_asli', data.nama_pasien_asli || data.nama_pasien);
-      params.append('No.RM_asli', data.no_rm_asli || data.no_rm);
+    // Jalankan database dan Google Sheets secara paralel untuk performa lebih cepat
+    const [dbResult] = await Promise.allSettled([
+      // 1. Update di database Neon PostgreSQL
+      pool.query(
+        `UPDATE data_entries 
+         SET date = $1, patient_name = $2, medical_record_number = $3, 
+             gender = $4, payment_type = $5, other_actions = $6, actions = $7
+         WHERE id = $8
+         RETURNING *`,
+        [
+          data.tanggal,
+          data.nama_pasien,
+          data.no_rm,
+          data.kelamin,
+          data.jenis_pasien,
+          data.lainnya || null,
+          JSON.stringify(data.actions || []),
+          id,
+        ],
+      ),
+      // 2. Update di Google Sheets (dengan timeout)
+      Promise.race([
+        fetch(googleSheetsUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: sheetsParams.toString(),
+        }),
+        new Promise(
+          (_, reject) => setTimeout(() => reject(new Error('Timeout')), 8000), // 8 detik timeout
+        ),
+      ]),
+    ]);
 
-      params.append('Tanggal Kunjungan', data.tanggal);
-      params.append('Nama Pasien', data.nama_pasien);
-      params.append('No.RM', data.no_rm);
-      params.append('Kelamin', data.kelamin);
-      params.append('Biaya', data.jenis_pasien);
-      params.append('Lainnya', data.lainnya || '');
+    // Periksa hasil database
+    if (dbResult.status === 'rejected') {
+      throw new Error('Gagal update database');
+    }
 
-      // Tambahkan tindakan ke Google Sheets
-      if (Array.isArray(data.actions)) {
-        // Update tindakan
-        params.append('Obat', data.actions.includes('Obat') ? 'Ya' : 'Tidak');
-        params.append('Cabut Anak', data.actions.includes('Cabut Anak') ? 'Ya' : 'Tidak');
-        params.append('Cabut Dewasa', data.actions.includes('Cabut Dewasa') ? 'Ya' : 'Tidak');
-        params.append(
-          'Tambal Sementara',
-          data.actions.includes('Tambal Sementara') ? 'Ya' : 'Tidak',
-        );
-        params.append('Tambal Tetap', data.actions.includes('Tambal Tetap') ? 'Ya' : 'Tidak');
-        params.append('Scaling', data.actions.includes('Scaling') ? 'Ya' : 'Tidak');
-        params.append('Rujuk', data.actions.includes('Rujuk') ? 'Ya' : 'Tidak');
-      }
-
-      // Kirim data ke Google Sheets
-      const sheetsResponse = await fetch(googleSheetsUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: params.toString(),
-      });
-
-      if (!sheetsResponse.ok) {
-        console.error('Gagal update ke Google Sheets:', await sheetsResponse.text());
-      }
-    } catch (sheetsError) {
-      console.error('Error saat update ke Google Sheets:', sheetsError);
-      // Tetap lanjutkan karena data sudah terupdate di database
+    const result = dbResult.value as { rows: Array<Record<string, unknown>>; rowCount: number };
+    if (result.rowCount === 0) {
+      return NextResponse.json({ error: 'Data pasien tidak ditemukan' }, { status: 404 });
     }
 
     return NextResponse.json({

@@ -10,17 +10,6 @@ const EditPatientModal = dynamic(() => import('../components/EditPatientModal'),
 
 import type { Patient } from '../types/patient';
 
-// Definisi label untuk tindakan
-const actionLabels: Record<string, string> = {
-  obat: 'Obat',
-  cabut_anak: 'Cabut Anak',
-  cabut_dewasa: 'Cabut Dewasa',
-  tambal_sementara: 'Tambal Sementara',
-  tambal_tetap: 'Tambal Tetap',
-  scaling: 'Scaling',
-  rujuk: 'Rujuk',
-};
-
 // Fungsi untuk memformat tanggal
 const formatDate = (dateString: string) => {
   const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: 'long', year: 'numeric' };
@@ -105,28 +94,58 @@ export default function CariPasienPage(): JSX.Element {
 
   const renderActionBadges = (patient: Patient) => {
     const badges: JSX.Element[] = [];
-    Object.entries(actionLabels).forEach(([key, label]: [string, string]) => {
-      if (patient[key] === true || patient[key] === 'Ya') {
-        badges.push(
-          <span
-            key={key}
-            className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-700/80 text-white dark:bg-blue-900 dark:text-blue-200 mr-2 mb-2"
-          >
-            {label}
-          </span>,
-        );
+
+    // Parse actions dari database (bisa berupa string JSON atau array)
+    let actions: string[] = [];
+    if (patient.actions) {
+      if (Array.isArray(patient.actions)) {
+        actions = patient.actions;
+      } else if (typeof patient.actions === 'string') {
+        try {
+          actions = JSON.parse(patient.actions);
+        } catch (e) {
+          console.error('Error parsing actions:', e);
+          actions = [];
+        }
       }
+    }
+
+    // Tampilkan badge untuk setiap tindakan yang ada
+    actions.forEach((action: string) => {
+      badges.push(
+        <span
+          key={action}
+          className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-700/80 text-white dark:bg-blue-900 dark:text-blue-200 mr-2 mb-2"
+        >
+          {action}
+        </span>,
+      );
     });
+
+    // Tampilkan tindakan lainnya jika ada
     if (patient.lainnya && (patient.lainnya as string).trim() !== '') {
       badges.push(
         <span
           key="lainnya"
           className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-700/80 text-white dark:bg-purple-900 dark:text-purple-200 mr-2 mb-2"
         >
-          {patient.lainnya}
+          Lainnya: {patient.lainnya}
         </span>,
       );
     }
+
+    // Jika tidak ada tindakan, tampilkan pesan
+    if (badges.length === 0) {
+      badges.push(
+        <span
+          key="no-action"
+          className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-500/80 text-white mr-2 mb-2"
+        >
+          Tidak ada tindakan
+        </span>,
+      );
+    }
+
     return badges;
   };
 
@@ -139,11 +158,18 @@ export default function CariPasienPage(): JSX.Element {
   // Handler untuk menyimpan perubahan pasien
   const handleSavePatient = async (updatedPatient: Patient) => {
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 detik timeout
+
       const response = await fetch(`/api/data-pasien/${updatedPatient.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedPatient),
+        signal: controller.signal,
       });
+
+      clearTimeout(timeoutId);
+
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(errorText);

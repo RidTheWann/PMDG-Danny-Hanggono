@@ -82,6 +82,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
             'Content-Type': 'application/x-www-form-urlencoded',
           },
           body: params.toString(),
+        }).then(async (res) => {
+          const text = await res.text();
+          // eslint-disable-next-line no-console
+          console.error('Sheets response:', text);
+          return text;
         }),
         new Promise(
           (_, reject) => setTimeout(() => reject(new Error('Timeout')), 8000), // 8 detik timeout

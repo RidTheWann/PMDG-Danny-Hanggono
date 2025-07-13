@@ -73,58 +73,87 @@ export default function TambahPasienPage(): JSX.Element {
     e.preventDefault();
     setLoading(true);
     setSubmitError(null);
+
+    // Konversi gender dari kode ke teks lengkap
+    const genderText =
+      formData.kelamin === 'L' ? 'Laki-laki' : formData.kelamin === 'P' ? 'Perempuan' : '';
+
+    // Data untuk dikirim ke API dan localStorage
+    const patientData = {
+      'Tanggal Kunjungan': formData.tanggal,
+      'Nama Pasien': formData.nama_pasien,
+      'No.RM': formData.no_rm,
+      Kelamin: genderText,
+      Biaya: formData.jenis_pasien,
+      Obat: formData.obat ? 'Ya' : 'Tidak',
+      'Cabut Anak': formData.cabut_anak ? 'Ya' : 'Tidak',
+      'Cabut Dewasa': formData.cabut_dewasa ? 'Ya' : 'Tidak',
+      'Tambal Sementara': formData.tambal_sementara ? 'Ya' : 'Tidak',
+      'Tambal Tetap': formData.tambal_tetap ? 'Ya' : 'Tidak',
+      Scaling: formData.scaling ? 'Ya' : 'Tidak',
+      Rujuk: formData.rujuk ? 'Ya' : 'Tidak',
+      Lainnya: formData.lainnya || '',
+      _optimistic: true, // penanda data ini dari frontend
+      _timestamp: Date.now(),
+    };
+
+    // Simpan ke localStorage (optimistic)
     try {
-      // Konversi gender dari kode ke teks lengkap
-      const genderText =
-        formData.kelamin === 'L' ? 'Laki-laki' : formData.kelamin === 'P' ? 'Perempuan' : '';
+      const localKey = 'optimistic-patients';
+      const existing: (typeof patientData)[] = JSON.parse(localStorage.getItem(localKey) || '[]');
+      localStorage.setItem(localKey, JSON.stringify([...existing, patientData]));
+    } catch (e) {}
 
-      // Data untuk dikirim ke API
-      const patientData = {
-        'Tanggal Kunjungan': formData.tanggal,
-        'Nama Pasien': formData.nama_pasien,
-        'No.RM': formData.no_rm,
-        Kelamin: genderText,
-        Biaya: formData.jenis_pasien,
-        Obat: formData.obat ? 'Ya' : 'Tidak',
-        'Cabut Anak': formData.cabut_anak ? 'Ya' : 'Tidak',
-        'Cabut Dewasa': formData.cabut_dewasa ? 'Ya' : 'Tidak',
-        'Tambal Sementara': formData.tambal_sementara ? 'Ya' : 'Tidak',
-        'Tambal Tetap': formData.tambal_tetap ? 'Ya' : 'Tidak',
-        Scaling: formData.scaling ? 'Ya' : 'Tidak',
-        Rujuk: formData.rujuk ? 'Ya' : 'Tidak',
-        Lainnya: formData.lainnya || '',
-      };
+    // Reset form dan tampilkan modal sukses langsung
+    setStatusModal({
+      isOpen: true,
+      status: 'success',
+      message: 'Data pasien berhasil disimpan!',
+    });
+    setFormData({
+      tanggal: getTodayJakarta(),
+      nama_pasien: '',
+      no_rm: '',
+      kelamin: '',
+      jenis_pasien: '',
+      obat: false,
+      cabut_anak: false,
+      cabut_dewasa: false,
+      tambal_sementara: false,
+      tambal_tetap: false,
+      scaling: false,
+      rujuk: false,
+      lainnya: '',
+    });
 
-      // Kirim data ke API untuk disimpan di database dan Google Sheets
+    // Kirim ke backend (tetap async, jika gagal hapus dari localStorage dan tampilkan error)
+    try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 detik timeout
-
+      const timeoutId = setTimeout(() => controller.abort(), 30000);
       const response = await fetch('/api/tambah-pasien', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(patientData),
         cache: 'no-store',
         signal: controller.signal,
       });
-
       clearTimeout(timeoutId);
-
-      if (!response.ok) {
-        throw new Error('Gagal menyimpan data');
-      }
-
-      // Show success modal
-      setStatusModal({
-        isOpen: true,
-        status: 'success',
-        message: 'Data pasien berhasil disimpan!',
-      });
-
-      // Form akan direset saat modal ditutup
+      if (!response.ok) throw new Error('Gagal menyimpan data');
+      // Jika sukses, hapus dari localStorage
+      try {
+        const localKey = 'optimistic-patients';
+        const existing: (typeof patientData)[] = JSON.parse(localStorage.getItem(localKey) || '[]');
+        const filtered = existing.filter((p) => p._timestamp !== patientData._timestamp);
+        localStorage.setItem(localKey, JSON.stringify(filtered));
+      } catch (e) {}
     } catch (error) {
-      // Tampilkan error di UI, jangan hanya di console
+      // Jika gagal, hapus dari localStorage dan tampilkan error
+      try {
+        const localKey = 'optimistic-patients';
+        const existing: (typeof patientData)[] = JSON.parse(localStorage.getItem(localKey) || '[]');
+        const filtered = existing.filter((p) => p._timestamp !== patientData._timestamp);
+        localStorage.setItem(localKey, JSON.stringify(filtered));
+      } catch (e) {}
       let message = 'Gagal menyimpan data. Silakan coba lagi beberapa saat lagi.';
       if (error instanceof Error && error.message) {
         message = error.message;

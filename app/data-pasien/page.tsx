@@ -48,6 +48,8 @@ const SuccessModal = dynamic(() => import('../components/SuccessModal'), { ssr: 
 export default function DataPasienPage(): JSX.Element {
   const { theme } = useTheme();
   const [patients, setPatients] = useState<Patient[]>([]);
+  // State untuk pasien dari localStorage (optimistic)
+  // Tidak perlu state terpisah, langsung proses di fetchPatientData
   const [loading, setLoading] = useState(true);
   const [filterDate, setFilterDate] = useState(() => getTodayJakarta());
   const [currentPage, setCurrentPage] = useState(1);
@@ -75,30 +77,47 @@ export default function DataPasienPage(): JSX.Element {
     try {
       const response = await fetch('/api/data-pasien', {
         cache: 'no-store',
-        // next: { revalidate: 0 } // Dihapus karena bukan properti valid
       });
       if (!response.ok) throw new Error('Gagal fetch data pasien');
       const data = await response.json();
-      // Pastikan actions selalu array string
-      setPatients(
-        data.map((p: Patient) => {
-          let actions = [];
-          try {
-            if (Array.isArray(p.actions)) {
-              actions = p.actions;
-            } else if (typeof p.actions === 'string') {
-              actions = JSON.parse(p.actions);
-            }
-          } catch (e) {
-            // console.error('Error parsing actions:', e);
+      // Ambil data optimistic dari localStorage
+      let optimistic: Patient[] = [];
+      try {
+        optimistic = JSON.parse(localStorage.getItem('optimistic-patients') || '[]');
+      } catch (e) {}
+      // Cek dan hapus data optimistic yang sudah ada di backend
+      const backendPatients = data.map((p: Patient) => {
+        let actions = [];
+        try {
+          if (Array.isArray(p.actions)) {
+            actions = p.actions;
+          } else if (typeof p.actions === 'string') {
+            actions = JSON.parse(p.actions);
           }
-          return {
-            ...p,
-            id: p.id,
-            actions: actions,
-          };
-        }),
-      );
+        } catch (e) {}
+        return {
+          ...p,
+          id: p.id,
+          actions: actions,
+        };
+      });
+      // Cek kecocokan berdasarkan beberapa field unik (tanggal, nama_pasien, no_rm)
+      const filteredOptimistic = optimistic.filter((op) => {
+        return !backendPatients.some(
+          (bp: Patient) =>
+            bp['Tanggal Kunjungan'] === op['Tanggal Kunjungan'] &&
+            bp['Nama Pasien'] === op['Nama Pasien'] &&
+            bp['No.RM'] === op['No.RM'],
+        );
+      });
+      // Jika ada yang berubah, update localStorage
+      if (filteredOptimistic.length !== optimistic.length) {
+        try {
+          localStorage.setItem('optimistic-patients', JSON.stringify(filteredOptimistic));
+        } catch (e) {}
+      }
+      // Gabungkan data backend dan optimistic (optimistic di atas)
+      setPatients([...filteredOptimistic, ...backendPatients]);
       setLoading(false);
     } catch (error) {
       let message = 'Gagal mengambil data pasien. Silakan coba lagi.';

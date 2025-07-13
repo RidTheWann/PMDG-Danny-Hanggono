@@ -57,10 +57,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     );
 
     // 2. Kirim data ke Google Sheets
+    let sheetsText;
     try {
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), 15000); // 15 detik
-      // Siapkan data untuk Google Sheets dengan format yang sesuai
       const params = new URLSearchParams();
       params.append('action', 'add');
       params.append('Tanggal Kunjungan', data['Tanggal Kunjungan']);
@@ -76,7 +76,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       params.append('Scaling', data['Scaling']);
       params.append('Rujuk', data['Rujuk']);
       params.append('Lainnya', data['Lainnya'] || '');
-      // Kirim data ke Google Sheets dengan format application/x-www-form-urlencoded
       const sheetsResponse = await fetch(googleSheetsUrl, {
         method: 'POST',
         headers: {
@@ -86,28 +85,58 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         signal: controller.signal,
       });
       clearTimeout(timeout);
+      sheetsText = await sheetsResponse.text();
       if (!sheetsResponse.ok) {
-        console.error('Gagal menyimpan ke Google Sheets:', await sheetsResponse.text());
+        // Balas error ke user, log response
+        return NextResponse.json(
+          {
+            error: 'Gagal menyimpan ke Google Sheets',
+            sheetsStatus: sheetsResponse.status,
+            sheetsText,
+          },
+          { status: 502 },
+        );
       }
-    } catch (sheetsError: unknown) {
-      if (sheetsError instanceof Error && sheetsError.name === 'AbortError') {
-        console.error('Timeout Google Sheets, lanjutkan karena data sudah masuk DB');
-      } else {
-        console.error('Error saat menyimpan ke Google Sheets:', sheetsError);
+      // Cek response Apps Script, jika error juga balas error
+      let sheetsJson;
+      try {
+        sheetsJson = JSON.parse(sheetsText);
+      } catch (e) {
+        sheetsJson = null;
       }
-      // Tetap lanjutkan karena data sudah tersimpan di database
+      if (sheetsJson && sheetsJson.result === 'error') {
+        return NextResponse.json(
+          {
+            error: 'Google Sheets error',
+            sheetsText,
+          },
+          { status: 502 },
+        );
+      }
+    } catch (err) {
+      return NextResponse.json(
+        {
+          error: 'Gagal mengirim ke Google Sheets',
+          detail: err instanceof Error ? err.message : String(err),
+          sheetsText,
+        },
+        { status: 502 },
+      );
     }
 
-    return NextResponse.json({
-      success: true,
-      message: 'Data berhasil disimpan',
-      id: result.rows[0].id,
-    });
+    return NextResponse.json({ success: true, id: result.rows[0].id });
   } catch (error) {
-    console.error('Error saat menyimpan data:', error);
-    return NextResponse.json(
-      { error: 'Gagal menyimpan data pasien', detail: error },
-      { status: 500 },
-    );
+    let message = 'Unknown error';
+    if (
+      typeof error === 'object' &&
+      error !== null &&
+      'message' in error &&
+      typeof (error as { message?: unknown }).message === 'string'
+    ) {
+      message = (error as { message: string }).message;
+    } else if (typeof error === 'string') {
+      message = error;
+    }
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

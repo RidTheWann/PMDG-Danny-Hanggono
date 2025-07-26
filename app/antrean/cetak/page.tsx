@@ -32,12 +32,12 @@ export default function CetakAntreanPage(): JSX.Element {
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white dark:bg-gray-900 rounded shadow border border-blue-100 dark:border-gray-700">
-      <h1 className="text-2xl font-bold mb-4 text-blue-800 dark:text-blue-200">
-        Cetak Nomor Antrean
-      </h1>
-      <div className="mb-6 text-center text-lg font-semibold text-blue-700 dark:text-blue-300">
+      <h1 className="text-2xl font-bold mb-2 text-blue-800 dark:text-blue-200 text-center">
         Selamat datang di sistem antrean drg. Danny Hanggono
-      </div>
+      </h1>
+      <h2 className="text-lg font-semibold text-blue-700 dark:text-blue-300 mb-6 text-center">
+        Cetak Nomor Antrean
+      </h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="text"

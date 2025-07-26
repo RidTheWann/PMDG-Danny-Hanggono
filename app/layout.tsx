@@ -102,10 +102,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }):
                 </Link>
                 <Link
                   href="/antrean"
-                  className="px-4 py-2 rounded-lg text-white bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-700 hover:to-blue-500 shadow-md hover:shadow-lg transition-all duration-300 relative overflow-hidden group border border-blue-700"
+                  className="px-4 py-2 rounded-lg text-gray-900 dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 hover:shadow-md transition-all duration-300 relative overflow-hidden group"
                 >
                   <span className="relative z-10">Portal Antrean</span>
-                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-white opacity-70 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-700 dark:bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
                 </Link>
               </nav>
 

@@ -121,7 +121,7 @@ export default function KontrolAntreanPage(): JSX.Element {
                   )}
                   {a.status === 'terlewat' && (
                     <button
-                      className="bg-yellow-500 text-white px-2 py-1 rounded text-xs"
+                      className="bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded text-xs"
                       onClick={() => panggilUlang(a.id)}
                     >
                       Panggil Ulang

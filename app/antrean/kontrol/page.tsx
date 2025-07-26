@@ -137,99 +137,122 @@ export default function KontrolAntreanPage(): JSX.Element {
         </div>
       )}
       {error && <div className="text-red-600 mb-2">{error}</div>}
-      <table className="w-full border border-blue-100 dark:border-gray-700">
-        <thead>
-          <tr className="bg-gray-100 dark:bg-gray-800">
-            <th className="p-2 text-gray-900 dark:text-white">No</th>
-            <th className="p-2 text-gray-900 dark:text-white">Nama</th>
-            <th className="p-2 text-gray-900 dark:text-white">Status</th>
-            <th className="p-2 text-gray-900 dark:text-white">Aksi</th>
-          </tr>
-        </thead>
-        <tbody>
-          {loading ? (
-            <tr>
-              <td colSpan={4} className="text-center p-4">
-                Memuat...
-              </td>
+      <div className="overflow-x-auto rounded-lg shadow-sm">
+        <table className="min-w-full border border-blue-100 dark:border-gray-700 text-center align-middle">
+          <colgroup>
+            <col style={{ width: '70px' }} />
+            <col style={{ width: '40%' }} />
+            <col style={{ width: '120px' }} />
+            <col style={{ width: '160px' }} />
+          </colgroup>
+          <thead>
+            <tr className="bg-gray-100 dark:bg-gray-800">
+              <th className="p-3 text-gray-900 dark:text-white text-center font-semibold">No</th>
+              <th className="p-3 text-gray-900 dark:text-white text-center font-semibold">Nama</th>
+              <th className="p-3 text-gray-900 dark:text-white text-center font-semibold">
+                Status
+              </th>
+              <th className="p-3 text-gray-900 dark:text-white text-center font-semibold">Aksi</th>
             </tr>
-          ) : antrean.length === 0 ? (
-            <tr>
-              <td colSpan={4} className="text-center p-4">
-                Belum ada antrean
-              </td>
-            </tr>
-          ) : (
-            antrean.map((a) => (
-              <tr
-                key={a.id}
-                className={
-                  a.status === 'dipanggil'
-                    ? 'bg-green-100 dark:bg-green-900 font-bold'
-                    : a.status === 'terlewat'
-                      ? 'bg-red-100 dark:bg-red-900 text-gray-400 dark:text-gray-300'
-                      : 'dark:text-white'
-                }
-              >
-                <td className="p-2 text-center text-2xl">{a.id}</td>
-                <td className="p-2">{a.nama}</td>
-                <td className="p-2 capitalize">{a.status}</td>
-                <td className="p-2 space-x-2 flex items-center justify-center gap-2">
-                  {/* Validasi pilihan muncul hanya untuk antrean yang baru dipanggil */}
-                  {showValidasi && validasiId === a.id && a.status === 'dipanggil' ? (
-                    <>
-                      <button
-                        className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm font-semibold"
-                        onClick={async () => {
-                          await fetch('/api/antrean', {
-                            method: 'PUT',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ id: a.id, status: 'valid-ada' }),
-                          });
-                          setShowValidasi(false);
-                          setValidasiId(null);
-                          fetchAntrean();
-                        }}
-                      >
-                        Ada
-                      </button>
-                      <button
-                        className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm font-semibold"
-                        onClick={async () => {
-                          await fetch('/api/antrean', {
-                            method: 'PUT',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ id: a.id, status: 'terlewat' }),
-                          });
-                          setShowValidasi(false);
-                          setValidasiId(null);
-                          fetchAntrean();
-                        }}
-                      >
-                        Terlewat
-                      </button>
-                    </>
-                  ) : (
-                    // Tampilkan hasil validasi jika sudah dipilih
-                    <>
-                      {a.status === 'valid-ada' && (
-                        <span title="Validasi Ada" className="text-green-600 text-xl">
-                          ✅
-                        </span>
-                      )}
-                      {a.status === 'terlewat' && (
-                        <span title="Pasien Terlewat" className="text-red-500 text-xl">
-                          ❌
-                        </span>
-                      )}
-                    </>
-                  )}
+          </thead>
+          <tbody>
+            {loading ? (
+              <tr>
+                <td colSpan={4} className="text-center p-4">
+                  Memuat...
                 </td>
               </tr>
-            ))
-          )}
-        </tbody>
-      </table>
+            ) : antrean.length === 0 ? (
+              <tr>
+                <td colSpan={4} className="text-center p-4">
+                  Belum ada antrean
+                </td>
+              </tr>
+            ) : (
+              antrean.map((a) => (
+                <tr
+                  key={a.id}
+                  className={
+                    a.status === 'dipanggil'
+                      ? 'bg-green-100 dark:bg-green-900 font-bold'
+                      : a.status === 'terlewat'
+                        ? 'bg-red-100 dark:bg-red-900 text-gray-400 dark:text-gray-300'
+                        : 'dark:text-white'
+                  }
+                >
+                  <td className="p-3 text-center text-2xl font-bold">{a.id}</td>
+                  <td className="p-3 text-center whitespace-nowrap">{a.nama}</td>
+                  <td className="p-3 text-center capitalize">
+                    {a.status === 'menunggu' && <span className="text-gray-500">Menunggu</span>}
+                    {a.status === 'dipanggil' && (
+                      <span className="text-blue-700 dark:text-blue-200 font-semibold">
+                        Dipanggil
+                      </span>
+                    )}
+                    {a.status === 'terlewat' && (
+                      <span className="text-red-600 font-semibold">Terlewat</span>
+                    )}
+                    {a.status === 'valid-ada' && (
+                      <span className="text-green-600 font-semibold">Ada</span>
+                    )}
+                  </td>
+                  <td className="p-3 flex items-center justify-center gap-2 min-h-[48px]">
+                    {/* Validasi pilihan muncul hanya untuk antrean yang baru dipanggil */}
+                    {showValidasi && validasiId === a.id && a.status === 'dipanggil' ? (
+                      <>
+                        <button
+                          className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm font-semibold"
+                          onClick={async () => {
+                            await fetch('/api/antrean', {
+                              method: 'PUT',
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify({ id: a.id, status: 'valid-ada' }),
+                            });
+                            setShowValidasi(false);
+                            setValidasiId(null);
+                            fetchAntrean();
+                          }}
+                        >
+                          Ada
+                        </button>
+                        <button
+                          className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm font-semibold"
+                          onClick={async () => {
+                            await fetch('/api/antrean', {
+                              method: 'PUT',
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify({ id: a.id, status: 'terlewat' }),
+                            });
+                            setShowValidasi(false);
+                            setValidasiId(null);
+                            fetchAntrean();
+                          }}
+                        >
+                          Terlewat
+                        </button>
+                      </>
+                    ) : (
+                      // Tampilkan hasil validasi jika sudah dipilih
+                      <>
+                        {a.status === 'valid-ada' && (
+                          <span title="Validasi Ada" className="text-green-600 text-xl">
+                            ✅
+                          </span>
+                        )}
+                        {a.status === 'terlewat' && (
+                          <span title="Pasien Terlewat" className="text-red-500 text-xl">
+                            ❌
+                          </span>
+                        )}
+                      </>
+                    )}
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

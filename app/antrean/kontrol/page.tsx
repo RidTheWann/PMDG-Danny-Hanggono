@@ -25,7 +25,7 @@ export default function KontrolAntreanPage(): JSX.Element {
 
   useEffect(() => {
     fetchAntrean();
-    const interval = setInterval(fetchAntrean, 2000); // polling setiap 2 detik
+    const interval = setInterval(fetchAntrean, 1); // polling secepat mungkin (min 1ms di JS)
     return () => clearInterval(interval);
   }, []);
 

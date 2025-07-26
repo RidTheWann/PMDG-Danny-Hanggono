@@ -68,6 +68,15 @@ export default function KontrolAntreanPage(): JSX.Element {
         <button className="bg-blue-600 text-white px-4 py-2 rounded" onClick={panggilBerikutnya}>
           Panggil Berikutnya
         </button>
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded"
+          onClick={() => {
+            const terlewat = antrean.find((a) => a.status === 'terlewat');
+            if (terlewat) panggilUlang(terlewat.id);
+          }}
+        >
+          Panggil Ulang
+        </button>
         <button className="bg-gray-600 text-white px-4 py-2 rounded" onClick={resetAntrean}>
           Reset Antrean
         </button>
@@ -110,7 +119,18 @@ export default function KontrolAntreanPage(): JSX.Element {
                 <td className="p-2 text-center text-2xl">{a.id}</td>
                 <td className="p-2">{a.nama}</td>
                 <td className="p-2 capitalize">{a.status}</td>
-                <td className="p-2 space-x-2">
+                <td className="p-2 space-x-2 flex items-center justify-center gap-2">
+                  {/* Validasi aksi: ceklist jika sudah dipanggil, silang jika belum, kosong jika terlewat */}
+                  {a.status === 'dipanggil' && (
+                    <span title="Sudah dipanggil" className="text-green-600 text-xl">
+                      ✅
+                    </span>
+                  )}
+                  {a.status === 'menunggu' && (
+                    <span title="Belum dipanggil" className="text-red-500 text-xl">
+                      ❌
+                    </span>
+                  )}
                   {a.status === 'menunggu' && (
                     <button
                       className="bg-red-500 text-white px-2 py-1 rounded text-xs"

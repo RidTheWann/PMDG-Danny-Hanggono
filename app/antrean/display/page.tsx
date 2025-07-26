@@ -12,33 +12,30 @@ type Antrean = {
 export default function DisplayAntreanPage(): JSX.Element {
   const [antrean, setAntrean] = useState<Antrean[]>([]);
   const [loading, setLoading] = useState(true);
-  const [lastCalledId, setLastCalledId] = useState<number | null>(null);
 
   useEffect(() => {
+    let prevDipanggilId: number | null = null;
     async function fetchAntrean() {
       const res = await fetch('/api/antrean');
       const data = await res.json();
-      setAntrean(() => {
-        // Deteksi antrean yang baru dipanggil
-        const currDipanggil = data.antrean.find((a: Antrean) => a.status === 'dipanggil');
-        if (currDipanggil && currDipanggil.id !== lastCalledId) {
-          // Panggil suara
-          const kalimat = `Nomor antrean ${currDipanggil.id} atas nama ${currDipanggil.nama} silahkan masuk ke ruang praktek`;
-          if (typeof window !== 'undefined' && window.speechSynthesis) {
-            const utter = new window.SpeechSynthesisUtterance(kalimat);
-            utter.lang = 'id-ID';
-            window.speechSynthesis.speak(utter);
-          }
-          setLastCalledId(currDipanggil.id);
+      setAntrean(data.antrean);
+      const currDipanggil = data.antrean.find((a: Antrean) => a.status === 'dipanggil');
+      if (currDipanggil && currDipanggil.id !== prevDipanggilId) {
+        // Panggil suara
+        const kalimat = `Nomor antrean ${currDipanggil.id} atas nama ${currDipanggil.nama} silahkan masuk ke ruang praktek`;
+        if (typeof window !== 'undefined' && window.speechSynthesis) {
+          const utter = new window.SpeechSynthesisUtterance(kalimat);
+          utter.lang = 'id-ID';
+          window.speechSynthesis.speak(utter);
         }
-        return data.antrean;
-      });
+        prevDipanggilId = currDipanggil.id;
+      }
       setLoading(false);
     }
     fetchAntrean();
-    const interval = setInterval(fetchAntrean, 2000); // polling setiap 2 detik
+    const interval = setInterval(fetchAntrean, 2000);
     return () => clearInterval(interval);
-  }, [lastCalledId]);
+  }, []);
 
   // Cari antrean yang sedang dipanggil
   const antreanDipanggil = antrean.find((a) => a.status === 'dipanggil');
@@ -52,21 +49,24 @@ export default function DisplayAntreanPage(): JSX.Element {
           </h1>
         </header>
         {loading ? (
-          <div className="text-2xl font-bold text-gray-600 dark:text-gray-200">
+          <div className="text-2xl font-bold text-gray-600 dark:text-gray-200 animate-pulse">
             Memuat antrean...
           </div>
         ) : antreanDipanggil ? (
           <div className="flex flex-col items-center justify-center w-full h-full">
-            <div className="text-8xl font-extrabold text-blue-700 dark:text-blue-300 drop-shadow mb-6">
-              {antreanDipanggil.id}
+            <div className="relative flex items-center justify-center mb-6">
+              <span className="absolute w-44 h-44 rounded-full bg-blue-400/30 blur-2xl animate-pulse"></span>
+              <span className="text-[8rem] md:text-[10rem] font-extrabold text-blue-700 dark:text-blue-300 drop-shadow-lg tracking-widest animate-glow">
+                {antreanDipanggil.id}
+              </span>
             </div>
-            <div className="text-3xl font-semibold text-gray-800 dark:text-white mb-8">
+            <div className="text-3xl font-semibold text-gray-800 dark:text-white mb-8 tracking-wide animate-fadein">
               {antreanDipanggil.nama}
             </div>
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center w-full h-full">
-            <div className="text-4xl font-bold text-gray-500 dark:text-gray-300 mb-4">
+            <div className="text-4xl font-bold text-gray-500 dark:text-gray-300 mb-4 animate-fadein">
               Belum ada antrean dipanggil
             </div>
           </div>

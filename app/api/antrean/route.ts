@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { emitAntreanUpdate } from './ws-server';
 
 // In-memory antrean data (replace with DB in production)
 let antreanList: Array<{
@@ -24,6 +25,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     waktu: new Date().toISOString(),
   };
   antreanList.push(antrean);
+  emitAntreanUpdate(antreanList); // Emit update ke semua client
   return NextResponse.json({ antrean });
 }
 
@@ -32,11 +34,13 @@ export async function PUT(req: NextRequest): Promise<NextResponse> {
   const idx = antreanList.findIndex((a) => a.id === id);
   if (idx === -1) return NextResponse.json({ error: 'Antrean tidak ditemukan' }, { status: 404 });
   if (status) antreanList[idx].status = status;
+  emitAntreanUpdate(antreanList); // Emit update ke semua client
   return NextResponse.json({ antrean: antreanList[idx] });
 }
 
 export async function DELETE(): Promise<NextResponse> {
   antreanList = [];
   lastNumber = 0;
+  emitAntreanUpdate(antreanList); // Emit update ke semua client
   return NextResponse.json({ success: true });
 }

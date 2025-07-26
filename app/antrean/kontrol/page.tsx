@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { getSocket } from './socket-client';
 
 type Antrean = {
   id: number;
@@ -24,9 +25,16 @@ export default function KontrolAntreanPage(): JSX.Element {
   }
 
   useEffect(() => {
-    fetchAntrean();
-    const interval = setInterval(fetchAntrean, 1); // polling secepat mungkin (min 1ms di JS)
-    return () => clearInterval(interval);
+    fetchAntrean(); // initial fetch
+    const socket = getSocket();
+    socket.on('antrean-update', (data: Antrean[]) => {
+      setAntrean(data);
+      setLoading(false);
+    });
+    return () => {
+      socket.off('antrean-update');
+      socket.close();
+    };
   }, []);
 
   async function panggilBerikutnya() {

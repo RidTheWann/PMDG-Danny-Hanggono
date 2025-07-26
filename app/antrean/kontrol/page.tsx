@@ -29,7 +29,7 @@ export default function KontrolAntreanPage(): JSX.Element {
     fetchAntrean(); // initial fetch
     const interval = setInterval(() => {
       fetchAntrean();
-    }, 2000); // Poll every 2 seconds
+    }, 200); // Poll every 0.2 seconds (200ms)
     return () => clearInterval(interval);
   }, []);
 

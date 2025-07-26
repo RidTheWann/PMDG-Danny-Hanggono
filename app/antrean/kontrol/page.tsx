@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { getSocket } from './socket-client';
+// import { getSocket } from './socket-client';
 
 type Antrean = {
   id: number;
@@ -27,14 +27,16 @@ export default function KontrolAntreanPage(): JSX.Element {
 
   useEffect(() => {
     fetchAntrean(); // initial fetch
-    const socket = getSocket();
-    socket.on('antrean-update', (data: Antrean[]) => {
-      setAntrean(data);
-      setLoading(false);
-    });
+    const es = new EventSource('/api/antrean/sse');
+    es.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data);
+        setAntrean(data);
+        setLoading(false);
+      } catch {}
+    };
     return () => {
-      socket.off('antrean-update');
-      socket.close();
+      es.close();
     };
   }, []);
 
@@ -197,14 +199,14 @@ export default function KontrolAntreanPage(): JSX.Element {
                           await fetch('/api/antrean', {
                             method: 'PUT',
                             headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ id: a.id, status: 'valid-tidak' }),
+                            body: JSON.stringify({ id: a.id, status: 'terlewat' }),
                           });
                           setShowValidasi(false);
                           setValidasiId(null);
                           fetchAntrean();
                         }}
                       >
-                        Tidak Ada
+                        Terlewat
                       </button>
                     </>
                   ) : (
@@ -215,8 +217,8 @@ export default function KontrolAntreanPage(): JSX.Element {
                           ✅
                         </span>
                       )}
-                      {a.status === 'valid-tidak' && (
-                        <span title="Validasi Tidak Ada" className="text-red-500 text-xl">
+                      {a.status === 'terlewat' && (
+                        <span title="Pasien Terlewat" className="text-red-500 text-xl">
                           ❌
                         </span>
                       )}

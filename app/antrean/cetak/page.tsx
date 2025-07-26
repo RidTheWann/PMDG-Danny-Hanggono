@@ -31,12 +31,17 @@ export default function CetakAntreanPage(): JSX.Element {
   }
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow">
-      <h1 className="text-2xl font-bold mb-4">Cetak Nomor Antrean</h1>
+    <div className="max-w-md mx-auto mt-10 p-6 bg-white dark:bg-gray-900 rounded shadow border border-blue-100 dark:border-gray-700">
+      <h1 className="text-2xl font-bold mb-4 text-blue-800 dark:text-blue-200">
+        Cetak Nomor Antrean
+      </h1>
+      <div className="mb-6 text-center text-lg font-semibold text-blue-700 dark:text-blue-300">
+        Selamat datang di sistem antrean drg. Danny Hanggono
+      </div>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="text"
-          className="border p-2 w-full rounded"
+          className="border p-2 w-full rounded bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
           placeholder="Nama Pasien"
           value={nama}
           onChange={(e) => setNama(e.target.value)}
@@ -44,7 +49,7 @@ export default function CetakAntreanPage(): JSX.Element {
         />
         <button
           type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded w-full"
+          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded w-full transition-colors"
           disabled={loading}
         >
           {loading ? 'Memproses...' : 'Cetak Nomor'}
@@ -52,10 +57,9 @@ export default function CetakAntreanPage(): JSX.Element {
       </form>
       {error && <div className="text-red-600 mt-2">{error}</div>}
       {result && (
-        <div className="mt-6 border-t pt-4 text-center">
-          <div className="text-4xl font-bold">{result.id}</div>
-          <div className="text-lg">{result.nama}</div>
-          <div className="text-sm text-gray-500">{new Date(result.waktu).toLocaleString()}</div>
+        <div className="mt-6 border-t border-blue-100 dark:border-gray-700 pt-4 text-center">
+          <div className="text-4xl font-bold text-blue-700 dark:text-blue-300">{result.id}</div>
+          <div className="text-lg text-gray-900 dark:text-white">{result.nama}</div>
         </div>
       )}
     </div>

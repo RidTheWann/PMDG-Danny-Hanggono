@@ -100,6 +100,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }):
                   <span className="relative z-10">Arship Tugas</span>
                   <span className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-700 dark:bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
                 </Link>
+                <Link
+                  href="/antrean"
+                  className="px-4 py-2 rounded-lg text-white bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-700 hover:to-blue-500 shadow-md hover:shadow-lg transition-all duration-300 relative overflow-hidden group border border-blue-700"
+                >
+                  <span className="relative z-10">Portal Antrean</span>
+                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-white opacity-70 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+                </Link>
               </nav>
 
               {/* Dark/Light Mode Toggle */}

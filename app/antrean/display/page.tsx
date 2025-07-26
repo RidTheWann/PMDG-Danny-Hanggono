@@ -39,46 +39,31 @@ export default function DisplayAntreanPage(): JSX.Element {
     return () => clearInterval(interval);
   }, [lastCalledId]);
 
+  // Cari antrean yang sedang dipanggil
+  const antreanDipanggil = antrean.find((a) => a.status === 'dipanggil');
+
   return (
-    <div className="max-w-2xl mx-auto mt-10 p-6 bg-white rounded shadow">
-      <h1 className="text-2xl font-bold mb-4 text-center">Display Antrean</h1>
+    <div className="w-screen h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-100 to-blue-300 dark:from-gray-900 dark:to-gray-800">
       {loading ? (
-        <div>Memuat antrean...</div>
+        <div className="text-2xl font-bold text-gray-600 dark:text-gray-200">Memuat antrean...</div>
+      ) : antreanDipanggil ? (
+        <div className="flex flex-col items-center justify-center w-full h-full">
+          <div className="text-8xl font-extrabold text-blue-700 dark:text-blue-300 drop-shadow mb-6">
+            {antreanDipanggil.id}
+          </div>
+          <div className="text-3xl font-semibold text-gray-800 dark:text-white mb-2">
+            {antreanDipanggil.nama}
+          </div>
+          <div className="text-lg text-gray-500 dark:text-gray-200 mb-8">
+            Silakan masuk ke ruang praktek
+          </div>
+        </div>
       ) : (
-        <table className="w-full border">
-          <thead>
-            <tr className="bg-gray-100">
-              <th className="p-2">No</th>
-              <th className="p-2">Nama</th>
-              <th className="p-2">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {antrean.length === 0 && (
-              <tr>
-                <td colSpan={3} className="text-center p-4">
-                  Belum ada antrean
-                </td>
-              </tr>
-            )}
-            {antrean.map((a) => (
-              <tr
-                key={a.id}
-                className={
-                  a.status === 'dipanggil'
-                    ? 'bg-green-100 font-bold'
-                    : a.status === 'terlewat'
-                      ? 'bg-red-100 text-gray-400'
-                      : ''
-                }
-              >
-                <td className="p-2 text-center text-2xl">{a.id}</td>
-                <td className="p-2">{a.nama}</td>
-                <td className="p-2 capitalize">{a.status}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="flex flex-col items-center justify-center w-full h-full">
+          <div className="text-4xl font-bold text-gray-500 dark:text-gray-300 mb-4">
+            Belum ada antrean dipanggil
+          </div>
+        </div>
       )}
     </div>
   );

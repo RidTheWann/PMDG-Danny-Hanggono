@@ -5,7 +5,7 @@ import { getSocket } from './socket-client';
 type Antrean = {
   id: number;
   nama: string;
-  status: 'menunggu' | 'dipanggil' | 'terlewat';
+  status: 'menunggu' | 'dipanggil' | 'terlewat' | 'valid-ada' | 'valid-tidak';
   waktu: string;
 };
 
@@ -14,6 +14,7 @@ export default function KontrolAntreanPage(): JSX.Element {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [showValidasi, setShowValidasi] = useState(false);
+  const [validasiId, setValidasiId] = useState<number | null>(null);
   const [showModal, setShowModal] = useState(false);
   // const [selectedUlang, setSelectedUlang] = useState<number | null>(null); // dihapus karena tidak digunakan
 
@@ -46,7 +47,8 @@ export default function KontrolAntreanPage(): JSX.Element {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id: next.id, status: 'dipanggil' }),
     });
-    setShowValidasi(true); // Tampilkan validasi di kolom aksi
+    setShowValidasi(true);
+    setValidasiId(next.id); // Simpan antrean yang perlu divalidasi
     fetchAntrean();
   }
 
@@ -171,22 +173,55 @@ export default function KontrolAntreanPage(): JSX.Element {
                 <td className="p-2">{a.nama}</td>
                 <td className="p-2 capitalize">{a.status}</td>
                 <td className="p-2 space-x-2 flex items-center justify-center gap-2">
-                  {/* Validasi aksi: ceklist jika sudah dipanggil, silang jika belum, kosong jika terlewat */}
-                  {showValidasi && (
+                  {/* Validasi pilihan muncul hanya untuk antrean yang baru dipanggil */}
+                  {showValidasi && validasiId === a.id && a.status === 'dipanggil' ? (
                     <>
-                      {a.status === 'dipanggil' && (
-                        <span title="Sudah dipanggil" className="text-green-600 text-xl">
+                      <button
+                        className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm font-semibold"
+                        onClick={async () => {
+                          await fetch('/api/antrean', {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ id: a.id, status: 'valid-ada' }),
+                          });
+                          setShowValidasi(false);
+                          setValidasiId(null);
+                          fetchAntrean();
+                        }}
+                      >
+                        Ada
+                      </button>
+                      <button
+                        className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm font-semibold"
+                        onClick={async () => {
+                          await fetch('/api/antrean', {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ id: a.id, status: 'valid-tidak' }),
+                          });
+                          setShowValidasi(false);
+                          setValidasiId(null);
+                          fetchAntrean();
+                        }}
+                      >
+                        Tidak Ada
+                      </button>
+                    </>
+                  ) : (
+                    // Tampilkan hasil validasi jika sudah dipilih
+                    <>
+                      {a.status === 'valid-ada' && (
+                        <span title="Validasi Ada" className="text-green-600 text-xl">
                           ✅
                         </span>
                       )}
-                      {a.status === 'menunggu' && (
-                        <span title="Belum dipanggil" className="text-red-500 text-xl">
+                      {a.status === 'valid-tidak' && (
+                        <span title="Validasi Tidak Ada" className="text-red-500 text-xl">
                           ❌
                         </span>
                       )}
                     </>
                   )}
-                  {/* Tombol 'Tandai Terlewat' dihilangkan sesuai permintaan, validasi hanya ada/tidak ada */}
                 </td>
               </tr>
             ))

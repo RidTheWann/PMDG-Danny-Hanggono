@@ -27,17 +27,10 @@ export default function KontrolAntreanPage(): JSX.Element {
 
   useEffect(() => {
     fetchAntrean(); // initial fetch
-    const es = new EventSource('/api/antrean/sse');
-    es.onmessage = (event) => {
-      try {
-        const data = JSON.parse(event.data);
-        setAntrean(data);
-        setLoading(false);
-      } catch {}
-    };
-    return () => {
-      es.close();
-    };
+    const interval = setInterval(() => {
+      fetchAntrean();
+    }, 2000); // Poll every 2 seconds
+    return () => clearInterval(interval);
   }, []);
 
   async function panggilBerikutnya() {

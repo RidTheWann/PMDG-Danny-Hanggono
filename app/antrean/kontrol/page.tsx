@@ -1,0 +1,119 @@
+'use client';
+import { useEffect, useState } from 'react';
+
+type Antrean = {
+  id: number;
+  nama: string;
+  status: 'menunggu' | 'dipanggil' | 'terlewat';
+  waktu: string;
+};
+
+export default function KontrolAntreanPage(): JSX.Element {
+  const [antrean, setAntrean] = useState<Antrean[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  async function fetchAntrean() {
+    const res = await fetch('/api/antrean');
+    const data = await res.json();
+    setAntrean(data.antrean);
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    fetchAntrean();
+  }, []);
+
+  async function panggilBerikutnya() {
+    setError('');
+    const next = antrean.find((a) => a.status === 'menunggu');
+    if (!next) return setError('Tidak ada antrean menunggu');
+    await fetch('/api/antrean', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: next.id, status: 'dipanggil' }),
+    });
+    fetchAntrean();
+  }
+
+  async function tandaiTerlewat(id: number) {
+    await fetch('/api/antrean', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, status: 'terlewat' }),
+    });
+    fetchAntrean();
+  }
+
+  async function resetAntrean() {
+    await fetch('/api/antrean', { method: 'DELETE' });
+    fetchAntrean();
+  }
+
+  return (
+    <div className="max-w-2xl mx-auto mt-10 p-6 bg-white rounded shadow">
+      <h1 className="text-2xl font-bold mb-4 text-center">Kontrol Antrean</h1>
+      <div className="flex gap-2 mb-4">
+        <button className="bg-blue-600 text-white px-4 py-2 rounded" onClick={panggilBerikutnya}>
+          Panggil Berikutnya
+        </button>
+        <button className="bg-gray-600 text-white px-4 py-2 rounded" onClick={resetAntrean}>
+          Reset Antrean
+        </button>
+      </div>
+      {error && <div className="text-red-600 mb-2">{error}</div>}
+      <table className="w-full border">
+        <thead>
+          <tr className="bg-gray-100">
+            <th className="p-2">No</th>
+            <th className="p-2">Nama</th>
+            <th className="p-2">Status</th>
+            <th className="p-2">Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          {loading ? (
+            <tr>
+              <td colSpan={4} className="text-center p-4">
+                Memuat...
+              </td>
+            </tr>
+          ) : antrean.length === 0 ? (
+            <tr>
+              <td colSpan={4} className="text-center p-4">
+                Belum ada antrean
+              </td>
+            </tr>
+          ) : (
+            antrean.map((a) => (
+              <tr
+                key={a.id}
+                className={
+                  a.status === 'dipanggil'
+                    ? 'bg-green-100 font-bold'
+                    : a.status === 'terlewat'
+                      ? 'bg-red-100 text-gray-400'
+                      : ''
+                }
+              >
+                <td className="p-2 text-center text-2xl">{a.id}</td>
+                <td className="p-2">{a.nama}</td>
+                <td className="p-2 capitalize">{a.status}</td>
+                <td className="p-2">
+                  {a.status === 'menunggu' && (
+                    <button
+                      className="bg-red-500 text-white px-2 py-1 rounded text-xs"
+                      onClick={() => tandaiTerlewat(a.id)}
+                    >
+                      Tandai Terlewat
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+    </div>
+  );
+}

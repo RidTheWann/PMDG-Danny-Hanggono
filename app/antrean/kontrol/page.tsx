@@ -25,6 +25,8 @@ export default function KontrolAntreanPage(): JSX.Element {
 
   useEffect(() => {
     fetchAntrean();
+    const interval = setInterval(fetchAntrean, 2000); // polling setiap 2 detik
+    return () => clearInterval(interval);
   }, []);
 
   async function panggilBerikutnya() {

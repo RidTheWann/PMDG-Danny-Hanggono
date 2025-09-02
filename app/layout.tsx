@@ -9,6 +9,8 @@ import { useTheme } from './hooks/useTheme';
 import { Sun, Moon } from 'lucide-react';
 import Image from 'next/image';
 import BottomNav from './components/BottomNav';
+import React, { Suspense } from 'react';
+const CookieConsent = React.lazy(() => import('./components/CookieConsent'));
 import { Inter } from 'next/font/google';
 
 const inter = Inter({ subsets: ['latin'], display: 'swap', variable: '--font-inter' });
@@ -121,6 +123,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }):
         <main className="flex-1 bg-white dark:bg-gray-900 py-6">
           <div className="fade-in">{children}</div>
         </main>
+
+        {/* Cookie Consent */}
+        <Suspense fallback={null}>
+          <CookieConsent />
+        </Suspense>
 
         {/* Bottom Navigation hanya tampil di mobile */}
         <BottomNav />

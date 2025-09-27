@@ -67,7 +67,7 @@ export default function TambahPasienPage(): JSX.Element {
       const currentTime = Date.now();
       const elapsedTime = currentTime - appStartTime;
 
-      if (elapsedTime >= 5 * 60 * 1000) {
+      if (elapsedTime >= 2 * 60 * 1000) {
         setFormData((prev) => ({ ...prev, tanggal: getTodayJakarta() }));
         localStorage.removeItem('selectedDate');
         clearInterval(interval); // Stop the interval after resetting

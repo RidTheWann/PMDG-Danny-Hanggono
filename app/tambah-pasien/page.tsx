@@ -56,27 +56,20 @@ export default function TambahPasienPage(): JSX.Element {
     setFormVisible(true);
   }, []);
 
-  const yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1);
-  const yesterdayString = yesterday.toISOString().split('T')[0];
-
   useEffect(() => {
-    const appStartTime = Date.now();
-    const interval = setInterval(() => {
-      const savedDate = localStorage.getItem('selectedDate');
-      const currentTime = Date.now();
-      const elapsedTime = currentTime - appStartTime;
+    const resetToToday = () => {
+      setFormData((prev) => ({ ...prev, tanggal: getTodayJakarta() }));
+      localStorage.removeItem('selectedDate');
+    };
 
-      if (elapsedTime >= 2 * 60 * 1000) {
-        setFormData((prev) => ({ ...prev, tanggal: getTodayJakarta() }));
-        localStorage.removeItem('selectedDate');
-        clearInterval(interval); // Stop the interval after resetting
-      } else if (savedDate === yesterdayString) {
-        setFormData((prev) => ({ ...prev, tanggal: savedDate }));
-      }
-    }, 1000); // Check every second
-
-    return () => clearInterval(interval);
+    const savedDate = localStorage.getItem('selectedDate');
+    if (savedDate) {
+      setFormData((prev) => ({ ...prev, tanggal: savedDate }));
+      const timeout = setTimeout(resetToToday, 2 * 60 * 1000); // Reset after 2 minutes
+      return () => clearTimeout(timeout);
+    } else {
+      resetToToday(); // Default to today
+    }
   }, []);
 
   const handleInputChange = (
@@ -95,10 +88,15 @@ export default function TambahPasienPage(): JSX.Element {
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setFormData((prev) => ({ ...prev, tanggal: value }));
-    if (value === yesterdayString) {
+    if (value !== getTodayJakarta()) {
       localStorage.setItem('selectedDate', value);
-    } else {
-      localStorage.removeItem('selectedDate');
+      setTimeout(
+        () => {
+          setFormData((prev) => ({ ...prev, tanggal: getTodayJakarta() }));
+          localStorage.removeItem('selectedDate');
+        },
+        2 * 60 * 1000,
+      ); // Reset after 2 minutes
     }
   };
 

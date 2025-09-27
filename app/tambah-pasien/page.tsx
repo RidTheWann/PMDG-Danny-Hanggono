@@ -61,12 +61,18 @@ export default function TambahPasienPage(): JSX.Element {
   const yesterdayString = yesterday.toISOString().split('T')[0];
 
   useEffect(() => {
+    const appStartTime = Date.now();
     const interval = setInterval(() => {
       const savedDate = localStorage.getItem('selectedDate');
-      if (savedDate === yesterdayString) {
-        setFormData((prev) => ({ ...prev, tanggal: savedDate }));
-      } else {
+      const currentTime = Date.now();
+      const elapsedTime = currentTime - appStartTime;
+
+      if (elapsedTime >= 5 * 60 * 1000) {
         setFormData((prev) => ({ ...prev, tanggal: getTodayJakarta() }));
+        localStorage.removeItem('selectedDate');
+        clearInterval(interval); // Stop the interval after resetting
+      } else if (savedDate === yesterdayString) {
+        setFormData((prev) => ({ ...prev, tanggal: savedDate }));
       }
     }, 1000); // Check every second
 

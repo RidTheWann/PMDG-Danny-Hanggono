@@ -61,18 +61,16 @@ export default function TambahPasienPage(): JSX.Element {
   const yesterdayString = yesterday.toISOString().split('T')[0];
 
   useEffect(() => {
-    const savedDate = localStorage.getItem('selectedDate');
-    if (savedDate === yesterdayString) {
-      setFormData((prev) => ({ ...prev, tanggal: savedDate }));
-      const timeout = setTimeout(
-        () => {
-          setFormData((prev) => ({ ...prev, tanggal: getTodayJakarta() }));
-          localStorage.removeItem('selectedDate');
-        },
-        5 * 60 * 1000,
-      );
-      return () => clearTimeout(timeout);
-    }
+    const interval = setInterval(() => {
+      const savedDate = localStorage.getItem('selectedDate');
+      if (savedDate === yesterdayString) {
+        setFormData((prev) => ({ ...prev, tanggal: savedDate }));
+      } else {
+        setFormData((prev) => ({ ...prev, tanggal: getTodayJakarta() }));
+      }
+    }, 1000); // Check every second
+
+    return () => clearInterval(interval);
   }, []);
 
   const handleInputChange = (

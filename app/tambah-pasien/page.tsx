@@ -56,6 +56,25 @@ export default function TambahPasienPage(): JSX.Element {
     setFormVisible(true);
   }, []);
 
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  const yesterdayString = yesterday.toISOString().split('T')[0];
+
+  useEffect(() => {
+    const savedDate = localStorage.getItem('selectedDate');
+    if (savedDate === yesterdayString) {
+      setFormData((prev) => ({ ...prev, tanggal: savedDate }));
+      const timeout = setTimeout(
+        () => {
+          setFormData((prev) => ({ ...prev, tanggal: getTodayJakarta() }));
+          localStorage.removeItem('selectedDate');
+        },
+        5 * 60 * 1000,
+      );
+      return () => clearTimeout(timeout);
+    }
+  }, []);
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
   ) => {
@@ -66,6 +85,16 @@ export default function TambahPasienPage(): JSX.Element {
       setFormData((prev) => ({ ...prev, [name]: checked }));
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
+    }
+  };
+
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setFormData((prev) => ({ ...prev, tanggal: value }));
+    if (value === yesterdayString) {
+      localStorage.setItem('selectedDate', value);
+    } else {
+      localStorage.removeItem('selectedDate');
     }
   };
 
@@ -239,7 +268,7 @@ export default function TambahPasienPage(): JSX.Element {
                   id="tanggal"
                   name="tanggal"
                   value={formData.tanggal}
-                  onChange={handleInputChange}
+                  onChange={handleDateChange}
                   required
                   className="w-full px-3 py-3 pl-10 text-gray-900 transition-all bg-white border border-gray-300 shadow-md outline-none dark:bg-gray-700/80 dark:border-gray-600 rounded-2xl dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 hover:border-blue-400 dark:hover:border-blue-500 focus:shadow-lg"
                   style={{ maxWidth: '100%' }}

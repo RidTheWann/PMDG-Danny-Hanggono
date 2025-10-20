@@ -1,4 +1,4 @@
-import { pgTable, serial, varchar, date, text, jsonb, timestamp } from 'drizzle-orm/pg-core';
+import { pgTable, serial, varchar, date, text, jsonb } from 'drizzle-orm/pg-core';
 
 export const dataEntries = pgTable('data_entries', {
   id: serial('id').primaryKey(),
@@ -10,7 +10,6 @@ export const dataEntries = pgTable('data_entries', {
   actions: jsonb('actions'),
   otherActions: text('other_actions'),
   description: text('description'),
-  createdAt: timestamp('created_at').defaultNow(),
 });
 
 export type DataEntry = typeof dataEntries.$inferSelect;

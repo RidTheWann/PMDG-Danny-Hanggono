@@ -1,19 +1,16 @@
 import type { NextConfig } from 'next';
 
+// @ts-ignore
+import withPWA from 'next-pwa';
+
 const nextConfig: NextConfig = {
-  experimental: {
-    ppr: true,
-    reactCompiler: true,
-  },
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [],
   },
-  logging: {
-    fetches: {
-      fullUrl: true,
-    },
-  },
 };
 
-export default nextConfig;
+export default withPWA({
+  dest: 'public',
+  disable: process.env.NODE_ENV === 'development',
+})(nextConfig);

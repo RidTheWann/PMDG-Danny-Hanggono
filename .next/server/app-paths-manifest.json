@@ -1,13 +1,8 @@
 {
-  "/_not-found": "app/_not-found.js",
-  "/api/data-pasien/[id]/route": "app/api/data-pasien/[id]/route.js",
-  "/api/tambah-pasien/route": "app/api/tambah-pasien/route.js",
+  "/_not-found/page": "app/_not-found/page.js",
   "/cari-pasien/page": "app/cari-pasien/page.js",
   "/data-pasien/page": "app/data-pasien/page.js",
   "/laporan/page": "app/laporan/page.js",
   "/page": "app/page.js",
-  "/tambah-pasien/page": "app/tambah-pasien/page.js",
-  "/api/data-pasien/route": "app/api/data-pasien/route.js",
-  "/api/dashboard-stats/route": "app/api/dashboard-stats/route.js",
-  "/api/reports/route": "app/api/reports/route.js"
+  "/tambah-pasien/page": "app/tambah-pasien/page.js"
 }
